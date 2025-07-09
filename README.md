@@ -82,7 +82,7 @@ npm run deploy
 ## 🌐 Live Demo
 
 Check out the live version:  
-👉 [https://yourusername.github.io](https://yourusername.github.io)
+👉 [https://yourusername.github.io](https://fr34ky-coder.github.io)
 
 ## 📸 Screenshots
 
