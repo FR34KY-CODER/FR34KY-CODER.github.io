@@ -1,8 +1,3 @@
-# 📝 GitHub README for Portfolio Website
-
-Here's a professional yet creative README for your portfolio website repository:
-
-
 # 🚀 Ojasvi Goyal's Portfolio Website
 
 
