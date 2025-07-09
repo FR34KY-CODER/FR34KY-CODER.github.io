@@ -80,9 +80,8 @@ npm run deploy
 ```
 
 ## 🌐 Live Demo
-
-Check out the live version:  
-👉 [https://yourusername.github.io](https://fr34ky-coder.github.io)
+ 
+👉 [Click Here For Live Demo](https://fr34ky-coder.github.io)
 
 ## 📸 Screenshots
 
