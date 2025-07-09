@@ -29,7 +29,7 @@ A modern, responsive portfolio website built with React, Tailwind CSS, and Frame
 ## 🎨 Design Highlights
 
 
-┌───────────────────────────────────────────────────────────────┐
+
 │                                                               │
 │   • Gradient text effects                                     │
 │   • Animated blob background elements                         │
@@ -37,7 +37,7 @@ A modern, responsive portfolio website built with React, Tailwind CSS, and Frame
 │   • Professional typography hierarchy                         │
 │   • Mobile-first responsive layout                            │
 │                                                               │
-└───────────────────────────────────────────────────────────────┘
+
 
 
 ## 📂 Project Structure
