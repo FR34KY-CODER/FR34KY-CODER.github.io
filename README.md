@@ -107,17 +107,16 @@ npm run deploy
 
 ## 📸 Screenshots
 
-<p align = "center">
-   Dark Mode(PC):-
-   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20115934.png?raw=true">
-   Light Mode(PC):-
-   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120003.png?raw=true">
+### Desktop Views
+<p align="center">
+  <img src="https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20115934.png?raw=true" width="45%" alt="Dark Mode (Desktop)" title="Dark Mode (Desktop)"/>
+  <img src="https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120003.png?raw=true" width="45%" alt="Light Mode (Desktop)" title="Light Mode (Desktop)"/>
 </p>
-<p align = "center">
-   Dark Mode(Mobile):-
-   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/image.png?raw=true">
-   Light Mode(Mobile):-
-   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120055.png?raw=true">
+
+### Mobile Views
+<p align="center">
+  <img src="https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/image.png?raw=true" width="22%" alt="Dark Mode (Mobile)" title="Dark Mode (Mobile)"/>
+  <img src="https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120055.png?raw=true" width="22%" alt="Light Mode (Mobile)" title="Light Mode (Mobile)"/>
 </p>
 
 ## 📜 License
