@@ -30,13 +30,35 @@ A modern, responsive portfolio website built with React, Tailwind CSS, and Frame
 
 
 
-│                                                               │
-│   • Gradient text effects                                     │
-│   • Animated blob background elements                         │
-│   • Smooth hover transitions on cards                         │
-│   • Professional typography hierarchy                         │
-│   • Mobile-first responsive layout                            │
-│                                                               │
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif;">
+  <thead>
+    <tr style="background-color: #f8f9fa;">
+      <th colspan="2" style="text-align: center; font-size: 1.2em; padding: 15px; background-color: #4b5563; color: white;">Design Highlights</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top; width: 30px;">•</td>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">Gradient text effects</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">•</td>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">Animated blob background elements</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">•</td>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">Smooth hover transitions on cards</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">•</td>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">Professional typography hierarchy</td>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">•</td>
+      <td style="padding: 12px; border: 1px solid #ddd; vertical-align: top;">Mobile-first responsive layout</td>
+    </tr>
+  </tbody>
+</table>
 
 
 
@@ -85,7 +107,18 @@ npm run deploy
 
 ## 📸 Screenshots
 
-
+<p align = "center">
+   Dark Mode(PC):-
+   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20115934.png?raw=true">
+   Light Mode(PC):-
+   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120003.png?raw=true">
+</p>
+<p align = "center">
+   Dark Mode(Mobile):-
+   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/image.png?raw=true">
+   Light Mode(Mobile):-
+   <img src = "https://github.com/FR34KY-CODER/FR34KY-CODER.github.io/blob/main/Screenshot%202025-07-09%20120055.png?raw=true">
+</p>
 
 ## 📜 License
 
