@@ -85,7 +85,7 @@ portfolio-website/
 ### Installation
 1. Clone the repository
    ```bash
-   git clone https://github.com/FR34KY-CODER/FR34KY-CODER.github.io.git
+   git clone https://github.com/yourusername/portfolio.git
    ```
 2. Install dependencies
    ```bash
