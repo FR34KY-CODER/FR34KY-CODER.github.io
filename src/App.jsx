@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from 'react';
+import { DarkModeProvider } from './context/DarkModeContext';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Experience from './components/Experience';
+import Achievements from './components/Achievements';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    const handleScroll = () => {
+      const blobs = document.querySelectorAll('.blob');
+      const scrollPosition = window.pageYOffset;
+
+      blobs.forEach((blob, index) => {
+        const speed = 0.1 + (index * 0.05);
+        const offset = scrollPosition * speed;
+        blob.style.transform = `translateY(${offset}px)`;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <DarkModeProvider>
+      <div className="font-sans antialiased text-gray-800 bg-white dark:bg-dark-900 dark:text-dark-100 transition-colors duration-300">
+        <Navbar />
+        <Hero />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Achievements />
+        <Contact />
+        <Footer />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </DarkModeProvider>
+  );
 }
 
-export default App
+export default App;
