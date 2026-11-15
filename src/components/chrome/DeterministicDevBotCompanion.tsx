@@ -20,10 +20,7 @@ const ROLE_AVATAR_IMAGES: Record<string, string> = {
   backend: "/images/avatars/avatar-backend.png",
   ds: "/images/avatars/avatar-ds.png",
   ml: "/images/avatars/avatar-ml.png",
-  bicycle: "/images/avatars/avatar-bicycle.png",
 };
-
-const DEFAULT_FALLBACK_IMAGE = "/images/developer-hero.jpg";
 
 export function DeterministicDevBotCompanion() {
   const pathname = usePathname();
@@ -36,7 +33,6 @@ export function DeterministicDevBotCompanion() {
   const [avatarSrc, setAvatarSrc] = useState<string>(
     ROLE_AVATAR_IMAGES[activeRole] ?? ROLE_AVATAR_IMAGES.all
   );
-  const [imgError, setImgError] = useState(false);
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<BotReply[]>([
@@ -44,7 +40,7 @@ export function DeterministicDevBotCompanion() {
       id: "welcome",
       sender: "bot",
       badge: "DETERMINISTIC ASSISTANT · ONLINE",
-      text: "Hey! I'm Ojasvi's deterministic portfolio assistant. Ask me anything about his projects, skills, education, or achievements with zero LLM delay.",
+      text: "Hey! I'm Ojasvi's interactive portfolio assistant. Ask me anything about his projects, skills, education, or achievements with zero LLM delay.",
     },
   ]);
 
@@ -52,7 +48,6 @@ export function DeterministicDevBotCompanion() {
 
   // Update avatar based on active role
   useEffect(() => {
-    setImgError(false);
     setAvatarSrc(ROLE_AVATAR_IMAGES[activeRole] ?? ROLE_AVATAR_IMAGES.all);
   }, [activeRole]);
 
@@ -111,17 +106,16 @@ export function DeterministicDevBotCompanion() {
 
   return (
     <>
-      {/* FLOATING COMPANION AGENT IN BOTTOM RIGHT */}
-      <div
-        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end select-none"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      {/* FLOATING ANIMATED 2D COMPANION IN BOTTOM RIGHT */}
+      <aside
+        aria-label="Interactive Portfolio Assistant"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end select-none pointer-events-none"
       >
-        {/* CONTEXTUAL LIVE INSIGHT SPEECH BUBBLE (Visible when not minimized and drawer closed) */}
+        {/* CONTEXTUAL LIVE INSIGHT SPEECH BUBBLE */}
         {!isOpen && !isMinimized && (
           <div
             onClick={() => setIsOpen(true)}
-            className="mb-2 max-w-[280px] sm:max-w-[320px] rounded-2xl border border-[#0f1217]/14 bg-[#ffffff]/95 px-3.5 py-2 shadow-lg backdrop-blur-md cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#ea1d0f] animate-[fadeIn_0.2s_ease-out]"
+            className="pointer-events-auto mb-2 max-w-[270px] sm:max-w-[310px] rounded-2xl border border-[#0f1217]/14 bg-[#ffffff]/95 px-3.5 py-2 shadow-xl backdrop-blur-md cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#ea1d0f] animate-[fadeIn_0.25s_ease-out]"
           >
             <div className="flex items-center justify-between gap-1 border-b border-[#0f1217]/8 pb-1 mb-1 font-mono text-[9px] uppercase tracking-wider text-[#ea1d0f] font-bold">
               <span className="flex items-center gap-1">
@@ -136,82 +130,101 @@ export function DeterministicDevBotCompanion() {
           </div>
         )}
 
-        {/* COMPANION AVATAR BUTTON */}
+        {/* 2D CARTOON CHARACTER CUTOUT (Zero white box, 100% transparent PNG with floating life animation) */}
         {!isMinimized ? (
-          <div className="relative flex items-center">
-            {/* The 2D Cartoon Character Bubble */}
+          <div
+            className="pointer-events-auto relative flex flex-col items-center"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Ambient Radial Energy Ring */}
+            <div
+              className="pointer-events-none absolute -inset-2 rounded-full opacity-40 blur-md transition-opacity duration-300"
+              style={{
+                background: isHovered
+                  ? "radial-gradient(circle, rgba(234,29,15,0.45) 0%, transparent 70%)"
+                  : "radial-gradient(circle, rgba(34,211,238,0.25) 0%, transparent 70%)",
+                animation: "pulse-ring 3s infinite",
+              }}
+            />
+
+            {/* Living Avatar Button */}
             <button
               type="button"
               onClick={() => setIsOpen((prev) => !prev)}
-              aria-label="Toggle Deterministic DevBot Assistant"
-              className={`relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border-2 overflow-hidden shadow-xl transition-all duration-300 cursor-pointer ${
-                isOpen
-                  ? "border-[#ea1d0f] bg-[#0f1217] scale-105"
-                  : isHovered
-                  ? "border-[#ea1d0f] bg-[#ffffff] -translate-y-1 scale-105"
-                  : "border-[#0f1217]/18 bg-[#ffffff]"
-              }`}
+              aria-label="Open Deterministic DevBot Assistant"
+              className="relative h-20 w-20 sm:h-24 sm:w-24 cursor-pointer focus:outline-none transition-transform duration-300"
+              style={{
+                animation: isHovered
+                  ? "avatar-hover-perk 0.4s forwards"
+                  : "avatar-breathe 3.5s ease-in-out infinite",
+              }}
             >
               <Image
-                src={imgError ? DEFAULT_FALLBACK_IMAGE : avatarSrc}
-                alt="Deterministic DevBot Assistant"
+                key={avatarSrc}
+                src={avatarSrc}
+                alt="Interactive 2D Cartoon Assistant"
                 fill
-                sizes="64px"
-                onError={() => setImgError(true)}
-                className={`object-cover ${
-                  imgError ? "object-[65%_35%]" : "object-contain p-1"
-                }`}
+                sizes="96px"
+                className="object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.22)]"
               />
 
-              {/* Online Green Indicator Dot */}
-              <span className="absolute top-1 right-1 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500 animate-pulse" />
+              {/* Online pulse dot near head */}
+              <span className="absolute top-1 right-2 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border border-white" />
+              </span>
             </button>
 
-            {/* Minimize Pill */}
-            <button
-              type="button"
-              onClick={() => setIsMinimized(true)}
-              aria-label="Minimize Assistant"
-              className="absolute -top-1 -left-1 flex h-5 w-5 items-center justify-center rounded-full border border-[#0f1217]/14 bg-white text-[#0f1217]/70 shadow-xs hover:text-[#ea1d0f] transition cursor-pointer"
-            >
-              <Minimize2 size={10} />
-            </button>
+            {/* Quick Status Pill docked under avatar */}
+            <div className="mt-1 flex items-center gap-1.5 rounded-full border border-[#0f1217]/12 bg-[#ffffff]/90 px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[#0f1217] shadow-xs backdrop-blur-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#ea1d0f]" />
+              <span>P1 ASSISTANT</span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMinimized(true);
+                }}
+                title="Minimize assistant"
+                className="ml-1 hover:text-[#ea1d0f] transition"
+              >
+                <Minimize2 size={9} />
+              </button>
+            </div>
           </div>
         ) : (
-          /* Minimized Pill */
+          /* Minimized Docked Pill */
           <button
             type="button"
             onClick={() => setIsMinimized(false)}
             aria-label="Restore Assistant"
-            className="flex items-center gap-1.5 rounded-full border border-[#0f1217]/18 bg-white px-3 py-1.5 font-mono text-[10px] font-bold text-[#0f1217] shadow-lg hover:border-[#ea1d0f] hover:text-[#ea1d0f] transition cursor-pointer"
+            className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-[#0f1217]/18 bg-white px-3 py-1.5 font-mono text-[10px] font-bold text-[#0f1217] shadow-xl hover:border-[#ea1d0f] hover:text-[#ea1d0f] transition cursor-pointer"
           >
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>AI ASSISTANT</span>
             <Maximize2 size={11} />
           </button>
         )}
-      </div>
+      </aside>
 
       {/* POPUP INTERACTIVE DEVBOT CONSOLE DRAWER */}
       {isOpen && (
         <div
           role="dialog"
           aria-labelledby="assistant-title"
-          className="fixed bottom-24 right-5 sm:bottom-26 sm:right-6 z-50 flex w-[calc(100vw-40px)] sm:w-[400px] max-h-[540px] flex-col rounded-3xl border border-[#0f1217]/14 bg-[#ffffff]/98 shadow-2xl backdrop-blur-xl animate-[fadeIn_0.25s_ease-out] overflow-hidden"
+          className="fixed bottom-28 right-4 sm:bottom-32 sm:right-6 z-50 flex w-[calc(100vw-32px)] sm:w-[410px] max-h-[540px] flex-col rounded-3xl border border-[#0f1217]/14 bg-[#ffffff]/98 shadow-2xl backdrop-blur-xl animate-[fadeIn_0.25s_ease-out] overflow-hidden"
         >
-          {/* Header */}
+          {/* Header with Cartoon Mascot Thumbnail */}
           <div className="flex items-center justify-between border-b border-[#0f1217]/10 bg-[#f4f1ea] px-4 py-3">
-            <div className="flex items-center gap-2">
-              <div className="relative h-7 w-7 overflow-hidden rounded-lg border border-[#0f1217]/12 bg-white">
+            <div className="flex items-center gap-2.5">
+              <div className="relative h-9 w-9 overflow-hidden rounded-xl border border-[#0f1217]/12 bg-white/80 p-0.5">
                 <Image
-                  src={imgError ? DEFAULT_FALLBACK_IMAGE : avatarSrc}
-                  alt="DevBot"
+                  src={avatarSrc}
+                  alt="DevBot Mascot"
                   fill
-                  sizes="28px"
-                  onError={() => setImgError(true)}
-                  className={`object-cover ${
-                    imgError ? "object-[65%_35%]" : "object-contain p-0.5"
-                  }`}
+                  sizes="36px"
+                  className="object-contain"
                 />
               </div>
               <div>
@@ -222,7 +235,7 @@ export function DeterministicDevBotCompanion() {
                   DETERMINISTIC ASSISTANT
                 </h3>
                 <span className="font-mono text-[9px] text-emerald-600 font-bold uppercase">
-                  ● INSTANT RECALL · ZERO LLM
+                  ● INSTANT RECALL · ZERO LLM LATENCY
                 </span>
               </div>
             </div>
@@ -258,7 +271,7 @@ export function DeterministicDevBotCompanion() {
           </div>
 
           {/* Message Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-xs max-h-[320px]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-xs max-h-[310px]">
             {messages.map((m) => (
               <div
                 key={m.id}

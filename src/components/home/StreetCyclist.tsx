@@ -8,9 +8,9 @@ interface StreetCyclistProps {
 }
 
 /**
- * 2D Illustrated Human Developer Cyclist
- * Commuter bike with 2D cartoon avatar, dark hoodie, glasses, and headphones.
- * Designed to ride directly on the asphalt road in ChapterStreet.
+ * 2D Animated Developer Cyclist
+ * Commuter bike with 100% transparent PNG cutout, bobbing suspension animation,
+ * dynamic contact shadow, and headlight beam.
  */
 export function StreetCyclist({ className = "" }: StreetCyclistProps) {
   const [useFallback, setUseFallback] = useState(false);
@@ -21,25 +21,32 @@ export function StreetCyclist({ className = "" }: StreetCyclistProps) {
       aria-hidden="true"
     >
       {!useFallback ? (
-        <div className="relative h-[110px] w-[140px] sm:h-[130px] sm:w-[170px] animate-[bounce_2.5s_infinite_ease-in-out]">
+        <div
+          className="relative h-[115px] w-[145px] sm:h-[135px] sm:w-[175px]"
+          style={{ animation: "bike-ride-bob 1.6s ease-in-out infinite" }}
+        >
+          {/* Transparent 2D Cartoon Cyclist */}
           <Image
             src="/images/avatars/avatar-bicycle.png"
             alt="Ojasvi Goyal Commuter Cyclist"
             fill
-            sizes="170px"
+            sizes="175px"
             onError={() => setUseFallback(true)}
-            className="object-contain drop-shadow-lg"
+            className="object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)]"
           />
 
-          {/* Road Contact Shadow */}
-          <div className="absolute -bottom-1 left-4 right-4 h-2.5 rounded-full bg-black/35 blur-xs" />
+          {/* Dynamic Road Contact Shadow */}
+          <div
+            className="absolute -bottom-1 left-5 right-5 h-2 rounded-full bg-black/40 blur-xs"
+            style={{ animation: "pulse-ring 1.6s ease-in-out infinite" }}
+          />
 
           {/* Headlight beam on road */}
           <div
-            className="pointer-events-none absolute -right-16 bottom-3 h-14 w-28 opacity-45"
+            className="pointer-events-none absolute -right-16 bottom-2.5 h-16 w-32 opacity-50"
             style={{
               background:
-                "conic-gradient(from 75deg at 0% 50%, #ffffff 0deg, #ea1d0f 30deg, transparent 55deg)",
+                "conic-gradient(from 75deg at 0% 50%, #ffffff 0deg, #ea1d0f 25deg, transparent 50deg)",
             }}
           />
         </div>

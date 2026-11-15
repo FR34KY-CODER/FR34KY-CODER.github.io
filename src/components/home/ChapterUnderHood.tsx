@@ -142,14 +142,17 @@ export function ChapterUnderHood() {
 
         <div className="relative z-10 my-6 flex flex-col items-center">
           <div className="relative h-[260px] w-[260px] sm:h-[300px] sm:w-[300px] overflow-hidden rounded-3xl border border-[#f4f1ea]/18 bg-[#161c28] p-2 shadow-2xl">
-            <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0b0e14]">
+            <div
+              className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0b0e14]"
+              style={{ animation: "avatar-breathe 4s ease-in-out infinite" }}
+            >
               <Image
                 key={activeRole}
                 src={UNDERHOOD_AVATARS[activeRole] ?? UNDERHOOD_AVATARS.all}
                 alt={`Ojasvi Goyal (${PROFILE.handle}) — ${roleData.shortLabel} Operator`}
                 fill
                 sizes="(max-width: 768px) 260px, 300px"
-                className="object-contain p-2 transition-transform duration-500 hover:scale-105"
+                className="object-contain p-2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:scale-105"
               />
               <div
                 className="pointer-events-none absolute inset-0 opacity-30 mix-blend-screen"

@@ -68,11 +68,9 @@ export function IllustratedHeroDeveloper({
   return (
     <div
       className={`group relative flex flex-col items-center select-none ${className}`}
-      onMouseLeave={() => {
-        setActiveTooltip(null);
-      }}
+      onMouseLeave={() => setActiveTooltip(null)}
     >
-      {/* Outer Editorial Paper Frame */}
+      {/* Outer Paper Frame */}
       <div className="relative w-full overflow-hidden rounded-2xl border border-[#0f1217]/12 bg-[#ffffff] shadow-sm transition-all duration-500 hover:shadow-xl hover:border-[#ea1d0f]/50">
         {/* Window Header Strip (devinthehood minimal style) */}
         <div className="flex items-center justify-between border-b border-[#0f1217]/8 bg-[#f4f1ea] px-3.5 py-1.5 font-mono text-[10px] text-[#0f1217]/70">
@@ -90,38 +88,117 @@ export function IllustratedHeroDeveloper({
           </span>
         </div>
 
-        {/* 2D Cartoon Character Canvas */}
+        {/* 2D Animated Character Canvas */}
         <div
           className={`relative aspect-[16/9] w-full overflow-hidden transition-colors duration-500 ${
             isDeskHero ? "bg-[#1a1816]" : "bg-[#f4f1ea]"
           }`}
         >
-          <Image
-            key={imageSrc}
-            src={imageSrc}
-            alt={`Ojasvi Goyal — ${status.tag}`}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            className={`transition-all duration-700 ease-out ${
-              isDeskHero
-                ? "object-cover object-center group-hover:scale-[1.02]"
-                : "object-contain p-2 group-hover:scale-105"
-            }`}
-          />
-
-          {/* Ambient Lighting Gradient Overlays */}
+          {/* Subtle warm paper grid pattern */}
           <div
-            className="pointer-events-none absolute inset-0 mix-blend-screen opacity-35 transition-opacity duration-500"
+            className="pointer-events-none absolute inset-0 opacity-25"
             style={{
-              background: `radial-gradient(circle at 50% 50%, ${status.color}33 0%, transparent 65%)`,
+              backgroundImage:
+                "linear-gradient(to right, rgba(15,18,23,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,18,23,0.06) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
             }}
           />
 
-          {/* Interactive Hotspots for the Desk Workstation */}
+          {/* Transparent 2D Cartoon Avatar with Breathing Idle Animation */}
+          <div
+            className="relative h-full w-full"
+            style={{
+              animation: isDeskHero
+                ? undefined
+                : "avatar-breathe 4s ease-in-out infinite",
+            }}
+          >
+            <Image
+              key={imageSrc}
+              src={imageSrc}
+              alt={`Ojasvi Goyal — ${status.tag}`}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+              className={`transition-all duration-700 ease-out ${
+                isDeskHero
+                  ? "object-cover object-center group-hover:scale-[1.02]"
+                  : "object-contain p-2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] group-hover:scale-105"
+              }`}
+            />
+          </div>
+
+          {/* ROLE-SPECIFIC DYNAMIC ANIMATION OVERLAYS */}
+          {/* 1. AI Engineering: Animated Pulsing Energy Leash & Companion Bot Rings */}
+          {activeRole === "ai" && (
+            <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
+              <svg className="h-full w-full" viewBox="0 0 400 225" fill="none">
+                {/* Glowing Laser Tether */}
+                <path
+                  d="M175,130 C220,110 260,140 310,95"
+                  stroke="#22d3ee"
+                  strokeWidth="2.5"
+                  strokeDasharray="6 4"
+                  className="animate-[laser-dash_1.2s_linear_infinite]"
+                  filter="drop-shadow(0 0 6px #22d3ee)"
+                />
+                <circle cx="310" cy="95" r="5" fill="#ea1d0f" className="animate-ping" />
+              </svg>
+              <div
+                className="absolute right-[16%] top-[34%] h-14 w-14 rounded-full border border-cyan-400/40"
+                style={{ animation: "pulse-ring 2.5s infinite" }}
+              />
+            </div>
+          )}
+
+          {/* 2. Backend Systems: Flowing Data Pulses & Server Activity LEDs */}
+          {activeRole === "backend" && (
+            <div className="pointer-events-none absolute inset-0 z-10">
+              {/* Blinking Rack LEDs */}
+              <div className="absolute right-[22%] top-[35%] flex flex-col gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-[pulse_1.2s_infinite]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-[pulse_0.8s_infinite]" />
+              </div>
+              {/* Flowing Fiber Line */}
+              <div className="absolute left-[30%] bottom-[25%] right-[25%] h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-amber-400 opacity-60 animate-[pulse_2s_infinite]" />
+            </div>
+          )}
+
+          {/* 3. Data Science: Holographic Data Prism Refraction & Floating Metrics */}
+          {activeRole === "ds" && (
+            <div className="pointer-events-none absolute inset-0 z-10">
+              <div
+                className="absolute left-[44%] top-[36%] h-20 w-20 rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(34,211,238,0.35) 0%, rgba(167,139,250,0.2) 50%, transparent 70%)",
+                  animation: "hologram-glow 3.5s ease-in-out infinite",
+                }}
+              />
+              {/* Drifting Causal Data Points */}
+              <div className="absolute left-[48%] top-[30%] h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
+              <div className="absolute left-[54%] top-[42%] h-1 w-1 rounded-full bg-amber-400 animate-ping" style={{ animationDelay: "0.7s" }} />
+            </div>
+          )}
+
+          {/* 4. ML Systems: Neural Network Synapse Rings & YOLO Detection Bounding Box */}
+          {activeRole === "ml" && (
+            <div className="pointer-events-none absolute inset-0 z-10">
+              {/* Animated YOLOv8 Bounding Box */}
+              <div className="absolute right-[22%] top-[28%] h-16 w-20 rounded-sm border-2 border-emerald-400/80 bg-emerald-400/10 font-mono text-[8px] text-emerald-400 px-1 py-0.5 animate-pulse">
+                <span>[0.98 vehicle]</span>
+              </div>
+              <div
+                className="absolute right-[28%] top-[35%] h-12 w-12 rounded-full border border-purple-400/50"
+                style={{ animation: "pulse-ring 2s infinite" }}
+              />
+            </div>
+          )}
+
+          {/* Desk Mode Interactive Hotspots */}
           {isDeskHero && (
             <div className="absolute inset-0 z-20 pointer-events-auto">
-              {/* Code Monitor */}
               <button
                 type="button"
                 onMouseEnter={() =>
@@ -134,7 +211,6 @@ export function IllustratedHeroDeveloper({
                 <Terminal size={11} />
               </button>
 
-              {/* Observability Dashboard */}
               <button
                 type="button"
                 onMouseEnter={() =>
@@ -147,7 +223,6 @@ export function IllustratedHeroDeveloper({
                 <Cpu size={11} />
               </button>
 
-              {/* Coffee Mug */}
               <button
                 type="button"
                 onMouseEnter={() =>
@@ -160,7 +235,6 @@ export function IllustratedHeroDeveloper({
                 <Coffee size={11} />
               </button>
 
-              {/* Headphones */}
               <button
                 type="button"
                 onMouseEnter={() =>
@@ -182,10 +256,11 @@ export function IllustratedHeroDeveloper({
             </div>
           )}
 
-          {/* Role Activity Overlay for non-desk mode */}
+          {/* Role Activity Badge */}
           {!isDeskHero && (
-            <div className="absolute top-2.5 right-2.5 z-20 rounded-md border border-black/10 bg-white/90 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[#0f1217] shadow-xs backdrop-blur-xs">
-              2D NANO AVATAR
+            <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 rounded-full border border-[#0f1217]/14 bg-white/90 px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[#0f1217] shadow-xs backdrop-blur-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>2D ANIMATED CUTOUT</span>
             </div>
           )}
         </div>
