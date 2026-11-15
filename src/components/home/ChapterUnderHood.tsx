@@ -1,13 +1,21 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Cpu, GraduationCap, MapPin } from "lucide-react";
 import { PROFILE } from "@/data/profile";
 import { CORE_ROLES } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
-import { DevBotAvatar } from "@/components/chrome/DevBotAvatar";
+
+const MorphingThreeCharacter = dynamic(
+  () =>
+    import("@/components/chrome/MorphingThreeCharacter").then(
+      (mod) => mod.MorphingThreeCharacter
+    ),
+  { ssr: false }
+);
 
 const ROLE_PROFICIENCY: {
   id: "ai" | "backend" | "ds" | "ml";
@@ -55,7 +63,8 @@ export function ChapterUnderHood() {
           if (e.isIntersecting) {
             setStageMode("under-hood");
             setDockVisible(true);
-            setDevMood("desk-chat");
+            setDevMood("graduation");
+            setHoverInfo(null);
           }
         }
       },
@@ -63,7 +72,7 @@ export function ChapterUnderHood() {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [setDevMood, setStageMode, setDockVisible]);
+  }, [setDevMood, setStageMode, setDockVisible, setHoverInfo]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -132,12 +141,14 @@ export function ChapterUnderHood() {
         </div>
 
         <div className="relative z-10 my-8 flex flex-col items-center">
-          <DevBotAvatar
-            mood="graduation"
-            className="h-[280px] w-[280px] sm:h-[320px] sm:w-[320px]"
-            accentColor={roleData.accentNight}
-            badgeText={`${PROFILE.monogram} · P1`}
-          />
+          <div className="h-[280px] w-[280px] sm:h-[320px] sm:w-[320px]">
+            <MorphingThreeCharacter
+              mood="graduation"
+              accentColor={roleData.accentNight}
+              badgeText={`${PROFILE.monogram} · P1`}
+              className="h-full w-full"
+            />
+          </div>
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#f4f1ea]/16 bg-[#131822] px-4 py-1.5 font-mono text-[12px] tracking-[0.14em] uppercase">
             <Cpu size={13} style={{ color: roleData.accentNight }} />
             <span>PLAYER 1 · {PROFILE.handle}</span>

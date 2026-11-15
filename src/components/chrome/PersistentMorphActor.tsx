@@ -36,9 +36,17 @@ const MOOD_TAG: Record<string, string> = {
   graduation: "FACTORY FLOOR · GRADUATE",
 };
 
+const ACTIVE_PERSISTENT_STAGES: Set<HeroStageMode> = new Set([
+  "hero-overview",
+  "hero-quarter",
+  "hero-desk",
+  "street",
+  "factory",
+]);
+
 function getStagePositionClass(stageMode: HeroStageMode, isHome: boolean): string {
-  if (!isHome || stageMode === "off-home" || stageMode === "under-hood") {
-    return "right-5 bottom-5 w-[170px] h-[170px] sm:w-[210px] sm:h-[210px] lg:right-8 lg:bottom-6 lg:w-[235px] lg:h-[235px]";
+  if (!isHome || !ACTIVE_PERSISTENT_STAGES.has(stageMode)) {
+    return "opacity-0 pointer-events-none scale-75 invisible select-none transition-all duration-500";
   }
 
   switch (stageMode) {
@@ -58,7 +66,7 @@ function getStagePositionClass(stageMode: HeroStageMode, isHome: boolean): strin
       // Physically ON THE FACTORY FLOOR beside the conveyor belt and press wearing Graduation cap!
       return "left-4 bottom-6 w-[150px] h-[145px] lg:left-[10%] lg:bottom-[64px] lg:w-[245px] lg:h-[235px]";
     default:
-      return "right-6 bottom-6 w-[215px] h-[215px]";
+      return "opacity-0 pointer-events-none scale-75 invisible select-none";
   }
 }
 
@@ -138,16 +146,17 @@ export function PersistentMorphActor() {
     setChatOpen(true);
   };
 
+  const isStageVisible = isHome && ACTIVE_PERSISTENT_STAGES.has(stageMode);
   const posClass = getStagePositionClass(stageMode, isHome);
 
   return (
     <>
       {/* ONE PERSISTENT CONTINUOUS MORPHING 3D HERO CHARACTER ACROSS ALL SCENES */}
       <div
-        className={`fixed z-30 pointer-events-none transition-[left,top,right,bottom,width,height,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${posClass}`}
+        className={`fixed z-30 pointer-events-none transition-[left,top,right,bottom,width,height,transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${posClass}`}
       >
         {/* LIVE SPEECH BUBBLE DIRECTLY ABOVE CHARACTER'S HEAD ON ANY HOVER */}
-        {hoverInfo && !chatOpen && (
+        {hoverInfo && !chatOpen && isStageVisible && (
           <div
             className="pointer-events-none absolute -top-3 left-1/2 z-40 w-[260px] sm:w-[295px] -translate-x-1/2 -translate-y-full rounded-2xl border bg-[#0b0e14]/95 px-3.5 py-2.5 text-[#f4f1ea] shadow-2xl backdrop-blur-md animate-[fadeIn_0.16s_ease-out]"
             style={{ borderColor: hoverInfo.accent ?? roleData.accentNight }}
@@ -174,11 +183,13 @@ export function PersistentMorphActor() {
         )}
 
         {/* Ambient Cosmic / Ground Contact Glow behind 3D canvas */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-4 rounded-full blur-2xl opacity-35 transition-colors duration-500"
-          style={{ backgroundColor: roleData.accentNight }}
-        />
+        {isStageVisible && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-4 rounded-full blur-2xl opacity-35 transition-colors duration-500"
+            style={{ backgroundColor: roleData.accentNight }}
+          />
+        )}
 
         {/* Revolving 4-role HTML orbital pills cleanly framing the 3D Hero when centered */}
         {stageMode === "hero-overview" && isHome && (
@@ -218,17 +229,19 @@ export function PersistentMorphActor() {
         />
 
         {/* Subtle interactive trigger pill docked cleanly below his feet (NOT a boxed corner) */}
-        <div className="pointer-events-auto absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap">
-          <button
-            type="button"
-            onClick={() => setChatOpen((v) => !v)}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#0f1217]/14 bg-[#ffffff]/95 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[#0f1217] shadow-md backdrop-blur-md hover:border-[#ea1d0f] transition cursor-pointer"
-            aria-label="Toggle Deterministic DevBot Assistant"
-          >
-            <MessageSquare size={11} className="text-[#ea1d0f]" />
-            <span>{MOOD_TAG[devMood] ?? "DEVBOT STAGE"}</span>
-          </button>
-        </div>
+        {isStageVisible && (
+          <div className="pointer-events-auto absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap">
+            <button
+              type="button"
+              onClick={() => setChatOpen((v) => !v)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#0f1217]/14 bg-[#ffffff]/95 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[#0f1217] shadow-md backdrop-blur-md hover:border-[#ea1d0f] transition cursor-pointer"
+              aria-label="Toggle Deterministic DevBot Assistant"
+            >
+              <MessageSquare size={11} className="text-[#ea1d0f]" />
+              <span>{MOOD_TAG[devMood] ?? "DEVBOT STAGE"}</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* EXPANDABLE DETERMINISTIC DEVBOT TERMINAL DRAWER ON THE SIDE */}
