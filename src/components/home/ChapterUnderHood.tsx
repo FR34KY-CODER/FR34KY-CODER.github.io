@@ -1,21 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Cpu, GraduationCap, MapPin } from "lucide-react";
 import { PROFILE } from "@/data/profile";
 import { CORE_ROLES } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
-
-const MorphingThreeCharacter = dynamic(
-  () =>
-    import("@/components/chrome/MorphingThreeCharacter").then(
-      (mod) => mod.MorphingThreeCharacter
-    ),
-  { ssr: false }
-);
 
 const ROLE_PROFICIENCY: {
   id: "ai" | "backend" | "ds" | "ml";
@@ -140,18 +132,41 @@ export function ChapterUnderHood() {
           </h2>
         </div>
 
-        <div className="relative z-10 my-8 flex flex-col items-center">
-          <div className="h-[280px] w-[280px] sm:h-[320px] sm:w-[320px]">
-            <MorphingThreeCharacter
-              mood="graduation"
-              accentColor={roleData.accentNight}
-              badgeText={`${PROFILE.monogram} · P1`}
-              className="h-full w-full"
-            />
+        <div className="relative z-10 my-6 flex flex-col items-center">
+          <div className="relative h-[260px] w-[260px] sm:h-[300px] sm:w-[300px] overflow-hidden rounded-3xl border border-[#f4f1ea]/18 bg-[#161c28] p-2 shadow-2xl">
+            <div className="relative h-full w-full overflow-hidden rounded-2xl">
+              <Image
+                src="/images/developer-hero.jpg"
+                alt="Ojasvi Goyal (FR34KY-CODER) — Illustrated Developer Portrait"
+                fill
+                sizes="(max-width: 768px) 260px, 300px"
+                className="object-cover object-[65%_40%]"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 opacity-40 mix-blend-screen"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, ${roleData.accentNight}55 0%, transparent 70%)`,
+                }}
+              />
+              {/* Subtle tech grid scanlines */}
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.3)_51%)] bg-[length:100%_4px] opacity-25" />
+            </div>
+
+            {/* Operator ID Badge */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-white/20 bg-black/75 px-3 py-1.5 backdrop-blur-md">
+              <div className="flex items-center gap-1.5 font-mono text-[10px] text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="uppercase font-bold tracking-wider">SYSTEM OPERATOR</span>
+              </div>
+              <span className="font-mono text-[9px] text-[#ffb547] font-bold">
+                P1 · {PROFILE.handle}
+              </span>
+            </div>
           </div>
+
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#f4f1ea]/16 bg-[#131822] px-4 py-1.5 font-mono text-[12px] tracking-[0.14em] uppercase">
             <Cpu size={13} style={{ color: roleData.accentNight }} />
-            <span>PLAYER 1 · {PROFILE.handle}</span>
+            <span>PLAYER 1 · {PROFILE.name} ({PROFILE.handle})</span>
           </div>
         </div>
 

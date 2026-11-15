@@ -7,7 +7,6 @@ import { Preloader } from "@/components/chrome/Preloader";
 import { PageVeil } from "@/components/chrome/PageVeil";
 import { CustomCursor } from "@/components/chrome/CustomCursor";
 import { Header } from "@/components/chrome/Header";
-import { PersistentMorphActor } from "@/components/chrome/PersistentMorphActor";
 import { Footer } from "@/components/chrome/Footer";
 import { PROFILE } from "@/data/profile";
 
@@ -64,7 +63,6 @@ export default function RootLayout({
           <PageVeil />
           <CustomCursor />
           <Header />
-          <PersistentMorphActor />
           <main className="relative min-h-screen">{children}</main>
           <Footer />
         </RoleProvider>

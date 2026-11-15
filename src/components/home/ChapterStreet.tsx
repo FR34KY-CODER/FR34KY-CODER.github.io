@@ -7,6 +7,7 @@ import { ROLES } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
 import { TransitionLink } from "@/components/chrome/TransitionLink";
 import { useHorizontalScene } from "@/hooks/useHorizontalScene";
+import { StreetCyclist } from "./StreetCyclist";
 
 export function ChapterStreet() {
   const { activeRole, setDevMood, setStageMode, setHoverInfo, setScrollRotation, setDockVisible } = useRole();
@@ -89,7 +90,12 @@ export function ChapterStreet() {
           <TransitionLink href="/work" className="street-more" data-scene-item="">All projects<ArrowUpRight size={36} /></TransitionLink>
         </div>
       </div>
-      <div className="street-road" aria-hidden="true" />
+      <div className="street-road" aria-hidden="true">
+        {/* 2D Illustrated Human Cyclist riding on the road */}
+        <div className="absolute left-[8%] sm:left-[14%] bottom-[16px] z-20 w-[140px] sm:w-[170px] drop-shadow-md">
+          <StreetCyclist />
+        </div>
+      </div>
     </section>
   );
 }
