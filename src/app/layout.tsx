@@ -7,6 +7,7 @@ import { Preloader } from "@/components/chrome/Preloader";
 import { PageVeil } from "@/components/chrome/PageVeil";
 import { CustomCursor } from "@/components/chrome/CustomCursor";
 import { Header } from "@/components/chrome/Header";
+import { DeterministicDevBotCompanion } from "@/components/chrome/DeterministicDevBotCompanion";
 import { Footer } from "@/components/chrome/Footer";
 import { PROFILE } from "@/data/profile";
 
@@ -64,6 +65,7 @@ export default function RootLayout({
           <CustomCursor />
           <Header />
           <main className="relative min-h-screen">{children}</main>
+          <DeterministicDevBotCompanion />
           <Footer />
         </RoleProvider>
       </body>

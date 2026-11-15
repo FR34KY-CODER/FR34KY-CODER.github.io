@@ -41,6 +41,14 @@ const ROLE_PROFICIENCY: {
   },
 ];
 
+const UNDERHOOD_AVATARS: Record<string, string> = {
+  all: "/images/avatars/avatar-assistant.png",
+  ai: "/images/avatars/avatar-ai.png",
+  backend: "/images/avatars/avatar-backend.png",
+  ds: "/images/avatars/avatar-ds.png",
+  ml: "/images/avatars/avatar-ml.png",
+};
+
 export function ChapterUnderHood() {
   const { activeRole, roleData, setActiveRole, setDevMood, setStageMode, setHoverInfo, setDockVisible } = useRole();
   const sectionRef = useRef<HTMLElement>(null);
@@ -134,29 +142,32 @@ export function ChapterUnderHood() {
 
         <div className="relative z-10 my-6 flex flex-col items-center">
           <div className="relative h-[260px] w-[260px] sm:h-[300px] sm:w-[300px] overflow-hidden rounded-3xl border border-[#f4f1ea]/18 bg-[#161c28] p-2 shadow-2xl">
-            <div className="relative h-full w-full overflow-hidden rounded-2xl">
+            <div className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0b0e14]">
               <Image
-                src="/images/developer-hero.jpg"
-                alt="Ojasvi Goyal (FR34KY-CODER) — Illustrated Developer Portrait"
+                key={activeRole}
+                src={UNDERHOOD_AVATARS[activeRole] ?? UNDERHOOD_AVATARS.all}
+                alt={`Ojasvi Goyal (${PROFILE.handle}) — ${roleData.shortLabel} Operator`}
                 fill
                 sizes="(max-width: 768px) 260px, 300px"
-                className="object-cover object-[65%_40%]"
+                className="object-contain p-2 transition-transform duration-500 hover:scale-105"
               />
               <div
-                className="pointer-events-none absolute inset-0 opacity-40 mix-blend-screen"
+                className="pointer-events-none absolute inset-0 opacity-30 mix-blend-screen"
                 style={{
                   background: `radial-gradient(circle at 50% 50%, ${roleData.accentNight}55 0%, transparent 70%)`,
                 }}
               />
               {/* Subtle tech grid scanlines */}
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.3)_51%)] bg-[length:100%_4px] opacity-25" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.3)_51%)] bg-[length:100%_4px] opacity-20" />
             </div>
 
             {/* Operator ID Badge */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-white/20 bg-black/75 px-3 py-1.5 backdrop-blur-md">
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-white">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="uppercase font-bold tracking-wider">SYSTEM OPERATOR</span>
+                <span className="uppercase font-bold tracking-wider">
+                  {activeRole === "all" ? "OPERATOR P1" : `${roleData.shortLabel} OPERATOR`}
+                </span>
               </div>
               <span className="font-mono text-[9px] text-[#ffb547] font-bold">
                 P1 · {PROFILE.handle}
