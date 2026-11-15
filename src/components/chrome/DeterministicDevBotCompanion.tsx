@@ -21,7 +21,6 @@ export function DeterministicDevBotCompanion() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<BotReply[]>([
@@ -116,22 +115,7 @@ export function DeterministicDevBotCompanion() {
 
         {/* 2D CARTOON CHARACTER CUTOUT (Zero white box, 100% transparent PNG with floating life animation) */}
         {!isMinimized ? (
-          <div
-            className="pointer-events-auto relative flex flex-col items-center"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Ambient Radial Energy Ring */}
-            <div
-              className="pointer-events-none absolute -inset-2 rounded-full opacity-40 blur-md transition-opacity duration-300"
-              style={{
-                background: isHovered
-                  ? "radial-gradient(circle, rgba(234,29,15,0.45) 0%, transparent 70%)"
-                  : "radial-gradient(circle, rgba(34,211,238,0.25) 0%, transparent 70%)",
-                animation: "pulse-ring 3s infinite",
-              }}
-            />
-
+          <div className="pointer-events-auto relative flex flex-col items-center">
             {/* Living Puppet Avatar Button with Waving Hand & Floating Bot */}
             <button
               type="button"

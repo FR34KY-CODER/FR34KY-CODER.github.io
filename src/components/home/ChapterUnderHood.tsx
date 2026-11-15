@@ -121,13 +121,14 @@ export function ChapterUnderHood() {
         data-night=""
         className="relative lg:col-span-5 flex flex-col items-center justify-between overflow-hidden bg-[#0b0e14] px-8 pt-28 pb-28 text-[#f4f1ea]"
       >
-        {/* Overhead Volumetric Spotlight Cone */}
+        {/* Clean subtle architectural background grid */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-1/2 h-[75%] w-[125%] -translate-x-1/2 opacity-40"
+          className="pointer-events-none absolute inset-0 opacity-15"
           style={{
-            background:
-              "conic-gradient(from 165deg at 50% 0%, transparent 0deg, rgba(244,241,234,0.16) 15deg, rgba(234,29,15,0.14) 24deg, transparent 42deg)",
+            backgroundImage:
+              "linear-gradient(to right, rgba(244,241,234,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,241,234,0.06) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
           }}
         />
 
@@ -141,9 +142,9 @@ export function ChapterUnderHood() {
         </div>
 
         <div className="relative z-10 my-6 flex flex-col items-center">
-          <div className="relative h-[260px] w-[260px] sm:h-[300px] sm:w-[300px] overflow-hidden rounded-3xl border border-[#f4f1ea]/18 bg-[#161c28] p-2 shadow-2xl">
+          <div className="relative h-[260px] w-[260px] sm:h-[300px] sm:w-[300px] overflow-hidden rounded-3xl border border-[#f4f1ea]/14 bg-[#141923] p-2 shadow-xl">
             <div
-              className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0b0e14]"
+              className="relative h-full w-full overflow-hidden rounded-2xl bg-[#0e1218]"
               style={{ animation: "avatar-breathe 4s ease-in-out infinite" }}
             >
               <Image
@@ -152,16 +153,8 @@ export function ChapterUnderHood() {
                 alt={`Ojasvi Goyal (${PROFILE.handle}) — ${roleData.shortLabel} Operator`}
                 fill
                 sizes="(max-width: 768px) 260px, 300px"
-                className="object-contain p-2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:scale-105"
+                className="object-contain p-2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.4)] transition-transform duration-500 hover:scale-105"
               />
-              <div
-                className="pointer-events-none absolute inset-0 opacity-30 mix-blend-screen"
-                style={{
-                  background: `radial-gradient(circle at 50% 50%, ${roleData.accentNight}55 0%, transparent 70%)`,
-                }}
-              />
-              {/* Subtle tech grid scanlines */}
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.3)_51%)] bg-[length:100%_4px] opacity-20" />
             </div>
 
             {/* Operator ID Badge */}

@@ -11,6 +11,10 @@ SOURCE_MAP = {
     "avatar-ds.png": "avatar_ds_*.jpg",
     "avatar-ml.png": "avatar_ml_*.jpg",
     "avatar-bicycle.png": "avatar_bicycle_*.jpg",
+    "cyclist-frame-1.png": "anime_cyclist_1_*.jpg",
+    "cyclist-frame-2.png": "anime_cyclist_2_1794714487688.jpg",
+    "cyclist-frame-3.png": "anime_cyclist_3_*.jpg",
+    "cyclist-frame-4.png": "avatar_bicycle_*.jpg",
 }
 
 BRAIN_DIR = r"C:\Users\FR34K\.gemini\antigravity\brain\b67b46a7-2029-457e-8769-b4b31ca4d52c"

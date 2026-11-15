@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { Sparkles, Terminal, Cpu, Coffee, Headphones } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { PuppetDeveloperAvatar } from "./PuppetDeveloperAvatar";
 
 interface IllustratedHeroDeveloperProps {
@@ -11,13 +11,13 @@ interface IllustratedHeroDeveloperProps {
 }
 
 const ROLE_IMAGE_MAP: Record<string, string> = {
-  all: "/images/developer-hero.jpg",
+  all: "/images/hero-anime-desk.jpg",
   ai: "/images/avatars/avatar-ai.png",
   backend: "/images/avatars/avatar-backend.png",
   ds: "/images/avatars/avatar-ds.png",
   ml: "/images/avatars/avatar-ml.png",
   assistant: "/images/avatars/avatar-assistant.png",
-  bicycle: "/images/avatars/avatar-bicycle.png",
+  bicycle: "/images/avatars/cyclist-frame-1.png",
 };
 
 const ROLE_STATUS_MAP: Record<
@@ -60,8 +60,6 @@ export function IllustratedHeroDeveloper({
   activeRole = "all",
   className = "",
 }: IllustratedHeroDeveloperProps) {
-  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
-
   const status = ROLE_STATUS_MAP[activeRole] ?? ROLE_STATUS_MAP.all;
   const imageSrc = ROLE_IMAGE_MAP[activeRole] ?? ROLE_IMAGE_MAP.all;
   const isDeskHero = activeRole === "all";
@@ -69,7 +67,6 @@ export function IllustratedHeroDeveloper({
   return (
     <div
       className={`group relative flex flex-col items-center select-none ${className}`}
-      onMouseLeave={() => setActiveTooltip(null)}
     >
       {/* Outer Paper Frame */}
       <div className="relative w-full overflow-hidden rounded-2xl border border-[#0f1217]/12 bg-[#ffffff] shadow-sm transition-all duration-500 hover:shadow-xl hover:border-[#ea1d0f]/50">
@@ -140,139 +137,11 @@ export function IllustratedHeroDeveloper({
             </div>
           )}
 
-          {/* ROLE-SPECIFIC DYNAMIC ANIMATION OVERLAYS */}
-          {/* 1. AI Engineering: Animated Pulsing Energy Leash & Companion Bot Rings */}
-          {activeRole === "ai" && (
-            <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-              <svg className="h-full w-full" viewBox="0 0 400 225" fill="none">
-                {/* Glowing Laser Tether */}
-                <path
-                  d="M175,130 C220,110 260,140 310,95"
-                  stroke="#22d3ee"
-                  strokeWidth="2.5"
-                  strokeDasharray="6 4"
-                  className="animate-[laser-dash_1.2s_linear_infinite]"
-                  filter="drop-shadow(0 0 6px #22d3ee)"
-                />
-                <circle cx="310" cy="95" r="5" fill="#ea1d0f" className="animate-ping" />
-              </svg>
-              <div
-                className="absolute right-[16%] top-[34%] h-14 w-14 rounded-full border border-cyan-400/40"
-                style={{ animation: "pulse-ring 2.5s infinite" }}
-              />
-            </div>
-          )}
-
-          {/* 2. Backend Systems: Flowing Data Pulses & Server Activity LEDs */}
-          {activeRole === "backend" && (
-            <div className="pointer-events-none absolute inset-0 z-10">
-              {/* Blinking Rack LEDs */}
-              <div className="absolute right-[22%] top-[35%] flex flex-col gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-[pulse_1.2s_infinite]" />
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-[pulse_0.8s_infinite]" />
-              </div>
-              {/* Flowing Fiber Line */}
-              <div className="absolute left-[30%] bottom-[25%] right-[25%] h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-amber-400 opacity-60 animate-[pulse_2s_infinite]" />
-            </div>
-          )}
-
-          {/* 3. Data Science: Holographic Data Prism Refraction & Floating Metrics */}
-          {activeRole === "ds" && (
-            <div className="pointer-events-none absolute inset-0 z-10">
-              <div
-                className="absolute left-[44%] top-[36%] h-20 w-20 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(34,211,238,0.35) 0%, rgba(167,139,250,0.2) 50%, transparent 70%)",
-                  animation: "hologram-glow 3.5s ease-in-out infinite",
-                }}
-              />
-              {/* Drifting Causal Data Points */}
-              <div className="absolute left-[48%] top-[30%] h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
-              <div className="absolute left-[54%] top-[42%] h-1 w-1 rounded-full bg-amber-400 animate-ping" style={{ animationDelay: "0.7s" }} />
-            </div>
-          )}
-
-          {/* 4. ML Systems: Neural Network Synapse Rings & YOLO Detection Bounding Box */}
-          {activeRole === "ml" && (
-            <div className="pointer-events-none absolute inset-0 z-10">
-              {/* Animated YOLOv8 Bounding Box */}
-              <div className="absolute right-[22%] top-[28%] h-16 w-20 rounded-sm border-2 border-emerald-400/80 bg-emerald-400/10 font-mono text-[8px] text-emerald-400 px-1 py-0.5 animate-pulse">
-                <span>[0.98 vehicle]</span>
-              </div>
-              <div
-                className="absolute right-[28%] top-[35%] h-12 w-12 rounded-full border border-purple-400/50"
-                style={{ animation: "pulse-ring 2s infinite" }}
-              />
-            </div>
-          )}
-
-          {/* Desk Mode Interactive Hotspots */}
-          {isDeskHero && (
-            <div className="absolute inset-0 z-20 pointer-events-auto">
-              <button
-                type="button"
-                onMouseEnter={() =>
-                  setActiveTooltip("VS Code / Neovim · Multi-agent Python & TypeScript engines")
-                }
-                onMouseLeave={() => setActiveTooltip(null)}
-                aria-label="Inspect Code Editor"
-                className="absolute left-[20%] top-[38%] h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/40 text-white backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-85 hover:scale-110 hover:border-white transition-all cursor-pointer"
-              >
-                <Terminal size={11} />
-              </button>
-
-              <button
-                type="button"
-                onMouseEnter={() =>
-                  setActiveTooltip("Observability · Causal telemetry, Databricks & latency tracking")
-                }
-                onMouseLeave={() => setActiveTooltip(null)}
-                aria-label="Inspect Observability Dashboard"
-                className="absolute left-[47%] top-[39%] h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/40 text-white backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-85 hover:scale-110 hover:border-white transition-all cursor-pointer"
-              >
-                <Cpu size={11} />
-              </button>
-
-              <button
-                type="button"
-                onMouseEnter={() =>
-                  setActiveTooltip("Ceramic Mug · Filter coffee fueling late-night releases")
-                }
-                onMouseLeave={() => setActiveTooltip(null)}
-                aria-label="Inspect Coffee"
-                className="absolute left-[55%] top-[64%] h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/40 text-white backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-85 hover:scale-110 hover:border-white transition-all cursor-pointer"
-              >
-                <Coffee size={11} />
-              </button>
-
-              <button
-                type="button"
-                onMouseEnter={() =>
-                  setActiveTooltip("Over-ear Headphones · Lo-fi beats & uninterrupted focus")
-                }
-                onMouseLeave={() => setActiveTooltip(null)}
-                aria-label="Inspect Headphones"
-                className="absolute left-[70%] top-[53%] h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/40 text-white backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-85 hover:scale-110 hover:border-white transition-all cursor-pointer"
-              >
-                <Headphones size={11} />
-              </button>
-            </div>
-          )}
-
-          {/* Active Tooltip Popover */}
-          {activeTooltip && (
-            <div className="absolute bottom-3 left-3 right-3 z-30 rounded-lg border border-white/20 bg-black/85 px-3 py-1.5 text-center font-mono text-[11px] text-[#f4f1ea] shadow-lg backdrop-blur-md animate-[fadeIn_0.15s_ease-out]">
-              {activeTooltip}
-            </div>
-          )}
-
           {/* Role Activity Badge */}
           {!isDeskHero && (
             <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 rounded-full border border-[#0f1217]/14 bg-white/90 px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[#0f1217] shadow-xs backdrop-blur-xs">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>2D ANIMATED CUTOUT</span>
+              <span>2D ANIME AVATAR</span>
             </div>
           )}
         </div>
