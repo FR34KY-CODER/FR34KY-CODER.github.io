@@ -8,38 +8,31 @@ interface ScrollDrivenCyclistProps {
   className?: string;
 }
 
-// 4-Frame Hand-Crafted 2D Anime Commuter Cyclist Sprite Sequence
-// Perfectly registered: pedal rotates through 12, 3, 6, and 9 o'clock
-const CYCLIST_FRAMES = [
-  {
-    src: "/images/avatars/cyclist-frame-1.png",
-    alt: "Anime Developer Cyclist — Pedal Up (12 o'clock)",
-  },
-  {
-    src: "/images/avatars/cyclist-frame-2.png",
-    alt: "Anime Developer Cyclist — Pedal Forward (3 o'clock)",
-  },
-  {
-    src: "/images/avatars/cyclist-frame-3.png",
-    alt: "Anime Developer Cyclist — Pedal Down (6 o'clock)",
-  },
-  {
-    src: "/images/avatars/cyclist-frame-4.png",
-    alt: "Anime Developer Cyclist — Pedal Back (9 o'clock)",
-  },
+// 8-Frame Continuous 2D Anime Commuter Cyclist Sprite Sequence
+// Anatomically complete: 360° circular pedaling cadence, rotating wheel spokes,
+// articulated denim legs with knee IK, red crank arm, level sneaker platform.
+const PEDAL_FRAMES = [
+  { src: "/images/avatars/cyclist-pedal-1.png", alt: "Anime Developer Cyclist — Pedal at 0°" },
+  { src: "/images/avatars/cyclist-pedal-2.png", alt: "Anime Developer Cyclist — Pedal at 45°" },
+  { src: "/images/avatars/cyclist-pedal-3.png", alt: "Anime Developer Cyclist — Pedal at 90°" },
+  { src: "/images/avatars/cyclist-pedal-4.png", alt: "Anime Developer Cyclist — Pedal at 135°" },
+  { src: "/images/avatars/cyclist-pedal-5.png", alt: "Anime Developer Cyclist — Pedal at 180°" },
+  { src: "/images/avatars/cyclist-pedal-6.png", alt: "Anime Developer Cyclist — Pedal at 225°" },
+  { src: "/images/avatars/cyclist-pedal-7.png", alt: "Anime Developer Cyclist — Pedal at 270°" },
+  { src: "/images/avatars/cyclist-pedal-8.png", alt: "Anime Developer Cyclist — Pedal at 315°" },
 ];
 
 /**
  * Scroll-Driven 2D Anime Developer Cyclist
- * Pure 2D Anime Sprite Frame Sequencing driven directly by scroll distance and travel.
- * Zero 3D models. Zero procedural box/wireframe approximations. Zero artificial headlight beams.
- * Pure transparent PNG anime artwork stepping cleanly as the user travels down The Street.
+ * Continuous 8-Frame Sprite Loop driven by scroll rotation and cruising momentum.
+ * Zero procedural wireframes or polygon cones.
+ * 100% transparent PNG anime artwork stepping cleanly as the user travels down The Street.
  */
 export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps) {
   const { scrollRotation } = useRole();
   const [autoCadence, setAutoCadence] = useState(0);
 
-  // Subtle cruising cadence when stationary
+  // Smooth cruising cadence when stationary
   useEffect(() => {
     let animId: number;
     let lastTime = performance.now();
@@ -47,8 +40,8 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
     const loop = (now: number) => {
       const dt = (now - lastTime) / 1000;
       lastTime = now;
-      // Gentle cruise cadence ~40 RPM
-      setAutoCadence((prev) => (prev + dt * 110) % 360000);
+      // Gentle coasting cadence
+      setAutoCadence((prev) => (prev + dt * 80) % 360000);
       animId = requestAnimationFrame(loop);
     };
 
@@ -57,14 +50,14 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
   }, []);
 
   // Total pedal rotation degree driven by scroll velocity + cruising cadence
-  const totalRotation = Math.abs(scrollRotation * 1.6 + autoCadence);
+  const totalRotation = Math.abs(scrollRotation * 1.8 + autoCadence);
 
-  // Map 360 degrees to 4 frames (90 degrees per frame)
-  const activeFrame = Math.floor((totalRotation / 70) % CYCLIST_FRAMES.length);
+  // Map 360 degrees smoothly across 8 frames (45 degrees per frame)
+  const activeFrame = Math.floor((totalRotation / 32) % PEDAL_FRAMES.length);
 
   // Subtle suspension bounce matching pedal cadence
   const bounceRad = ((totalRotation % 360) * 2 * Math.PI) / 180;
-  const bounceY = Math.sin(bounceRad) * 2.2;
+  const bounceY = Math.sin(bounceRad) * 2.0;
 
   return (
     <div
@@ -75,15 +68,15 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
         transition: "transform 0.08s ease-out",
       }}
     >
-      {/* Soft natural road contact shadow under tires — strictly no artificial headlight cones */}
+      {/* Soft natural road contact shadow under tires */}
       <div
         className="pointer-events-none absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-3.5 w-[86%] rounded-[50%] bg-[#0f1217]/25 blur-[4px]"
         aria-hidden="true"
       />
 
-      {/* 4-Frame Preloaded Sprite Stack for 0-latency, flicker-free frame swapping */}
+      {/* 8-Frame Preloaded Sprite Stack for 0-latency, flicker-free frame swapping */}
       <div className="relative aspect-square w-full">
-        {CYCLIST_FRAMES.map((frame, index) => {
+        {PEDAL_FRAMES.map((frame, index) => {
           const isActive = index === activeFrame;
           return (
             <div
@@ -98,7 +91,7 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
                 fill
                 priority
                 sizes="(max-width: 768px) 160px, 200px"
-                className="object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+                className="object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)]"
               />
             </div>
           );

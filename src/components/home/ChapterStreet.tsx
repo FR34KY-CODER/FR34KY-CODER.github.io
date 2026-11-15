@@ -11,9 +11,11 @@ import { ScrollDrivenCyclist } from "./ScrollDrivenCyclist";
 
 export function ChapterStreet() {
   const { activeRole, setDevMood, setStageMode, setHoverInfo, setScrollRotation, setDockVisible } = useRole();
+  const [streetProgress, setStreetProgress] = React.useState(0);
   const { sectionRef, viewportRef, trackRef, advance } = useHorizontalScene({
-    onTravel: (_travel, rotation) => {
+    onTravel: (_travel, rotation, progress) => {
       setScrollRotation(rotation * 2.1);
+      setStreetProgress(progress);
     },
     onActiveChange: (active) => {
       if (active) {
@@ -91,8 +93,13 @@ export function ChapterStreet() {
         </div>
       </div>
       <div className="street-road" aria-hidden="true">
-        {/* Anatomical 2D Human Cyclist - Leg IK Pedaling & Wheel Rotation Driven by Scroll */}
-        <div className="absolute left-[8%] sm:left-[14%] bottom-[14px] z-20 w-[145px] sm:w-[175px] drop-shadow-md">
+        {/* Anatomical 2D Anime Cyclist - Pedaling & Wheel Rotation Driven by Scroll */}
+        <div
+          className="absolute bottom-[14px] z-20 w-[145px] sm:w-[175px] drop-shadow-md transition-[left] duration-150 ease-out"
+          style={{
+            left: `calc(6% + ${(streetProgress * 24).toFixed(2)}%)`,
+          }}
+        >
           <ScrollDrivenCyclist />
         </div>
       </div>

@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface UseHorizontalSceneOptions {
-  onTravel?: (travelPx: number, rotationDeg: number) => void;
+  onTravel?: (travelPx: number, rotationDeg: number, progress: number) => void;
   onActiveChange?: (isActive: boolean) => void;
 }
 
@@ -29,9 +29,12 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
     const update = () => {
       const travel = viewport.scrollLeft;
       const rotation = travel / 3;
+      const distance = Math.max(1, track.scrollWidth - viewport.clientWidth);
+      const progress = Math.min(1, Math.max(0, travel / distance));
       section.style.setProperty("--travel", `${travel}px`);
       section.style.setProperty("--rotation", `${rotation}deg`);
-      callbacksRef.current?.onTravel?.(travel, rotation);
+      section.style.setProperty("--street-progress", `${progress}`);
+      callbacksRef.current?.onTravel?.(travel, rotation, progress);
     };
 
     const observer = new IntersectionObserver(
@@ -62,6 +65,7 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
           pin: true,
           scrub: 0.55,
           invalidateOnRefresh: true,
+          onUpdate: () => update(),
           onToggle: (self) => callbacksRef.current?.onActiveChange?.(self.isActive),
         },
       });
