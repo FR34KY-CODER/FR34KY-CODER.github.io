@@ -210,7 +210,7 @@ export function PersistentMorphActor() {
         {/* Single Continuous WebGL Three.js Character Stage */}
         <MorphingThreeCharacter
           mood={devMood}
-          accentColor={roleData.accentNight}
+          accentColor={roleData.accentPaper ?? "#ea1d0f"}
           secondaryAccent={activeRole === "ds" ? "#A78BFA" : "#22D3EE"}
           scrollRotation={scrollRotation}
           badgeText={`${PROFILE.monogram} · ${roleData.code}`}
@@ -222,10 +222,10 @@ export function PersistentMorphActor() {
           <button
             type="button"
             onClick={() => setChatOpen((v) => !v)}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#f4f1ea]/22 bg-[#0b0e14]/92 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[#f4f1ea] shadow-lg backdrop-blur-md hover:border-[var(--role-accent-night)] transition cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#0f1217]/14 bg-[#ffffff]/95 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[#0f1217] shadow-md backdrop-blur-md hover:border-[#ea1d0f] transition cursor-pointer"
             aria-label="Toggle Deterministic DevBot Assistant"
           >
-            <MessageSquare size={11} style={{ color: roleData.accentNight }} />
+            <MessageSquare size={11} className="text-[#ea1d0f]" />
             <span>{MOOD_TAG[devMood] ?? "DEVBOT STAGE"}</span>
           </button>
         </div>

@@ -28,20 +28,28 @@ interface KgNodeData extends Record<string, unknown> {
   info: string;
   href?: string;
   accentColor: string;
+  theme?: "paper" | "night";
 }
 
 const KgHubNode = memo(function KgHubNode({ data }: NodeProps<Node<KgNodeData>>) {
+  const isPaper = data.theme !== "night";
   return (
     <div
-      className="relative flex items-center gap-2 rounded-2xl border-2 px-4 py-2.5 shadow-lg backdrop-blur-md transition-transform hover:scale-105 cursor-grab active:cursor-grabbing"
+      className="relative flex items-center gap-2 rounded-2xl border-2 px-4 py-2.5 shadow-md backdrop-blur-md transition-transform hover:scale-105 cursor-grab active:cursor-grabbing"
       style={{
         borderColor: data.accentColor,
-        backgroundColor: "rgba(11, 14, 20, 0.96)",
-        boxShadow: `0 0 28px -6px ${data.accentColor}88`,
+        backgroundColor: isPaper ? "rgba(255, 255, 255, 0.98)" : "rgba(11, 14, 20, 0.96)",
+        boxShadow: isPaper
+          ? `0 6px 20px -6px ${data.accentColor}44, 0 2px 6px rgba(15,18,23,0.06)`
+          : `0 0 28px -6px ${data.accentColor}88`,
       }}
     >
       <Cpu size={14} style={{ color: data.accentColor }} />
-      <span className="font-mono text-[11px] font-black tracking-[0.14em] uppercase text-[#f4f1ea]">
+      <span
+        className={`font-mono text-[11px] font-black tracking-[0.14em] uppercase ${
+          isPaper ? "text-[#0f1217]" : "text-[#f4f1ea]"
+        }`}
+      >
         {data.label}
       </span>
       <Handle type="source" position={Position.Right} className="!opacity-0" />
@@ -53,20 +61,30 @@ const KgHubNode = memo(function KgHubNode({ data }: NodeProps<Node<KgNodeData>>)
 });
 
 const KgProjectNode = memo(function KgProjectNode({ data }: NodeProps<Node<KgNodeData>>) {
+  const isPaper = data.theme !== "night";
   return (
     <div
-      className="group relative flex items-center gap-2 rounded-xl border px-3 py-2 shadow-md transition-all hover:scale-105 cursor-pointer"
+      className="group relative flex items-center gap-2 rounded-xl border px-3 py-2 shadow-xs transition-all hover:scale-105 cursor-pointer"
       style={{
         borderColor: data.accentColor,
-        backgroundColor: "rgba(18, 22, 31, 0.94)",
+        backgroundColor: isPaper ? "rgba(255, 255, 255, 0.96)" : "rgba(18, 22, 31, 0.94)",
+        boxShadow: isPaper ? "0 4px 12px -3px rgba(15,18,23,0.08)" : "none",
       }}
     >
       <FolderGit2 size={12} style={{ color: data.accentColor }} />
       <div className="flex flex-col">
-        <span className="font-mono text-[8px] tracking-[0.14em] uppercase text-[#f4f1ea]/55">
+        <span
+          className={`font-mono text-[8px] tracking-[0.14em] uppercase ${
+            isPaper ? "text-[#6f685d]" : "text-[#f4f1ea]/55"
+          }`}
+        >
           PROJECT CASE
         </span>
-        <span className="font-mono text-[11px] font-bold text-[#f4f1ea]">
+        <span
+          className={`font-mono text-[11px] font-bold ${
+            isPaper ? "text-[#0f1217]" : "text-[#f4f1ea]"
+          }`}
+        >
           {data.label}
         </span>
       </div>
@@ -81,12 +99,17 @@ const KgProjectNode = memo(function KgProjectNode({ data }: NodeProps<Node<KgNod
 });
 
 const KgSkillNode = memo(function KgSkillNode({ data }: NodeProps<Node<KgNodeData>>) {
+  const isPaper = data.theme !== "night";
   return (
     <div
-      className="relative flex items-center gap-1.5 rounded-full border border-[#f4f1ea]/22 bg-[#0f131b]/92 px-3 py-1.5 shadow-sm transition-transform hover:scale-105 cursor-grab"
+      className={`relative flex items-center gap-1.5 rounded-full border px-3 py-1.5 shadow-xs transition-transform hover:scale-105 cursor-grab ${
+        isPaper
+          ? "border-[#0f1217]/14 bg-[#ffffff]/90 text-[#0f1217]"
+          : "border-[#f4f1ea]/22 bg-[#0f131b]/92 text-[#f4f1ea]/90"
+      }`}
     >
-      <Layers size={10} className="text-[#f4f1ea]/70" />
-      <span className="font-mono text-[10px] font-semibold tracking-[0.04em] text-[#f4f1ea]/90">
+      <Layers size={10} className={isPaper ? "text-[#6f685d]" : "text-[#f4f1ea]/70"} />
+      <span className="font-mono text-[10px] font-semibold tracking-[0.04em]">
         {data.label}
       </span>
       <Handle type="target" position={Position.Top} className="!opacity-0" />
@@ -121,6 +144,7 @@ interface RoleKnowledgeGraphProps {
   accentColor: string;
   active: boolean;
   fullPage?: boolean;
+  theme?: "paper" | "night";
 }
 
 export function RoleKnowledgeGraph({
@@ -128,10 +152,12 @@ export function RoleKnowledgeGraph({
   accentColor,
   active,
   fullPage = false,
+  theme = "paper",
 }: RoleKnowledgeGraphProps) {
   const router = useRouter();
   const { setHoverInfo } = useRole();
   const graph = ROLE_KNOWLEDGE_GRAPHS[roleId];
+  const isPaper = theme !== "night";
 
   const builtNodes = useMemo<Node<KgNodeData>[]>(() => {
     const scaleX = fullPage ? 1.58 : 1.18;
@@ -155,9 +181,10 @@ export function RoleKnowledgeGraph({
         info: node.info,
         href: node.href,
         accentColor,
+        theme,
       },
     }));
-  }, [graph.nodes, accentColor, fullPage]);
+  }, [graph.nodes, accentColor, fullPage, theme]);
 
   const builtEdges = useMemo<Edge[]>(() => {
     return graph.edges.map((edge, idx) => ({
@@ -170,10 +197,10 @@ export function RoleKnowledgeGraph({
         stroke: accentColor,
         strokeWidth: active ? 2 : 1.25,
         strokeDasharray: active ? "5 4" : "3 3",
-        opacity: active ? 0.72 : 0.25,
+        opacity: active ? (isPaper ? 0.85 : 0.72) : (isPaper ? 0.35 : 0.25),
       },
     }));
-  }, [graph.edges, roleId, accentColor, active]);
+  }, [graph.edges, roleId, accentColor, active, isPaper]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<KgNodeData>>(builtNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(builtEdges);
@@ -192,7 +219,7 @@ export function RoleKnowledgeGraph({
       aria-label={`${roleId} interactive knowledge graph`}
     >
       <ReactFlow
-        key={`${roleId}-${fullPage ? "full" : "tile"}`}
+        key={`${roleId}-${fullPage ? "full" : "tile"}-${theme}`}
         nodes={nodes}
         edges={edges}
         nodeTypes={NODE_TYPES}
@@ -233,14 +260,18 @@ export function RoleKnowledgeGraph({
             variant={BackgroundVariant.Dots}
             gap={20}
             size={1.2}
-            color="rgba(244,241,234,0.16)"
+            color={isPaper ? "rgba(15,18,23,0.12)" : "rgba(244,241,234,0.16)"}
           />
         )}
         <FitViewSync fullPage={fullPage} />
         {fullPage && (
           <Controls
             showInteractive={false}
-            className="!bg-[#0f1217]/90 !border-[#f4f1ea]/18 !rounded-xl [&>button]:!bg-[#161b24] [&>button]:!border-[#f4f1ea]/12 [&>button]:!fill-[#f4f1ea]"
+            className={
+              isPaper
+                ? "!bg-[#ffffff] !border-[#0f1217]/14 !rounded-xl !shadow-md [&>button]:!bg-[#f4f1ea] [&>button]:!border-[#0f1217]/10 [&>button]:!fill-[#0f1217]"
+                : "!bg-[#0f1217]/90 !border-[#f4f1ea]/18 !rounded-xl [&>button]:!bg-[#161b24] [&>button]:!border-[#f4f1ea]/12 [&>button]:!fill-[#f4f1ea]"
+            }
           />
         )}
       </ReactFlow>

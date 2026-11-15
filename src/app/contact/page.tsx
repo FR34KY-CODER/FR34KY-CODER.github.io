@@ -144,9 +144,19 @@ function ContactConsoleContent() {
         }),
       });
 
-      const data = await res.json();
+      let data: {
+        ok?: boolean;
+        provider?: string;
+        needsConfig?: boolean;
+        message?: string;
+      } | null = null;
+      try {
+        data = await res.json();
+      } catch {
+        // Non-JSON response (e.g. static host 404 on GitHub Pages)
+      }
 
-      if (res.ok && data.ok) {
+      if (res.ok && data?.ok) {
         setStatusMessage({
           type: "success",
           text: `Automated HTML email dispatched via ${data.provider || "relay"}! Subject: "${liveEmailSubject}"`,
@@ -160,7 +170,23 @@ function ContactConsoleContent() {
         setPhone("");
         setCompany("");
         setMessage("");
-      } else if (data.needsConfig) {
+      } else if (res.status === 404 || !data) {
+        // GitHub Pages static export fallback: opens pre-filled mailto directly
+        const mailtoUrl = `mailto:${encodeURIComponent(PROFILE.email)}?subject=${encodeURIComponent(
+          liveEmailSubject
+        )}&body=${encodeURIComponent(
+          `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nCompany: ${payload.company || "N/A"}\nMission: ${payload.roleMission}\n\nMessage:\n${payload.message}`
+        )}`;
+        window.open(mailtoUrl, "_blank");
+        setStatusMessage({
+          type: "success",
+          text: `Static deployment detected · Opened pre-filled dispatch directly in your mail client!`,
+        });
+        setCliLog((prev) => [
+          ...prev,
+          `[STATIC HOST] Redirected to direct mailto client -> ${PROFILE.email}`,
+        ]);
+      } else if (data?.needsConfig) {
         setStatusMessage({
           type: "config",
           text:
@@ -172,7 +198,7 @@ function ContactConsoleContent() {
         setStatusMessage({
           type: "error",
           text:
-            data.message || "Validation failed. Please double check your fields.",
+            data?.message || "Validation failed. Please double check your fields.",
         });
       }
     } catch {

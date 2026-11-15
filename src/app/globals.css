@@ -388,3 +388,41 @@ p { text-wrap: pretty; }
 .devbot-spin { animation: devbot-orbit-spin 26s linear infinite; }
 .devbot-counter-spin { animation: devbot-orbit-counter 26s linear infinite; }
 .devbot-pet-float { animation: devbot-float 2.2s ease-in-out infinite; }
+
+/* =========================================================================
+   RADIAL WIPE TRANSITION (Conic Gradient Profile Sweep)
+   ========================================================================= */
+@property --wipe-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes radar-wipe-sweep {
+  0% {
+    --wipe-angle: 0deg;
+    opacity: 1;
+  }
+  90% {
+    --wipe-angle: 360deg;
+    opacity: 1;
+  }
+  100% {
+    --wipe-angle: 360deg;
+    opacity: 0;
+  }
+}
+
+.radar-wipe-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--wipe-start-angle, 0deg) at var(--wipe-cx, 50%) var(--wipe-cy, 50%),
+    transparent 0deg var(--wipe-angle, 0deg),
+    var(--wipe-line-color, #ea1d0f) var(--wipe-angle, 0deg) calc(var(--wipe-angle, 0deg) + 1.25deg),
+    var(--wipe-mask-color, rgba(244, 241, 234, 0.98)) calc(var(--wipe-angle, 0deg) + 1.25deg) 360deg
+  );
+}
+
