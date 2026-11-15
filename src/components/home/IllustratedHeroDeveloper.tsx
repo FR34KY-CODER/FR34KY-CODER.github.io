@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Sparkles, Terminal, Cpu, Coffee, Headphones } from "lucide-react";
+import { PuppetDeveloperAvatar } from "./PuppetDeveloperAvatar";
 
 interface IllustratedHeroDeveloperProps {
   activeRole?: string;
@@ -104,29 +105,40 @@ export function IllustratedHeroDeveloper({
             }}
           />
 
-          {/* Transparent 2D Cartoon Avatar with Breathing Idle Animation */}
-          <div
-            className="relative h-full w-full"
-            style={{
-              animation: isDeskHero
-                ? undefined
-                : "avatar-breathe 4s ease-in-out infinite",
-            }}
-          >
-            <Image
-              key={imageSrc}
-              src={imageSrc}
-              alt={`Ojasvi Goyal — ${status.tag}`}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-              className={`transition-all duration-700 ease-out ${
-                isDeskHero
-                  ? "object-cover object-center group-hover:scale-[1.02]"
-                  : "object-contain p-2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] group-hover:scale-105"
-              }`}
-            />
-          </div>
+          {/* 2D Cartoon Character: Active Puppet for AI, Transparent Image Cutout for others, Desk Battlestation for All */}
+          {activeRole === "ai" ? (
+            <div className="relative h-full w-full flex items-center justify-center p-2">
+              <PuppetDeveloperAvatar
+                activeRole="ai"
+                isWaving
+                showCompanionBot
+                className="h-full w-auto max-h-[92%] drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)]"
+              />
+            </div>
+          ) : (
+            <div
+              className="relative h-full w-full"
+              style={{
+                animation: isDeskHero
+                  ? undefined
+                  : "avatar-breathe 4s ease-in-out infinite",
+              }}
+            >
+              <Image
+                key={imageSrc}
+                src={imageSrc}
+                alt={`Ojasvi Goyal — ${status.tag}`}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                className={`transition-all duration-700 ease-out ${
+                  isDeskHero
+                    ? "object-cover object-center group-hover:scale-[1.02]"
+                    : "object-contain p-2 drop-shadow-[0_12px_24px_rgba(0,0,0,0.18)] group-hover:scale-105"
+                }`}
+              />
+            </div>
+          )}
 
           {/* ROLE-SPECIFIC DYNAMIC ANIMATION OVERLAYS */}
           {/* 1. AI Engineering: Animated Pulsing Energy Leash & Companion Bot Rings */}

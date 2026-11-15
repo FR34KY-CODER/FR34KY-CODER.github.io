@@ -133,6 +133,24 @@
   }
 }
 
+@keyframes puppet-wave {
+  0%, 100% {
+    transform: rotate(-16deg);
+  }
+  50% {
+    transform: rotate(24deg);
+  }
+}
+
+@keyframes puppet-wave-fast {
+  0%, 100% {
+    transform: rotate(-26deg);
+  }
+  50% {
+    transform: rotate(30deg);
+  }
+}
+
 @keyframes laser-dash {
   0% {
     stroke-dashoffset: 80;

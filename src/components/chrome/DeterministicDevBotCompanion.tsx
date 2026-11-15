@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import React, { useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Sparkles,
@@ -13,14 +12,7 @@ import {
 } from "lucide-react";
 import { useRole } from "@/context/RoleContext";
 import { BotActionLink, BotReply, resolveDevBotQuery } from "@/lib/devbotEngine";
-
-const ROLE_AVATAR_IMAGES: Record<string, string> = {
-  all: "/images/avatars/avatar-assistant.png",
-  ai: "/images/avatars/avatar-ai.png",
-  backend: "/images/avatars/avatar-backend.png",
-  ds: "/images/avatars/avatar-ds.png",
-  ml: "/images/avatars/avatar-ml.png",
-};
+import { PuppetDeveloperAvatar } from "@/components/home/PuppetDeveloperAvatar";
 
 export function DeterministicDevBotCompanion() {
   const pathname = usePathname();
@@ -30,9 +22,6 @@ export function DeterministicDevBotCompanion() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState<string>(
-    ROLE_AVATAR_IMAGES[activeRole] ?? ROLE_AVATAR_IMAGES.all
-  );
 
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<BotReply[]>([
@@ -45,11 +34,6 @@ export function DeterministicDevBotCompanion() {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Update avatar based on active role
-  useEffect(() => {
-    setAvatarSrc(ROLE_AVATAR_IMAGES[activeRole] ?? ROLE_AVATAR_IMAGES.all);
-  }, [activeRole]);
 
   // Contextual live insight message based on route and hover
   const getContextualInsight = (): string => {
@@ -148,29 +132,22 @@ export function DeterministicDevBotCompanion() {
               }}
             />
 
-            {/* Living Avatar Button */}
+            {/* Living Puppet Avatar Button with Waving Hand & Floating Bot */}
             <button
               type="button"
               onClick={() => setIsOpen((prev) => !prev)}
               aria-label="Open Deterministic DevBot Assistant"
-              className="relative h-20 w-20 sm:h-24 sm:w-24 cursor-pointer focus:outline-none transition-transform duration-300"
-              style={{
-                animation: isHovered
-                  ? "avatar-hover-perk 0.4s forwards"
-                  : "avatar-breathe 3.5s ease-in-out infinite",
-              }}
+              className="relative h-24 w-24 sm:h-28 sm:w-28 cursor-pointer focus:outline-none transition-transform duration-300 drop-shadow-[0_10px_20px_rgba(0,0,0,0.22)]"
             >
-              <Image
-                key={avatarSrc}
-                src={avatarSrc}
-                alt="Interactive 2D Cartoon Assistant"
-                fill
-                sizes="96px"
-                className="object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.22)]"
+              <PuppetDeveloperAvatar
+                activeRole={activeRole}
+                isWaving
+                showCompanionBot
+                className="w-full h-full"
               />
 
               {/* Online pulse dot near head */}
-              <span className="absolute top-1 right-2 flex h-3 w-3">
+              <span className="absolute top-1 right-2 flex h-3 w-3 pointer-events-none">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border border-white" />
               </span>
@@ -218,13 +195,12 @@ export function DeterministicDevBotCompanion() {
           {/* Header with Cartoon Mascot Thumbnail */}
           <div className="flex items-center justify-between border-b border-[#0f1217]/10 bg-[#f4f1ea] px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <div className="relative h-9 w-9 overflow-hidden rounded-xl border border-[#0f1217]/12 bg-white/80 p-0.5">
-                <Image
-                  src={avatarSrc}
-                  alt="DevBot Mascot"
-                  fill
-                  sizes="36px"
-                  className="object-contain"
+              <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-[#0f1217]/12 bg-white/80 p-0.5">
+                <PuppetDeveloperAvatar
+                  activeRole={activeRole}
+                  isWaving
+                  showCompanionBot={false}
+                  className="w-full h-full"
                 />
               </div>
               <div>

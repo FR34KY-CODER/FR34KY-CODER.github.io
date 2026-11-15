@@ -90,3 +90,4 @@ for dest_name, pattern in SOURCE_MAP.items():
     process_image(src, dest)
 
 print("All transparent avatar PNGs generated successfully!")
+
