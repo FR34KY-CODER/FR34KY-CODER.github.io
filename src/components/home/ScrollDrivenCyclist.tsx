@@ -1,7 +1,7 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRole } from "@/context/RoleContext";
 
 interface ScrollDrivenCyclistProps {
@@ -40,8 +40,8 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
     const loop = (now: number) => {
       const dt = (now - lastTime) / 1000;
       lastTime = now;
-      // Gentle coasting cadence
-      setAutoCadence((prev) => (prev + dt * 80) % 360000);
+      // Gentle coasting cadence ~50 RPM
+      setAutoCadence((prev) => (prev + dt * 90) % 360000);
       animId = requestAnimationFrame(loop);
     };
 
@@ -57,11 +57,11 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
 
   // Subtle suspension bounce matching pedal cadence
   const bounceRad = ((totalRotation % 360) * 2 * Math.PI) / 180;
-  const bounceY = Math.sin(bounceRad) * 2.0;
+  const bounceY = Math.sin(bounceRad) * 2.2;
 
   return (
     <div
-      className={`relative inline-block pointer-events-none select-none ${className}`}
+      className={`relative block w-full h-full aspect-square pointer-events-none select-none ${className}`}
       aria-label="2D Anime Developer riding commuter bicycle"
       style={{
         transform: `translateY(${bounceY.toFixed(2)}px)`,
@@ -70,30 +70,25 @@ export function ScrollDrivenCyclist({ className = "" }: ScrollDrivenCyclistProps
     >
       {/* Soft natural road contact shadow under tires */}
       <div
-        className="pointer-events-none absolute -bottom-1.5 left-1/2 -translate-x-1/2 h-3.5 w-[86%] rounded-[50%] bg-[#0f1217]/25 blur-[4px]"
+        className="pointer-events-none absolute -bottom-1 left-1/2 -translate-x-1/2 h-3.5 w-[84%] rounded-[50%] bg-[#0f1217]/35 blur-[3px]"
         aria-hidden="true"
       />
 
       {/* 8-Frame Preloaded Sprite Stack for 0-latency, flicker-free frame swapping */}
-      <div className="relative aspect-square w-full">
+      <div className="relative h-full w-full aspect-square">
         {PEDAL_FRAMES.map((frame, index) => {
           const isActive = index === activeFrame;
           return (
-            <div
+            <img
               key={frame.src}
-              className={`absolute inset-0 transition-opacity duration-75 ${
+              src={frame.src}
+              alt={frame.alt}
+              width={1024}
+              height={1024}
+              className={`absolute inset-0 h-full w-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)] transition-opacity duration-75 ${
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               }`}
-            >
-              <Image
-                src={frame.src}
-                alt={frame.alt}
-                fill
-                priority
-                sizes="(max-width: 768px) 160px, 200px"
-                className="object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)]"
-              />
-            </div>
+            />
           );
         })}
       </div>

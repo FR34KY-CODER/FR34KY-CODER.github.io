@@ -92,16 +92,18 @@ export function ChapterStreet() {
           <TransitionLink href="/work" className="street-more" data-scene-item="">All projects<ArrowUpRight size={36} /></TransitionLink>
         </div>
       </div>
-      <div className="street-road" aria-hidden="true">
-        {/* Anatomical 2D Anime Cyclist - Pedaling & Wheel Rotation Driven by Scroll */}
-        <div
-          className="absolute bottom-[14px] z-20 w-[145px] sm:w-[175px] drop-shadow-md transition-[left] duration-150 ease-out"
-          style={{
-            left: `calc(6% + ${(streetProgress * 24).toFixed(2)}%)`,
-          }}
-        >
-          <ScrollDrivenCyclist />
-        </div>
+      {/* Asphalt Street Road Strip */}
+      <div className="street-road" aria-hidden="true" />
+
+      {/* Anatomical 2D Anime Developer Cyclist — High z-index riding directly on the road */}
+      <div
+        className="pointer-events-none absolute bottom-[18px] z-30 w-[170px] sm:w-[210px] aspect-square drop-shadow-xl transition-[left] duration-150 ease-out"
+        style={{
+          left: `calc(6% + ${(streetProgress * 26).toFixed(2)}%)`,
+        }}
+        aria-label="Anime Developer riding commuter bicycle across The Street"
+      >
+        <ScrollDrivenCyclist className="w-full h-full" />
       </div>
     </section>
   );
