@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 interface PuppetDeveloperAvatarProps {
@@ -25,8 +25,23 @@ export function PuppetDeveloperAvatar({
 }: PuppetDeveloperAvatarProps) {
   const [hovered, setHovered] = useState(false);
 
+  const artwork = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let current = true;
+    setReady(false);
+    const layers = Array.from(artwork.current?.querySelectorAll("img") ?? []);
+    void Promise.allSettled(layers.map(image => image.decode())).then(() => {
+      if (current) setReady(true);
+    });
+    return () => { current = false; };
+  }, [isWaving, showCompanionBot]);
+
   return (
     <div
+      ref={artwork}
+      style={{ opacity: ready ? 1 : 0 }}
       className={`group relative inline-block select-none aspect-square w-full ${className}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -42,7 +57,7 @@ export function PuppetDeveloperAvatar({
         }}
       >
         <Image
-          src="/images/avatars/anime-avatar-body.png"
+          src="/images/avatars/anime-avatar-body.webp"
           alt="2D Anime Developer"
           fill
           priority
@@ -62,7 +77,7 @@ export function PuppetDeveloperAvatar({
             }}
           >
             <Image
-              src="/images/avatars/anime-waving-hand.png"
+              src="/images/avatars/anime-waving-hand.webp"
               alt="Waving hand greeting"
               fill
               priority
@@ -82,10 +97,11 @@ export function PuppetDeveloperAvatar({
           }}
         >
           <Image
-            src="/images/avatars/anime-companion-bot.png"
+            src="/images/avatars/anime-companion-bot.webp"
             alt="Floating Companion AI Drone"
             fill
-            sizes="120px"
+            loading="eager"
+              sizes="120px"
             className="object-contain drop-shadow-[0_8px_18px_rgba(0,0,0,0.22)]"
           />
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,6 +15,9 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<ScrollTrigger | null>(null);
+  const stops = useRef<number[]>([]);
+  const [position, setPosition] = useState(0);
+  const [last, setLast] = useState(0);
   const callbacksRef = useRef(options);
   callbacksRef.current = options;
 
@@ -28,6 +31,10 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
 
     const update = () => {
       const travel = viewport.scrollLeft;
+      const positions = stops.current;
+      const nearest = positions.reduce((best, offset, index) =>
+        Math.abs(offset - travel) < Math.abs(positions[best] - travel) ? index : best, 0);
+      setPosition(positions.length && travel > 0 && travel >= positions[positions.length - 1] - 1 ? positions.length - 1 : nearest);
       const rotation = travel / 3;
       const distance = Math.max(1, track.scrollWidth - viewport.clientWidth);
       const progress = Math.min(1, Math.max(0, travel / distance));
@@ -36,6 +43,25 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
       section.style.setProperty("--street-progress", `${progress}`);
       callbacksRef.current?.onTravel?.(travel, rotation, progress);
     };
+
+    const measure = () => {
+      const bounds = viewport.getBoundingClientRect();
+      const limit = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+      const items = Array.from(track.querySelectorAll<HTMLElement>("[data-scene-item]"));
+      stops.current = items.map((item, index) => {
+        if (index === 0) return 0;
+        if (index === items.length - 1) return limit;
+        const rect = item.getBoundingClientRect();
+        const center = viewport.scrollLeft + rect.left - bounds.left + (rect.width - bounds.width) / 2;
+        return Math.max(0, Math.min(limit, center));
+      });
+      setLast(Math.max(0, items.length - 1));
+      update();
+    };
+    const resize = new ResizeObserver(measure);
+    resize.observe(track);
+    resize.observe(viewport);
+    measure();
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -65,7 +91,6 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
           pin: true,
           scrub: 0.55,
           invalidateOnRefresh: true,
-          onUpdate: () => update(),
           onToggle: (self) => callbacksRef.current?.onActiveChange?.(self.isActive),
         },
       });
@@ -74,10 +99,12 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
         const item = (event.target as HTMLElement).closest<HTMLElement>("[data-scene-item]");
         const trigger = triggerRef.current;
         if (!item || !trigger) return;
-        const target = Math.max(
-          0,
-          Math.min(distance(), item.offsetLeft - viewport.clientWidth / 2 + item.offsetWidth / 2)
-        );
+        const bounds = viewport.getBoundingClientRect();
+        const rect = item.getBoundingClientRect();
+        const syncedTravel = trigger.progress * distance();
+        const left = viewport.scrollLeft + rect.left - bounds.left;
+        if (left >= syncedTravel - 1 && left + rect.width <= syncedTravel + bounds.width + 1) return;
+        const target = Math.max(0, Math.min(distance(), left + (rect.width - bounds.width) / 2));
         window.scrollTo({ top: trigger.start + target, behavior: "instant" });
       };
       track.addEventListener("focusin", focus);
@@ -88,6 +115,7 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
     });
     return () => {
       media.revert();
+      resize.disconnect();
       observer.disconnect();
       viewport.removeEventListener("scroll", update);
     };
@@ -96,11 +124,11 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
   const advance = (direction: number) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
-    const distance = viewport.scrollWidth - viewport.clientWidth;
-    const target = Math.max(
-      0,
-      Math.min(distance, viewport.scrollLeft + direction * Math.min(460, viewport.clientWidth * 0.85))
-    );
+    const offsets = stops.current;
+    const target = direction > 0
+      ? offsets.find(offset => offset > viewport.scrollLeft + 1)
+      : offsets.slice().reverse().find(offset => offset < viewport.scrollLeft - 1);
+    if (target === undefined) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const behavior = reduced ? "instant" : "smooth";
     if (triggerRef.current) {
@@ -109,5 +137,5 @@ export function useHorizontalScene(options?: UseHorizontalSceneOptions) {
       viewport.scrollTo({ left: target, behavior });
     }
   };
-  return { sectionRef, viewportRef, trackRef, advance };
+  return { sectionRef, viewportRef, trackRef, advance, position, last };
 }

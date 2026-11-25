@@ -15,6 +15,17 @@ export interface FactoryCrate {
 export const FACTORY_CRATES: FactoryCrate[] = [
   {
     number: "01",
+    slug: "ordm-odcs-contracts",
+    name: "Open Retail Data Model",
+    role: "ds",
+    roleLabel: "DATA SCI",
+    kind: "pipeline",
+    tag: "RETAIL MODELING",
+    summary: "Inventory modeling, generated retail data, SQL validation and 12 metric views for margin and volume analysis.",
+    githubUrl: "https://github.com/databricks-industry-solutions/open-retail-data-model",
+  },
+  {
+    number: "02",
     slug: "lexrank-bart",
     name: "lexrank-bart-hybrid",
     role: "ai",
@@ -25,7 +36,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Legal-Case-Intelligence-System-Phase-2",
   },
   {
-    number: "02",
+    number: "03",
     slug: "tinytrack-roi",
     name: "tinytrack-yolov8-roi",
     role: "ml",
@@ -36,7 +47,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Adaptive-Traffic-Control-System",
   },
   {
-    number: "03",
+    number: "04",
     slug: "fastapi-async-pg",
     name: "fastapi-asyncpg-core",
     role: "backend",
@@ -47,7 +58,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/FastAPI-PostgresSQL",
   },
   {
-    number: "04",
+    number: "05",
     slug: "ml-journey",
     name: "feature-eda-pipelines",
     role: "ds",
@@ -58,7 +69,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Machine-Learning-Journey",
   },
   {
-    number: "05",
+    number: "06",
     slug: "bge-zero-shot",
     name: "zero-shot-taxonomy",
     role: "ai",
@@ -69,7 +80,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Legal-Case-Intelligence-System-Phase-2",
   },
   {
-    number: "06",
+    number: "07",
     slug: "dynamic-rule-engine",
     name: "uniapply-rule-engine",
     role: "backend",
@@ -80,7 +91,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Hero-Vired-Project",
   },
   {
-    number: "07",
+    number: "08",
     slug: "dl-journey",
     name: "pytorch-keras-lab",
     role: "ml",
@@ -91,7 +102,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Deep-Learning-Journey",
   },
   {
-    number: "08",
+    number: "09",
     slug: "churn-roc-auc",
     name: "lgbm-churn-scorer",
     role: "ds",
@@ -102,7 +113,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Customer-Churn-Prediction-Using-ML",
   },
   {
-    number: "09",
+    number: "10",
     slug: "local-llm-stream",
     name: "llamacpp-sse-bridge",
     role: "ai",
@@ -113,7 +124,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Site-Engineer",
   },
   {
-    number: "10",
+    number: "11",
     slug: "ephemeris-graph",
     name: "swiss-ephemeris-core",
     role: "backend",
@@ -124,7 +135,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/GYAstro",
   },
   {
-    number: "11",
+    number: "12",
     slug: "legal-scraper",
     name: "selenium-bs4-harvester",
     role: "ds",
@@ -135,7 +146,7 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     githubUrl: "https://github.com/FR34KY-CODER/WebScraping-Practice",
   },
   {
-    number: "12",
+    number: "13",
     slug: "codeforces-cpp",
     name: "cpp-algo-telemetry",
     role: "ml",
@@ -145,16 +156,6 @@ export const FACTORY_CRATES: FactoryCrate[] = [
     summary: "Competitive programming archive sharpening algorithmic complexity, graphs, DP, and optimization.",
     githubUrl: "https://github.com/FR34KY-CODER/Codeforces-Journey",
   },
-  {
-    number: "13",
-    slug: "ordm-odcs-contracts",
-    name: "databricks-ordm-odcs",
-    role: "ds",
-    roleLabel: "DATA SCI",
-    kind: "pipeline",
-    tag: "DATA CONTRACTS",
-    summary: "Canonical inventory & Balancing Margin/Volume ODCS contracts, 12 metric views & SQL checks built with Databricks devs.",
-    githubUrl: "https://github.com/databricks-industry-solutions/open-retail-data-model",
-  },
+
 ];
 

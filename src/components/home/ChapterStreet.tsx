@@ -9,13 +9,15 @@ import { TransitionLink } from "@/components/chrome/TransitionLink";
 import { useHorizontalScene } from "@/hooks/useHorizontalScene";
 import { ScrollDrivenCyclist } from "./ScrollDrivenCyclist";
 
+import { ProjectIndex } from "./ProjectIndex";
+import { SceneIndex } from "./SceneIndex";
+
 export function ChapterStreet() {
-  const { activeRole, setDevMood, setStageMode, setHoverInfo, setScrollRotation, setDockVisible } = useRole();
-  const [streetProgress, setStreetProgress] = React.useState(0);
-  const { sectionRef, viewportRef, trackRef, advance } = useHorizontalScene({
-    onTravel: (_travel, rotation, progress) => {
-      setScrollRotation(rotation * 2.1);
-      setStreetProgress(progress);
+  const { activeRole, setDevMood, setStageMode, setHoverInfo, setDockVisible } = useRole();
+  const rotationRef = React.useRef(0);
+  const { sectionRef, viewportRef, trackRef, advance, position, last } = useHorizontalScene({
+    onTravel: (_travel, rotation) => {
+      rotationRef.current = rotation * 2.1;
     },
     onActiveChange: (active) => {
       if (active) {
@@ -26,16 +28,17 @@ export function ChapterStreet() {
     },
   });
   return (
+    <>
     <section id="the-street" ref={sectionRef} data-paper="" className="motion-scene street-scene" aria-labelledby="street-title">
       <div className="street-sky" aria-hidden="true"><span className="street-sun" /><span className="street-cloud" /><div className="street-skyline">{Array.from({length: 16}, (_, i) => <i key={i} style={{height: 70 + i % 5 * 28}} />)}</div></div>
       <div className="scene-heading">
-        <p className="scene-eyebrow">02 / The street</p>
-        <h2 id="street-title">Ideas become<br /><em>working systems.</em></h2>
-        <p>Explore the projects. Step inside to see how they work.</p>
+        <p className="scene-eyebrow">Selected work</p>
+        <h2 id="street-title">The project <em>street.</em></h2>
+        <TransitionLink href="/work" className="underline underline-offset-4">Browse all projects</TransitionLink>
         <div className="scene-controls">
-          <button onClick={() => advance(-1)} aria-label="Previous projects"><ArrowLeft size={18} /></button>
-          <span>Scroll to explore</span>
-          <button onClick={() => advance(1)} aria-label="Next projects"><ArrowRight size={18} /></button>
+          <button disabled={position === 0} onClick={() => advance(-1)} aria-label="Previous projects"><ArrowLeft size={18} /></button>
+          <span>Project {position + 1} of {PROJECTS.length}</span>
+          <button disabled={position === last} onClick={() => advance(1)} aria-label="Next projects"><ArrowRight size={18} /></button>
         </div>
       </div>
       <div ref={viewportRef} className="scene-viewport street-viewport" tabIndex={0} aria-label="Project storefronts">
@@ -46,7 +49,7 @@ export function ChapterStreet() {
                 href={`/work/${project.slug}`}
                 data-scene-item=""
                 data-shop=""
-                data-cursor-label="VIEW"
+                data-cursor-label="VIEW" data-insight={project.summary}
                 className={`storefront storefront--${project.shopTone}`}
                 data-matching={activeRole !== "all" && project.roles.includes(activeRole)}
                 onMouseEnter={() =>
@@ -89,7 +92,6 @@ export function ChapterStreet() {
               <div className="street-lamp" aria-hidden="true"><i /></div>
             </div>
           ))}
-          <TransitionLink href="/work" className="street-more" data-scene-item="">All projects<ArrowUpRight size={36} /></TransitionLink>
         </div>
       </div>
       {/* Asphalt Street Road Strip */}
@@ -97,14 +99,17 @@ export function ChapterStreet() {
 
       {/* Anatomical 2D Anime Developer Cyclist — High z-index riding directly on the road */}
       <div
-        className="pointer-events-none absolute bottom-[18px] z-30 w-[170px] sm:w-[210px] aspect-square drop-shadow-xl transition-[left] duration-150 ease-out"
+        className="pointer-events-none absolute bottom-[18px] z-30 w-[170px] sm:w-[210px] aspect-square drop-shadow-xl "
         style={{
-          left: `calc(6% + ${(streetProgress * 26).toFixed(2)}%)`,
+          left: "calc(6% + var(--street-progress, 0) * 26%)",
         }}
         aria-label="Anime Developer riding commuter bicycle across The Street"
       >
-        <ScrollDrivenCyclist className="w-full h-full" />
+        <ScrollDrivenCyclist rotationRef={rotationRef} className="w-full h-full" />
       </div>
     </section>
+    <SceneIndex title="Project index"><ProjectIndex /></SceneIndex>
+    </>
   );
 }
+

@@ -10,13 +10,23 @@ export interface AchievementItem {
 
 const ACHIEVEMENTS: AchievementItem[] = [
   {
+    id: "celebal-engineer",
+    badge: "INDUSTRY · DEC 2025–PRESENT",
+    title: "Client-Side AI & Data Solutions · Celebal Tech",
+    shortTitle: "Celebal · Client AI & DS",
+    subtitle:
+      "Working on enterprise diagnostic copilots, autonomous transactions, semantic discovery and data quality across four client engagements.",
+    metric: "4 ENTERPRISE ENGAGEMENTS",
+    href: "/work?role=client",
+  },
+  {
     id: "databricks-ordm",
     badge: "OPEN SOURCE · DATABRICKS",
     title: "Open Retail Data Model (ORDM v0.5)",
     shortTitle: "Databricks ORDM v0.5",
     subtitle:
-      "Co-authored canonical inventory & margin/volume outcome packages remotely with Databricks Industry Solutions engineers.",
-    metric: "8.8K+ LINES · 12 METRIC VIEWS",
+      "Built the inventory model and retail margin use case, generated synthetic data, tested the outputs and developed 12 early metric views with Databricks Industry Solutions engineers.",
+    metric: "12 METRIC VIEWS",
     href: "https://github.com/databricks-industry-solutions/open-retail-data-model",
   },
   {
@@ -38,16 +48,7 @@ const ACHIEVEMENTS: AchievementItem[] = [
     metric: "10,000+ JUDGMENTS INDEXED",
     href: "/work/lexnext-ai",
   },
-  {
-    id: "celebal-engineer",
-    badge: "INDUSTRY · DEC 2025–PRESENT",
-    title: "Client-Side AI & Data Solutions · Celebal Tech",
-    shortTitle: "Celebal · Client AI & DS",
-    subtitle:
-      "Delivering enterprise diagnostic copilots, autonomous transactional workflows, semantic discovery & data trust platforms (48+ YAML quality contracts; proprietary internals confidential).",
-    metric: "4 ENTERPRISE ENGAGEMENTS",
-    href: "/work?role=client",
-  },
+
   {
     id: "adaptive-traffic-cv",
     badge: "COMPUTER VISION · MAY–JUN 2025",

@@ -14,7 +14,6 @@ import {
   ReactFlow,
   useEdgesState,
   useNodesState,
-  useReactFlow,
 } from "@xyflow/react";
 import { ArrowUpRight, Cpu, FolderGit2, Layers } from "lucide-react";
 import { KnowledgeNode, ROLE_KNOWLEDGE_GRAPHS } from "@/data/knowledgeGraph";
@@ -125,19 +124,6 @@ const NODE_TYPES = {
   kgProject: KgProjectNode,
   kgSkill: KgSkillNode,
 };
-
-function FitViewSync({ fullPage }: { fullPage: boolean }) {
-  const { fitView } = useReactFlow();
-  useEffect(() => {
-    const t1 = window.setTimeout(() => fitView({ padding: fullPage ? 0.16 : 0.14, duration: 280 }), 120);
-    const t2 = window.setTimeout(() => fitView({ padding: fullPage ? 0.16 : 0.14, duration: 280 }), 740);
-    return () => {
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-    };
-  }, [fitView, fullPage]);
-  return null;
-}
 
 interface RoleKnowledgeGraphProps {
   roleId: CoreRoleId;
@@ -254,7 +240,6 @@ export function RoleKnowledgeGraph({
           }
         }}
       >
-        <FitViewSync fullPage={fullPage} />
         {fullPage && (
           <Background
             variant={BackgroundVariant.Dots}
@@ -263,7 +248,6 @@ export function RoleKnowledgeGraph({
             color={isPaper ? "rgba(15,18,23,0.12)" : "rgba(244,241,234,0.16)"}
           />
         )}
-        <FitViewSync fullPage={fullPage} />
         {fullPage && (
           <Controls
             showInteractive={false}

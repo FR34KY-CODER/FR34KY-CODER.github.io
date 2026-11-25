@@ -8,8 +8,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  Lock,
-  ShieldCheck,
 } from "lucide-react";
 import { ProjectCaseStudy } from "@/data/projects";
 import { ROLES } from "@/data/roles";
@@ -86,7 +84,7 @@ export function CaseStudyView({ project, nextProject }: CaseStudyViewProps) {
   }, [project.slug]);
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-[#f4f1ea] text-[#0f1217]">
+    <div ref={rootRef} className="case-route min-h-screen bg-[#f4f1ea] text-[#0f1217]">
       {/* SPLIT HERO */}
       <section className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#0f1217]/12">
         {/* Left Editorial Title */}
@@ -159,33 +157,6 @@ export function CaseStudyView({ project, nextProject }: CaseStudyViewProps) {
           data-night=""
           className="lg:col-span-5 flex flex-col justify-between bg-[#0f1217] px-6 sm:px-10 pt-28 pb-14 text-[#f4f1ea]"
         >
-          {project.isClientEngagement ? (
-            <div className="rounded-2xl border border-amber-400/35 bg-amber-400/10 p-5 space-y-2">
-              <div className="flex items-center gap-2 font-mono text-[12px] font-bold tracking-[0.18em] uppercase text-amber-300">
-                <Lock size={14} />
-                <span>Client Engagement · Confidentiality Shield</span>
-              </div>
-              <p className="text-xs leading-relaxed text-[#f4f1ea]/80">
-                Per enterprise client agreements, internal system
-                architectures, proprietary schemas, codebases, and exact vendor
-                stacks are excluded. Only high-level solution framing and
-                verified operational outcomes are shared below.
-              </p>
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-[#f4f1ea]/14 bg-[#141923] p-5 space-y-2">
-              <div className="flex items-center gap-2 font-mono text-[12px] font-bold tracking-[0.18em] uppercase text-emerald-400">
-                <ShieldCheck size={14} />
-                <span>Public Open-Source Case File</span>
-              </div>
-              <p className="text-xs leading-relaxed text-[#f4f1ea]/75">
-                Designed, built, and published openly under FR34KY-CODER. Full
-                capability breakdown and technical components are documented on
-                this page.
-              </p>
-            </div>
-          )}
-
           {/* 4-Cell Stat Grid (.case-stats) */}
           <div className="case-stats mt-8 grid grid-cols-2 gap-3.5">
             {project.stats.map((st) => (
@@ -215,7 +186,7 @@ export function CaseStudyView({ project, nextProject }: CaseStudyViewProps) {
             data-night=""
           >
             <div className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#f4f1ea]/75">
-              Headline Verified Outcome
+              Outcome
             </div>
             <div
               className="mt-2 text-3xl sm:text-5xl font-black tracking-tight uppercase"
@@ -276,7 +247,7 @@ export function CaseStudyView({ project, nextProject }: CaseStudyViewProps) {
         <div className="rounded-3xl border border-[#0f1217]/15 bg-[#ece7dc] p-7 sm:p-8">
           <div className="font-mono text-[12px] font-bold tracking-[0.18em] uppercase text-[#0f1217]/75">
             {project.isClientEngagement
-              ? "Verified Domain Competencies (Stack Omitted Per NDA)"
+              ? "Areas of work"
               : "Engineering Stack & Core Modules"}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -327,9 +298,6 @@ export function CaseStudyView({ project, nextProject }: CaseStudyViewProps) {
               </div>
               <div className="mt-1 text-2xl font-black tracking-tight uppercase">
                 Start A Conversation
-              </div>
-              <div className="mt-1 font-mono text-xs text-[#f4f1ea]/70">
-                Dispatches formatted HTML mail directly to Ojasvi
               </div>
             </div>
             <ArrowUpRight

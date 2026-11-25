@@ -101,14 +101,14 @@ export function buildContactEmailHtml(input: ContactPayloadInput): string {
               <a href="mailto:${email}" style="color:${accent};text-decoration:none;font-weight:600;">${email}</a>
             </td>
           </tr>
-          <tr>
+          ${phone ? `<tr>
             <td style="padding:12px 16px;border-bottom:1px solid #2b3341;font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8d96a6;">
               PHONE NUMBER
             </td>
             <td style="padding:12px 16px;border-bottom:1px solid #2b3341;font-size:14px;">
               <a href="tel:${phone}" style="color:#f4f1ea;text-decoration:none;font-family:'Courier New',monospace;">${phone}</a>
             </td>
-          </tr>
+          </tr>` : ""}
           <tr>
             <td style="padding:12px 16px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8d96a6;">
               COMPANY / ORG

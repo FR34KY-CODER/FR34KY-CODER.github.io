@@ -47,8 +47,6 @@ interface RoleContextValue {
   setHoverInfo: (info: DevHoverInfo | null) => void;
   dockVisible: boolean;
   setDockVisible: (v: boolean) => void;
-  scrollRotation: number;
-  setScrollRotation: (deg: number) => void;
   chatOpen: boolean;
   setChatOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
 }
@@ -63,7 +61,6 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
   const [activePhaseKey, setActivePhaseKey] = useState<HeroPhaseKey>("overview");
   const [hoverInfo, setHoverInfo] = useState<DevHoverInfo | null>(null);
   const [dockVisible, setDockVisible] = useState(false);
-  const [scrollRotation, setScrollRotation] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
 
   const roleData = ROLES[activeRole];
@@ -94,8 +91,6 @@ export function RoleProvider({ children }: { children: React.ReactNode }) {
         setHoverInfo,
         dockVisible,
         setDockVisible,
-        scrollRotation,
-        setScrollRotation,
         chatOpen,
         setChatOpen,
       }}

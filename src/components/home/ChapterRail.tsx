@@ -5,12 +5,13 @@ import { scrollToSectionId } from "@/lib/navigation";
 import { ArrowDown } from "lucide-react";
 
 const CHAPTERS = [
-  { id: "two-sides", num: "01", label: "Two Sides · 4 Roles" },
-  { id: "the-street", num: "02", label: "The Street · Live Builds" },
-  { id: "the-factory", num: "03", label: "The Factory · Bench" },
-  { id: "under-the-hood", num: "04", label: "Under The Hood · Dossier" },
-  { id: "missions", num: "05", label: "Missions · Role Spec" },
-  { id: "both-sides", num: "06", label: "The Finale · Engage" },
+  { id: "two-sides", num: "01", label: "Introduction" },
+  { id: "missions", num: "02", label: "Role profiles" },
+  { id: "the-street", num: "03", label: "Projects" },
+  { id: "the-factory", num: "04", label: "Tools" },
+  { id: "under-the-hood", num: "05", label: "Experience" },
+
+  { id: "both-sides", num: "06", label: "Contact" },
 ];
 
 export function ChapterRail() {
@@ -35,6 +36,8 @@ export function ChapterRail() {
     window.addEventListener("scroll", updateActive, { passive: true });
     return () => window.removeEventListener("scroll", updateActive);
   }, []);
+
+  if (activeId === "two-sides") return null;
 
   return (
     <aside
@@ -93,4 +96,5 @@ export function ChapterRail() {
     </aside>
   );
 }
+
 

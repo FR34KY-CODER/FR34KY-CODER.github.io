@@ -189,7 +189,7 @@ export const ROLE_KNOWLEDGE_GRAPHS: Record<CoreRoleId, RoleGraphData> = {
         kind: "project",
         x: 92,
         y: 74,
-        info: "Open source contribution to Databricks: Canonical Inventory + Margin/Volume contracts.",
+        info: "Open source contribution to Databricks: inventory modeling, synthetic data, testing and 12 metric views.",
         href: "/work/open-retail-data-model",
       },
       {
@@ -212,11 +212,11 @@ export const ROLE_KNOWLEDGE_GRAPHS: Record<CoreRoleId, RoleGraphData> = {
       },
       {
         id: "s-odcs",
-        label: "Databricks · ODCS",
+        label: "Retail metric views",
         kind: "skill",
         x: 84,
         y: 238,
-        info: "4,400+ lines of Open Data Contract Standard specs, Gold tables & metric views.",
+        info: "Model and test the retail margin use case across 11 Gold tables and 12 reusable metric views.",
       },
       {
         id: "s-sql",

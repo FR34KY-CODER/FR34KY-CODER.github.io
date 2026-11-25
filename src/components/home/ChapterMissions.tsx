@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { CORE_ROLES, CoreRoleId, ROLES } from "@/data/roles";
@@ -40,7 +41,7 @@ export function ChapterMissions() {
 
   return (
     <section
-      id="missions"
+      id="missions" data-collaboration=""
       className="relative grid grid-cols-1 lg:grid-cols-12 min-h-screen border-t border-[#0f1217]/10"
     >
       {/* LEFT SELECTOR COLUMN (Warm Paper) */}
@@ -50,18 +51,12 @@ export function ChapterMissions() {
       >
         <div className="space-y-3">
           <div className="font-mono text-[12px] tracking-[0.2em] uppercase text-[#0f1217]/75">
-            Ch 05 · Missions · Role Selector
+            Role profiles
           </div>
           <h2 className="text-4xl sm:text-5xl font-black tracking-tight uppercase leading-[0.95]">
-            Pick Your
-            <br />
-            Deployment
+            Engineering roles
           </h2>
-          <p className="max-w-md text-sm leading-relaxed text-[#0f1217]/72">
-            Whether you need an AI systems builder, backend architect, causal
-            data scientist, or production ML engineer — inspect each role
-            loadout below.
-          </p>
+
         </div>
 
         {/* 4 Interactive Role Rows */}
@@ -72,6 +67,7 @@ export function ChapterMissions() {
               <button
                 key={role.id}
                 type="button"
+                aria-pressed={isSelected}
                 onClick={() => setActiveRole(role.id)}
                 className={`group flex w-full items-center justify-between rounded-2xl border p-4 sm:p-5 text-left transition-all duration-200 cursor-pointer ${
                   isSelected
@@ -122,9 +118,7 @@ export function ChapterMissions() {
           })}
         </div>
 
-        <div className="font-mono text-[12px] uppercase tracking-[0.16em] text-[#0f1217]/75">
-          Selected role automatically pre-fills /contact dispatch form.
-        </div>
+
       </div>
 
       {/* RIGHT LOADOUT DOSSIER (Obsidian) */}
@@ -134,13 +128,12 @@ export function ChapterMissions() {
       >
         <div ref={detailRef} className="mx-auto w-full max-w-2xl space-y-8">
           <div className="space-y-3 border-b border-[#f4f1ea]/12 pb-6">
+            <Image className="role-portrait" src={`/images/avatars/avatar-${selectedCoreId}.webp`} width={150} height={150} alt={selectedRole.title + " avatar"} />
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[12px] uppercase tracking-[0.2em]">
               <span style={{ color: selectedRole.accentNight }}>
-                MISSION BRIEF {selectedRole.code} · {selectedRole.shortLabel}
+                {selectedRole.shortLabel}
               </span>
-              <span className="rounded-full border border-[#f4f1ea]/18 px-2.5 py-0.5 text-[12px] text-[#f4f1ea]/70">
-                ACTIVE LOADOUT
-              </span>
+
             </div>
 
             <h3 className="text-3xl sm:text-5xl font-black tracking-tight uppercase">
@@ -155,7 +148,7 @@ export function ChapterMissions() {
           {/* Core Capabilities */}
           <div className="space-y-3">
             <div className="font-mono text-[12px] tracking-[0.18em] uppercase text-[#f4f1ea]/75">
-              Verified Capabilities &amp; Ownership
+              Skills
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {(
@@ -180,12 +173,12 @@ export function ChapterMissions() {
           {/* Related Matching Systems (respecting client engagement NDA rules) */}
           <div className="space-y-3">
             <div className="flex items-center justify-between font-mono text-[12px] tracking-[0.18em] uppercase text-[#f4f1ea]/75">
-              <span>Key Proof Systems</span>
+              <span>Related projects</span>
               <TransitionLink
                 href={`/work?role=${selectedRole.id}`}
                 className="text-[#f4f1ea]/80 hover:underline underline-offset-4"
               >
-                Filter Archive →
+                View all →
               </TransitionLink>
             </div>
 
@@ -195,7 +188,7 @@ export function ChapterMissions() {
                   key={proj.slug}
                   href={`/work/${proj.slug}`}
                   data-card=""
-                  data-cursor-label="CASE"
+                  data-cursor-label="CASE" data-insight={proj.summary}
                   className="group flex flex-col justify-between rounded-xl border border-[#f4f1ea]/14 bg-[#141922] p-4 hover:border-[#f4f1ea]/40 transition"
                 >
                   <div>
@@ -232,7 +225,7 @@ export function ChapterMissions() {
               className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-[#0f1217] transition-transform hover:scale-[1.02]"
               style={{ backgroundColor: selectedRole.accentNight }}
             >
-              <span>Engage as {selectedRole.shortLabel}</span>
+              <span>Discuss a role</span>
               <ArrowRight size={14} />
             </TransitionLink>
 
@@ -240,7 +233,7 @@ export function ChapterMissions() {
               href="/work"
               className="inline-flex items-center gap-2 rounded-full border border-[#f4f1ea]/25 px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-[#f4f1ea] hover:bg-[#f4f1ea] hover:text-[#0f1217] transition-colors"
             >
-              <span>Browse Full Archive</span>
+              <span>Browse projects</span>
             </TransitionLink>
           </div>
         </div>
@@ -248,4 +241,5 @@ export function ChapterMissions() {
     </section>
   );
 }
+
 

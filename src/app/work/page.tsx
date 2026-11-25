@@ -1,6 +1,7 @@
 "use client";
 
-import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import Loading from "../loading";
 import { useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
@@ -13,7 +14,7 @@ import { useRole } from "@/context/RoleContext";
 type WorkFilter = RoleId | "client" | "opensource";
 
 const FILTER_OPTIONS: { id: WorkFilter; label: string; color?: string }[] = [
-  { id: "all", label: "All Systems" },
+  { id: "all", label: "All projects" },
   ...CORE_ROLES.map((r) => ({
     id: r.id as WorkFilter,
     label: r.shortLabel,
@@ -25,17 +26,12 @@ const FILTER_OPTIONS: { id: WorkFilter; label: string; color?: string }[] = [
 
 function WorkArchiveContent() {
   const searchParams = useSearchParams();
-  const { activeRole, setActiveRole } = useRole();
-  const initialParam = searchParams.get("role") as WorkFilter | null;
+  const { setActiveRole } = useRole();
+  const filter = FILTER_OPTIONS.find(option => option.id === searchParams.get("role"))?.id ?? "all";
 
-  const [filter, setFilter] = useState<WorkFilter>(
-    initialParam &&
-      ["all", "ai", "backend", "ds", "ml", "client", "opensource"].includes(
-        initialParam
-      )
-      ? initialParam
-      : activeRole
-  );
+  useEffect(() => {
+    if (filter !== "client" && filter !== "opensource") setActiveRole(filter);
+  }, [filter, setActiveRole]);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const flipStateRef = useRef<Flip.FlipState | null>(null);
@@ -46,6 +42,7 @@ function WorkArchiveContent() {
   }, []);
 
   const handleSelectFilter = (next: WorkFilter) => {
+    if (next === filter) return;
     if (gridRef.current) {
       try {
         gsap.registerPlugin(Flip);
@@ -57,17 +54,10 @@ function WorkArchiveContent() {
       }
     }
 
-    setFilter(next);
-
-    if (
-      next === "all" ||
-      next === "ai" ||
-      next === "backend" ||
-      next === "ds" ||
-      next === "ml"
-    ) {
-      setActiveRole(next);
-    }
+    const url = new URL(window.location.href);
+    if (next === "all") url.searchParams.delete("role");
+    else url.searchParams.set("role", next);
+    window.history.pushState(null, "", url);
   };
 
   useLayoutEffect(() => {
@@ -103,7 +93,7 @@ function WorkArchiveContent() {
   });
 
   return (
-    <div className="min-h-screen bg-[#f4f1ea] text-[#0f1217]">
+    <div className="work-route min-h-screen bg-[#f4f1ea] text-[#0f1217]">
       {/* SPLIT ARCHIVE HERO */}
       <section className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#0f1217]/12">
         <div
@@ -114,16 +104,10 @@ function WorkArchiveContent() {
             Archive · {PROJECTS.length} Case Files
           </div>
           <h1 className="mt-2 text-5xl sm:text-7xl font-black leading-[0.88] tracking-[-0.04em] uppercase">
-            Every System
-            <br />
-            <span style={{ color: "var(--role-accent-paper, #d91b0e)" }}>
-              On The Record
-            </span>
+            Selected work
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-[#0f1217]/75">
-            Explore public engineering repositories with full architectural
-            context alongside enterprise client engagements framed strictly
-            around problem framing, design ideas, and measurable business impact.
+            Open-source projects and client engagements in AI, backend engineering and data science.
           </p>
         </div>
 
@@ -131,43 +115,16 @@ function WorkArchiveContent() {
           data-night=""
           className="lg:col-span-5 flex flex-col justify-between bg-[#0f1217] px-6 sm:px-10 pt-28 pb-12 text-[#f4f1ea]"
         >
-          <div className="space-y-2 font-mono text-xs">
-            <div className="text-[#f4f1ea]/75 uppercase tracking-[0.18em]">
-              Index Breakdown
+          <div className="archive-matrix">
+            <p className="atlas-label">Project index</p>
+            <nav aria-label="Case studies by number">
+              {PROJECTS.map(p => <TransitionLink key={p.slug} href={`/work/${p.slug}`} title={p.title}
+                aria-label={p.number + " " + p.title} data-client={p.isClientEngagement}>{p.number}</TransitionLink>)}
+            </nav>
+            <div className="archive-key">
+              <button onClick={()=>handleSelectFilter("client")} aria-pressed={filter==="client"}>Client · {PROJECTS.filter(p=>p.isClientEngagement).length}</button>
+              <button onClick={()=>handleSelectFilter("opensource")} aria-pressed={filter==="opensource"}>Open source · {PROJECTS.filter(p=>!p.isClientEngagement).length}</button>
             </div>
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="rounded-xl border border-[#f4f1ea]/14 bg-[#151a24] p-4">
-                <div className="text-[12px] text-[#f4f1ea]/75 uppercase">
-                  Open Source
-                </div>
-                <div className="mt-1 text-2xl font-black">
-                  {PROJECTS.filter((p) => !p.isClientEngagement).length}
-                </div>
-              </div>
-              <div className="rounded-xl border border-[#f4f1ea]/14 bg-[#151a24] p-4">
-                <div className="text-[12px] text-[#f4f1ea]/75 uppercase">
-                  Client Builds
-                </div>
-                <div
-                  className="mt-1 text-2xl font-black"
-                  style={{ color: "var(--role-accent-night)" }}
-                >
-                  {PROJECTS.filter((p) => p.isClientEngagement).length}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 flex items-center gap-2 rounded-xl border border-[#f4f1ea]/12 bg-[#141923] px-4 py-3 font-mono text-[12px] text-[#f4f1ea]/75">
-            <ShieldCheck
-              size={15}
-              className="shrink-0"
-              style={{ color: "var(--role-accent-night)" }}
-            />
-            <span>
-              Client NDA Shield: zero internal stacks or code insights exposed on
-              client engagements.
-            </span>
           </div>
         </div>
       </section>
@@ -186,6 +143,7 @@ function WorkArchiveContent() {
                 <button
                   key={opt.id}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => handleSelectFilter(opt.id)}
                   className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] transition cursor-pointer ${
                     isSelected
@@ -221,7 +179,7 @@ function WorkArchiveContent() {
               key={project.slug}
               href={`/work/${project.slug}`}
               data-card=""
-              data-cursor-label="CASE"
+              data-cursor-label="CASE" data-insight={project.summary}
               className={`work-card group flex flex-col justify-between rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1.5 ${
                 project.isClientEngagement
                   ? "border-[#0f1217] bg-[#0f1217] text-[#f4f1ea]"
@@ -245,7 +203,7 @@ function WorkArchiveContent() {
                     {project.isClientEngagement ? (
                       <>
                         <ShieldCheck size={11} />
-                        <span>Client Ideas &amp; Impact</span>
+                        <span>Client project</span>
                       </>
                     ) : (
                       <>
@@ -328,14 +286,11 @@ function WorkArchiveContent() {
 export default function WorkPage() {
   return (
     <Suspense
-      fallback={
-        <div className="min-h-screen bg-[#f4f1ea] px-8 pt-32 font-mono text-xs uppercase">
-          Loading work archive...
-        </div>
-      }
+      fallback={<Loading />}
     >
       <WorkArchiveContent />
     </Suspense>
   );
 }
+
 

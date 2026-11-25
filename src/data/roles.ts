@@ -97,7 +97,7 @@ export const ROLES: Record<RoleId, RoleDefinition> = {
       summary:
         "Designing reasoning pipelines, hybrid retrieval-augmented systems, local LLM tooling, and agentic workflows that turn unstructured data into reliable action.",
       loadout: ["LLMs & Transformers", "Hybrid RAG", "Semantic Search", "Multi-Agent Flows", "Local Inference"],
-      featuredSlugs: ["lexnext-ai", "gyastro", "site-engineer"],
+      featuredSlugs: ["semantic-graph-discovery", "autonomous-commerce", "lexnext-ai"],
       ctaLabel: "Hire for AI Engineering",
     },
   },
@@ -133,7 +133,7 @@ export const ROLES: Record<RoleId, RoleDefinition> = {
       summary:
         "Building asynchronous REST & WebSocket APIs, dynamic rule engines, relational data layers, and containerized services designed for resilience and speed.",
       loadout: ["FastAPI", "PostgreSQL", "Node.js & Prisma", "WebSockets & SSE", "Docker & RBAC"],
-      featuredSlugs: ["uniapply", "async-booking-api", "autonomous-commerce"],
+      featuredSlugs: ["autonomous-commerce", "uniapply", "async-booking-api"],
       ctaLabel: "Hire for Backend Systems",
     },
   },
@@ -169,7 +169,7 @@ export const ROLES: Record<RoleId, RoleDefinition> = {
       summary:
         "Turning raw, messy datasets and multi-layer enterprise tables into clean canonical representations, validated insights, and actionable predictive models.",
       loadout: ["Python & SQL", "Feature Pipelines", "Canonical Modeling", "Data Quality Diagnostics", "Statistical Analysis"],
-      featuredSlugs: ["canonical-data-shield", "causal-inventory-copilot", "ml-predictive-suite"],
+      featuredSlugs: ["open-retail-data-model", "causal-inventory-copilot", "canonical-data-shield"],
       ctaLabel: "Hire for Data Science",
     },
   },

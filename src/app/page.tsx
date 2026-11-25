@@ -12,12 +12,14 @@ export default function HomePage() {
     <div className="relative">
       <ChapterRail />
       <ChapterTwoSides />
+      <ChapterMissions />
       <ChapterStreet />
       <ChapterFactory />
       <ChapterUnderHood />
-      <ChapterMissions />
+
       <ChapterFinale />
     </div>
   );
 }
+
 

@@ -80,17 +80,17 @@ export function resolveDevBotQuery(rawInput: string): Omit<BotReply, "id" | "sen
   // Explicit slash commands first
   if (lower === "/help" || lower === "help") {
     return {
-      badge: "COMMAND & NL ROUTER",
+      badge: "HELP",
       text: "Ask in natural language or try commands: /project LexNext.AI · /project Open Retail · /skill FastAPI · /edu · /achievements · /roles · /links · /contact",
     };
   }
 
   if (lower.startsWith("/contact") || /\b(hire|contact|email|reach out|message|mail|recruit)\b/i.test(input)) {
     return {
-      badge: "DISPATCH RELAY",
-      text: "You can dispatch a structured HTML mission brief right from /contact — themed around \"The Visitor is interested in contacting you!\" with instant preview & direct delivery.",
+      badge: "CONTACT",
+      text: "You can reach Ojasvi by email or through the contact page.",
       links: [
-        { label: "Open Contact Dispatch →", href: "/contact" },
+        { label: "Contact Ojasvi", href: "/contact" },
         { label: `Mail ${PROFILE.email}`, href: `mailto:${PROFILE.email}` },
       ],
     };
@@ -236,11 +236,11 @@ export function resolveDevBotQuery(rawInput: string): Omit<BotReply, "id" | "sen
   }
 
   return {
-    badge: "DETERMINISTIC DEVBOT",
-    text: `Didn't match "${input}" directly. Try asking about a skill (FastAPI, Databricks, YOLOv8, LangGraph), a project (/project LexNext.AI, Open Retail), /edu, /achievements, /links, or /contact.`,
+    badge: "Portfolio guide",
+    text: "Try a project name, a skill, or a question about my education.",
     links: [
       { label: "View All 12 Projects →", href: "/work" },
-      { label: "Open /contact →", href: "/contact" },
+      { label: "Contact", href: "/contact" },
     ],
   };
 }
