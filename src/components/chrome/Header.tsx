@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { HexMark } from "./HexMark";
 import { TransitionLink } from "./TransitionLink";
 import { PROFILE } from "@/data/profile";
-import { CORE_ROLES, ROLES } from "@/data/roles";
+import { CORE_ROLES, RoleId } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
 import { Menu, X } from "lucide-react";
 
@@ -35,7 +35,7 @@ function useJaipurClock() {
 }
 
 const NAV_LINKS = [
-  { href: "/", label: "Index" },
+  { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
   { href: "/contact", label: "Contact" },
 ];
@@ -50,6 +50,16 @@ export function Header() {
   const [leftNight, setLeftNight] = useState(false);
   const [rightNight, setRightNight] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const selectRole = (role: RoleId) => {
+    setActiveRole(role);
+    if (pathname === "/work") {
+      const url = new URL(window.location.href);
+      if (role === "all") url.searchParams.delete("role");
+      else url.searchParams.set("role", role);
+      if (url.href !== window.location.href) window.history.pushState(null, "", url);
+    }
+  };
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -93,18 +103,12 @@ export function Header() {
     evaluateContrast();
     window.addEventListener("scroll", scheduleEval, { passive: true });
     window.addEventListener("resize", scheduleEval, { passive: true });
-    window.addEventListener("wheel", scheduleEval, { passive: true });
-    window.addEventListener("og:preloader-done", scheduleEval);
 
-    const interval = window.setInterval(evaluateContrast, 200);
 
     return () => {
       if (rafId) window.cancelAnimationFrame(rafId);
-      window.clearInterval(interval);
       window.removeEventListener("scroll", scheduleEval);
       window.removeEventListener("resize", scheduleEval);
-      window.removeEventListener("wheel", scheduleEval);
-      window.removeEventListener("og:preloader-done", scheduleEval);
     };
   }, [pathname]);
 
@@ -140,7 +144,7 @@ export function Header() {
                   {PROFILE.name}
                 </span>
                 <span className="font-mono text-[12px] tracking-[0.16em] opacity-80 uppercase">
-                  {PROFILE.handle} · {ROLES[activeRole].shortLabel}
+                  {PROFILE.handle}
                 </span>
               </span>
             </TransitionLink>
@@ -284,7 +288,8 @@ export function Header() {
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
-                onClick={() => setActiveRole("all")}
+                aria-pressed={activeRole === "all"}
+                onClick={() => selectRole("all")}
                 className={`rounded-full border px-3 py-1.5 font-mono text-[12px] uppercase transition ${
                   activeRole === "all"
                     ? "border-[#f4f1ea] bg-[#f4f1ea] text-[#0f1217]"
@@ -297,7 +302,8 @@ export function Header() {
                 <button
                   key={role.id}
                   type="button"
-                  onClick={() => setActiveRole(role.id)}
+                  aria-pressed={activeRole === role.id}
+                  onClick={() => selectRole(role.id)}
                   className="rounded-full border px-3 py-1.5 font-mono text-[12px] uppercase transition"
                   style={{
                     borderColor:

@@ -3,13 +3,12 @@
 import React from "react";
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { PROFILE } from "@/data/profile";
-import { CORE_ROLES } from "@/data/roles";
 import { HexMark } from "./HexMark";
 import { TransitionLink } from "./TransitionLink";
 
 export function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
 
   return (
@@ -35,20 +34,7 @@ export function Footer() {
             <p className="max-w-md text-sm leading-relaxed text-[#f4f1ea]/70">
               {PROFILE.tagline}
             </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {CORE_ROLES.map((role) => (
-                <span
-                  key={role.id}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-[#f4f1ea]/14 bg-[#f4f1ea]/[0.04] px-2.5 py-1 font-mono text-[12px] uppercase tracking-[0.12em] text-[#f4f1ea]/80"
-                >
-                  <span
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{ backgroundColor: role.accentNight }}
-                  />
-                  {role.shortLabel}
-                </span>
-              ))}
-            </div>
+
           </div>
 
           {/* Sitemap Column */}
@@ -62,7 +48,7 @@ export function Footer() {
                   href="/"
                   className="text-[#f4f1ea]/80 hover:text-[var(--role-accent-night)] transition-colors"
                 >
-                  01 · Story Index
+                  Home
                 </TransitionLink>
               </li>
               <li>
@@ -70,7 +56,7 @@ export function Footer() {
                   href="/work"
                   className="text-[#f4f1ea]/80 hover:text-[var(--role-accent-night)] transition-colors"
                 >
-                  02 · Full Work Archive
+                  Work
                 </TransitionLink>
               </li>
               <li>
@@ -78,7 +64,7 @@ export function Footer() {
                   href="/contact"
                   className="text-[#f4f1ea]/80 hover:text-[var(--role-accent-night)] transition-colors"
                 >
-                  03 · Dispatch &amp; Contact
+                  Contact
                 </TransitionLink>
               </li>
             </ul>
@@ -87,7 +73,7 @@ export function Footer() {
           {/* Verified Links Column */}
           <div className="md:col-span-4 space-y-3">
             <div className="font-mono text-[12px] tracking-[0.2em] text-[#f4f1ea]/75 uppercase">
-              Verified Channels
+              Elsewhere
             </div>
             <ul className="space-y-2 text-sm">
               <li>
@@ -108,7 +94,7 @@ export function Footer() {
                     className="inline-flex items-center gap-1.5 text-[#f4f1ea]/80 hover:text-[var(--role-accent-night)] transition-colors"
                   >
                     <span>
-                      {soc.label} ({soc.handle})
+                      {soc.label}
                     </span>
                     <ArrowUpRight size={13} />
                   </a>

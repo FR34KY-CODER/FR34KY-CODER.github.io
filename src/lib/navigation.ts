@@ -37,31 +37,5 @@ export function triggerRouteNavigation(
     return;
   }
 
-  // Respect reduced motion
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-  if (prefersReduced) {
-    window.dispatchEvent(new CustomEvent(CURSOR_RESET_EVENT));
-    router.push(href);
-    return;
-  }
-
-  let navigated = false;
-  const performPush = () => {
-    if (navigated) return;
-    navigated = true;
-    window.dispatchEvent(new CustomEvent(CURSOR_RESET_EVENT));
-    router.push(href);
-  };
-
-  window.dispatchEvent(
-    new CustomEvent<VeilNavigateDetail>(VEIL_EVENT, {
-      detail: {
-        href,
-        onReady: performPush,
-      },
-    })
-  );
+  router.push(href);
 }
-

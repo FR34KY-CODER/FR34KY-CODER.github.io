@@ -37,6 +37,267 @@ export interface ProjectCaseStudy {
 export const PROJECTS: ProjectCaseStudy[] = [
   {
     number: "01",
+    slug: "open-retail-data-model",
+    title: "Open Retail Data Model",
+    subtitle: "Databricks Industry Solutions · Open Source",
+    year: "2026",
+    category: "Open Source · Databricks Data Model",
+    roles: ["ds", "backend"],
+    isClientEngagement: false,
+    shopTone: "brick",
+    headlineMetric: {
+      value: "12 metric views",
+      label: "Retail margin and volume, measured on a shared inventory model",
+    },
+    stats: [
+      { label: "USE CASE", value: "Margin & volume" },
+      { label: "GOLD TABLES", value: "11" },
+      { label: "METRIC VIEWS", value: "12" },
+      { label: "VALIDATION", value: "SQL tests" },
+    ],
+    summary:
+      "I co-developed the inventory model and the Balancing Margin & Volume use case for Databricks’ Open Retail Data Model. I generated synthetic retail data, tested the model and built 12 early metric views for the contribution.",
+    previewHighlights: [
+      "Modeled inventory positions and their relationships across the retail dataset.",
+      "Developed the margin and volume use case from sample data through SQL validation.",
+      "Defined 12 reusable metric views over 11 Gold analytical tables.",
+    ],
+    groups: [
+      {
+        title: "Inventory model",
+        items: [
+          "Defined inventory position tables, relationship keys and the data contract.",
+          "Documented entity relationships in Mermaid and DBML so contributors could trace how retail records fit together.",
+        ],
+      },
+      {
+        title: "From use case to metric view",
+        items: [
+          "Developed the Balancing Margin & Volume use case to explore retail pricing, margins and stockouts.",
+          "Generated synthetic datasets and tested the outputs with SQL assertions and validation notebooks.",
+          "Built 12 early metric views for the Open Retail Data Model contribution, giving analysts consistent definitions across 11 Gold tables.",
+        ],
+      },
+    ],
+    pills: [
+      "Databricks",
+      "ODCS YAML",
+      "SQL DDL",
+      "Gold Lakehouse",
+      "Data Contracts",
+      "Dimensional Modeling",
+      "Metric Views",
+      "Open Source",
+    ],
+    githubUrl: "https://github.com/databricks-industry-solutions/open-retail-data-model",
+  },
+  {
+    number: "02",
+    slug: "causal-inventory-copilot",
+    title: "Causal Retail Copilot",
+    subtitle: "Conversational Inventory Diagnostics Concept",
+    year: "2026",
+    category: "Client Engagement",
+    roles: ["ai", "ds"],
+    isClientEngagement: true,
+    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
+    shopTone: "brick",
+    headlineMetric: {
+      value: "CAUSAL",
+      label: "Conversational root-cause diagnostics bridging business questions & supply data",
+    },
+    stats: [
+      { label: "SCOPE", value: "Client R&D" },
+      { label: "DOMAIN", value: "Retail Ops" },
+      { label: "FOCUS", value: "Root-Cause AI" },
+      { label: "OUTCOME", value: "Decision Speed" },
+    ],
+    summary:
+      "An enterprise decision-intelligence concept where retail operators ask plain-language diagnostic questions about stockouts or anomalies and receive structured, evidence-backed causal explanations rather than raw spreadsheet dumps.",
+    previewHighlights: [
+      "Multi-step conversational diagnostic reasoning",
+      "Grounded evidence retrieval over business metrics",
+      "Decision-ready executive insights",
+    ],
+    groups: [
+      {
+        title: "01 — The Core Idea",
+        items: [
+          "Bridges the gap between high-level retail KPIs and multi-layered operational root causes.",
+          "Orchestrates specialized reasoning steps to isolate why inventory or sales metrics drifted.",
+        ],
+      },
+      {
+        title: "02 — Business Impact",
+        items: [
+          "Compresses hours of manual analyst cross-referencing into interactive diagnostic threads.",
+          "Delivers transparent, auditable reasoning trails (proprietary architecture & stack omitted).",
+        ],
+      },
+    ],
+    pills: [
+      "Client Engagement",
+      "Causal Reasoning",
+      "Retail Diagnostics",
+      "Decision Intelligence",
+    ],
+  },
+  {
+    number: "03",
+    slug: "semantic-graph-discovery",
+    title: "Semantic Graph Discovery",
+    subtitle: "Enterprise Entity Resolution Concept",
+    year: "2026",
+    category: "Client Engagement",
+    roles: ["ai", "ml"],
+    isClientEngagement: true,
+    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
+    shopTone: "brick",
+    headlineMetric: {
+      value: "MULTI-HOP",
+      label: "Connecting ambiguous entities with relational context for high-confidence retrieval",
+    },
+    stats: [
+      { label: "SCOPE", value: "Client R&D" },
+      { label: "DOMAIN", value: "Enterprise KG" },
+      { label: "METHOD", value: "Hybrid Recall" },
+      { label: "FOCUS", value: "Precision" },
+    ],
+    summary:
+      "A discovery engine concept combining semantic similarity with structured multi-hop relationship traversal so complex domain queries resolve exact entities reliably across dense catalogs and schemas.",
+    previewHighlights: [
+      "Resolves synonyms & ambiguous queries via context",
+      "Combines semantic meaning with structural relationships",
+      "Strict confidence gating before evidence synthesis",
+    ],
+    groups: [
+      {
+        title: "01 — The Core Idea",
+        items: [
+          "Pure keyword search misses intent; pure vector search misses relational constraints.",
+          "Pairing semantic embeddings with graph relationship context grounds discovery in verifiable entity paths.",
+        ],
+      },
+      {
+        title: "02 — Business Impact",
+        items: [
+          "Significantly reduces false positives in complex enterprise lookups (technical stack & thresholds confidential).",
+        ],
+      },
+    ],
+    pills: [
+      "Client Engagement",
+      "Entity Resolution",
+      "Semantic Discovery",
+      "Graph Reasoning Idea",
+    ],
+  },
+  {
+    number: "04",
+    slug: "autonomous-commerce",
+    title: "Autonomous Commerce",
+    subtitle: "Conditional Purchasing & Real-Time Trigger Idea",
+    year: "2026",
+    category: "Client Engagement",
+    roles: ["ai", "backend"],
+    isClientEngagement: true,
+    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
+    shopTone: "red",
+    headlineMetric: {
+      value: "ZERO-TOUCH",
+      label: "Conceptual shift from manual price tracking to intent-driven autonomous purchasing",
+    },
+    stats: [
+      { label: "SCOPE", value: "Client R&D" },
+      { label: "DOMAIN", value: "Commerce AI" },
+      { label: "MODE", value: "Event-Driven" },
+      { label: "TRUST", value: "Cryptographic" },
+    ],
+    summary:
+      "A high-level enterprise concept enabling users to declare purchase intents and budget rules once, allowing intelligent background evaluators to verify price movements and execute authorized transactions safely without manual re-approval.",
+    previewHighlights: [
+      "User-defined intent & price threshold triggers",
+      "Tamper-evident authorization boundaries",
+      "Automated recurring fulfillment concept",
+    ],
+    groups: [
+      {
+        title: "01 — The Core Idea",
+        items: [
+          "Replaces repetitive manual cart checking with declarative user buying mandates.",
+          "Continuously observes catalogue price mutations against pre-authorized user boundaries.",
+          "Ensures every autonomous action carries verifiable user consent and non-repudiation.",
+        ],
+      },
+      {
+        title: "02 — Business Impact",
+        items: [
+          "Eliminates drop-off between user purchase intent and real-time flash-price opportunities.",
+          "Establishes a zero-trust safety perimeter before any autonomous execution occurs.",
+          "High-level product concept delivered as an enterprise client engagement (implementation details confidential).",
+        ],
+      },
+    ],
+    pills: [
+      "Client Engagement",
+      "Autonomous Commerce",
+      "Conditional Triggers",
+      "Zero-Trust Consent",
+      "Event-Driven Idea",
+    ],
+  },
+  {
+    number: "05",
+    slug: "canonical-data-shield",
+    title: "Canonical Data & Quality Shield",
+    subtitle: "Multi-Layer Observability & Retail Modeling Idea",
+    year: "2026",
+    category: "Client Engagement",
+    roles: ["ds", "backend"],
+    isClientEngagement: true,
+    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
+    shopTone: "red",
+    headlineMetric: {
+      value: "4-LAYER",
+      label: "Automated anomaly tracing from reporting tables back to raw ingestion",
+    },
+    stats: [
+      { label: "SCOPE", value: "Client R&D" },
+      { label: "DOMAIN", value: "Data Quality" },
+      { label: "MODELING", value: "Canonical" },
+      { label: "TRACE", value: "End-to-End" },
+    ],
+    summary:
+      "An enterprise data governance and canonical modeling initiative pairing declarative quality contracts with reverse-lineage diagnostics—pinpointing the exact upstream source of downstream inconsistencies while aligning retail data schemas to unified outcome packages.",
+    previewHighlights: [
+      "Declarative contract checks across data tiers",
+      "Automated root-cause isolation across lineage layers",
+      "Canonical domain modeling for scalable retail analytics",
+    ],
+    groups: [
+      {
+        title: "01 — The Core Idea",
+        items: [
+          "Shifts reactive data debugging into proactive, declarative contract verification.",
+          "Unifies fragmented retail entities into reusable canonical packages aligned to business outcomes.",
+        ],
+      },
+      {
+        title: "02 — Business Impact",
+        items: [
+          "Accelerates data anomaly triage across multi-hop pipelines and prevents bad ingestion from reaching analytics.",
+        ],
+      },
+    ],
+    pills: [
+      "Client Engagement",
+      "Data Observability",
+      "Canonical Data Modeling",
+      "Root-Cause Lineage",
+    ],
+  },
+  {
+    number: "06",
     slug: "lexnext-ai",
     title: "LexNext.AI",
     subtitle: "Indian Legal Case Intelligence Platform",
@@ -95,61 +356,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Legal-Case-Intelligence-System-Phase-2",
   },
   {
-    number: "02",
-    slug: "autonomous-commerce",
-    title: "Autonomous Commerce",
-    subtitle: "Conditional Purchasing & Real-Time Trigger Idea",
-    year: "2026",
-    category: "Client Engagement",
-    roles: ["ai", "backend"],
-    isClientEngagement: true,
-    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
-    shopTone: "red",
-    headlineMetric: {
-      value: "ZERO-TOUCH",
-      label: "Conceptual shift from manual price tracking to intent-driven autonomous purchasing",
-    },
-    stats: [
-      { label: "SCOPE", value: "Client R&D" },
-      { label: "DOMAIN", value: "Commerce AI" },
-      { label: "MODE", value: "Event-Driven" },
-      { label: "TRUST", value: "Cryptographic" },
-    ],
-    summary:
-      "A high-level enterprise concept enabling users to declare purchase intents and budget rules once, allowing intelligent background evaluators to verify price movements and execute authorized transactions safely without manual re-approval.",
-    previewHighlights: [
-      "User-defined intent & price threshold triggers",
-      "Tamper-evident authorization boundaries",
-      "Automated recurring fulfillment concept",
-    ],
-    groups: [
-      {
-        title: "01 — The Core Idea",
-        items: [
-          "Replaces repetitive manual cart checking with declarative user buying mandates.",
-          "Continuously observes catalogue price mutations against pre-authorized user boundaries.",
-          "Ensures every autonomous action carries verifiable user consent and non-repudiation.",
-        ],
-      },
-      {
-        title: "02 — Business Impact",
-        items: [
-          "Eliminates drop-off between user purchase intent and real-time flash-price opportunities.",
-          "Establishes a zero-trust safety perimeter before any autonomous execution occurs.",
-          "High-level product concept delivered as an enterprise client engagement (implementation details confidential).",
-        ],
-      },
-    ],
-    pills: [
-      "Client Engagement",
-      "Autonomous Commerce",
-      "Conditional Triggers",
-      "Zero-Trust Consent",
-      "Event-Driven Idea",
-    ],
-  },
-  {
-    number: "03",
+    number: "07",
     slug: "adaptive-traffic",
     title: "Adaptive Traffic Control",
     subtitle: "Real-Time YOLOv8 Signal Optimization",
@@ -204,58 +411,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Adaptive-Traffic-Control-System",
   },
   {
-    number: "04",
-    slug: "causal-inventory-copilot",
-    title: "Causal Retail Copilot",
-    subtitle: "Conversational Inventory Diagnostics Concept",
-    year: "2026",
-    category: "Client Engagement",
-    roles: ["ai", "ds"],
-    isClientEngagement: true,
-    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
-    shopTone: "brick",
-    headlineMetric: {
-      value: "CAUSAL",
-      label: "Conversational root-cause diagnostics bridging business questions & supply data",
-    },
-    stats: [
-      { label: "SCOPE", value: "Client R&D" },
-      { label: "DOMAIN", value: "Retail Ops" },
-      { label: "FOCUS", value: "Root-Cause AI" },
-      { label: "OUTCOME", value: "Decision Speed" },
-    ],
-    summary:
-      "An enterprise decision-intelligence concept where retail operators ask plain-language diagnostic questions about stockouts or anomalies and receive structured, evidence-backed causal explanations rather than raw spreadsheet dumps.",
-    previewHighlights: [
-      "Multi-step conversational diagnostic reasoning",
-      "Grounded evidence retrieval over business metrics",
-      "Decision-ready executive insights",
-    ],
-    groups: [
-      {
-        title: "01 — The Core Idea",
-        items: [
-          "Bridges the gap between high-level retail KPIs and multi-layered operational root causes.",
-          "Orchestrates specialized reasoning steps to isolate why inventory or sales metrics drifted.",
-        ],
-      },
-      {
-        title: "02 — Business Impact",
-        items: [
-          "Compresses hours of manual analyst cross-referencing into interactive diagnostic threads.",
-          "Delivers transparent, auditable reasoning trails (proprietary architecture & stack omitted).",
-        ],
-      },
-    ],
-    pills: [
-      "Client Engagement",
-      "Causal Reasoning",
-      "Retail Diagnostics",
-      "Decision Intelligence",
-    ],
-  },
-  {
-    number: "05",
+    number: "08",
     slug: "gyastro",
     title: "GYAstro",
     subtitle: "Agentic Astrological Knowledge Engine",
@@ -307,7 +463,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/GYAstro",
   },
   {
-    number: "06",
+    number: "09",
     slug: "uniapply",
     title: "UniApply",
     subtitle: "Dynamic Rule-Driven Application Marketplace",
@@ -362,7 +518,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Hero-Vired-Project",
   },
   {
-    number: "07",
+    number: "10",
     slug: "site-engineer",
     title: "Site-Engineer",
     subtitle: "100% Local GPU AI Website Generator",
@@ -414,57 +570,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/Site-Engineer",
   },
   {
-    number: "08",
-    slug: "semantic-graph-discovery",
-    title: "Semantic Graph Discovery",
-    subtitle: "Enterprise Entity Resolution Concept",
-    year: "2026",
-    category: "Client Engagement",
-    roles: ["ai", "ml"],
-    isClientEngagement: true,
-    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
-    shopTone: "brick",
-    headlineMetric: {
-      value: "MULTI-HOP",
-      label: "Connecting ambiguous entities with relational context for high-confidence retrieval",
-    },
-    stats: [
-      { label: "SCOPE", value: "Client R&D" },
-      { label: "DOMAIN", value: "Enterprise KG" },
-      { label: "METHOD", value: "Hybrid Recall" },
-      { label: "FOCUS", value: "Precision" },
-    ],
-    summary:
-      "A discovery engine concept combining semantic similarity with structured multi-hop relationship traversal so complex domain queries resolve exact entities reliably across dense catalogs and schemas.",
-    previewHighlights: [
-      "Resolves synonyms & ambiguous queries via context",
-      "Combines semantic meaning with structural relationships",
-      "Strict confidence gating before evidence synthesis",
-    ],
-    groups: [
-      {
-        title: "01 — The Core Idea",
-        items: [
-          "Pure keyword search misses intent; pure vector search misses relational constraints.",
-          "Pairing semantic embeddings with graph relationship context grounds discovery in verifiable entity paths.",
-        ],
-      },
-      {
-        title: "02 — Business Impact",
-        items: [
-          "Significantly reduces false positives in complex enterprise lookups (technical stack & thresholds confidential).",
-        ],
-      },
-    ],
-    pills: [
-      "Client Engagement",
-      "Entity Resolution",
-      "Semantic Discovery",
-      "Graph Reasoning Idea",
-    ],
-  },
-  {
-    number: "09",
+    number: "11",
     slug: "async-booking-api",
     title: "Async Booking Engine",
     subtitle: "Real-Time WebSocket & PostgreSQL Backend",
@@ -518,57 +624,7 @@ export const PROJECTS: ProjectCaseStudy[] = [
     githubUrl: "https://github.com/FR34KY-CODER/FastAPI-PostgresSQL",
   },
   {
-    number: "10",
-    slug: "canonical-data-shield",
-    title: "Canonical Data & Quality Shield",
-    subtitle: "Multi-Layer Observability & Retail Modeling Idea",
-    year: "2026",
-    category: "Client Engagement",
-    roles: ["ds", "backend"],
-    isClientEngagement: true,
-    clientBadge: "CLIENT ENGAGEMENT · IDEA & IMPACT",
-    shopTone: "red",
-    headlineMetric: {
-      value: "4-LAYER",
-      label: "Automated anomaly tracing from reporting tables back to raw ingestion",
-    },
-    stats: [
-      { label: "SCOPE", value: "Client R&D" },
-      { label: "DOMAIN", value: "Data Quality" },
-      { label: "MODELING", value: "Canonical" },
-      { label: "TRACE", value: "End-to-End" },
-    ],
-    summary:
-      "An enterprise data governance and canonical modeling initiative pairing declarative quality contracts with reverse-lineage diagnostics—pinpointing the exact upstream source of downstream inconsistencies while aligning retail data schemas to unified outcome packages.",
-    previewHighlights: [
-      "Declarative contract checks across data tiers",
-      "Automated root-cause isolation across lineage layers",
-      "Canonical domain modeling for scalable retail analytics",
-    ],
-    groups: [
-      {
-        title: "01 — The Core Idea",
-        items: [
-          "Shifts reactive data debugging into proactive, declarative contract verification.",
-          "Unifies fragmented retail entities into reusable canonical packages aligned to business outcomes.",
-        ],
-      },
-      {
-        title: "02 — Business Impact",
-        items: [
-          "Accelerates data anomaly triage across multi-hop pipelines and prevents bad ingestion from reaching analytics.",
-        ],
-      },
-    ],
-    pills: [
-      "Client Engagement",
-      "Data Observability",
-      "Canonical Data Modeling",
-      "Root-Cause Lineage",
-    ],
-  },
-  {
-    number: "11",
+    number: "12",
     slug: "ml-predictive-suite",
     title: "Predictive ML & NLP Suite",
     subtitle: "Churn ROC-AUC, Placement SVM & Language ID",
@@ -621,61 +677,6 @@ export const PROJECTS: ProjectCaseStudy[] = [
     ],
     githubUrl: "https://github.com/FR34KY-CODER/Customer-Churn-Prediction-Using-ML",
     liveUrl: "https://placement-prediction-using-machine-learning-algorithms-cmy2s3s.streamlit.app/",
-  },
-  {
-    number: "12",
-    slug: "open-retail-data-model",
-    title: "Open Retail Data Model",
-    subtitle: "Databricks Industry Solutions · Open Source",
-    year: "2026",
-    category: "Open Source · Databricks Data Model",
-    roles: ["ds", "backend"],
-    isClientEngagement: false,
-    shopTone: "brick",
-    headlineMetric: {
-      value: "4.2K+ ODCS",
-      label: "Canonical Inventory core + 12 Balancing Margin & Volume metric views shipped to Databricks OSS",
-    },
-    stats: [
-      { label: "ODCS SPEC", value: "4,473 Lines" },
-      { label: "GOLD LAYER", value: "11 Views" },
-      { label: "METRICS", value: "12 Views" },
-      { label: "QUALITY", value: "565+ SQL" },
-    ],
-    summary:
-      "Collaborated remotely alongside Databricks Industry Solutions engineers to design and publish canonical retail data models and outcome packages to the official Databricks Open Retail Data Model (ORDM) repository.",
-    previewHighlights: [
-      "Authored canonical-core/inventory DDL, ODCS contract & ERD lineage",
-      "Shipped Balancing Margin & Volume package with 12 metric views & 11 Gold tables",
-      "Built 515+ lines of automated SQL data quality checks & comments",
-    ],
-    groups: [
-      {
-        title: "01 — Canonical Core · Inventory Foundation",
-        items: [
-          "Published canonical-core/inventory table definitions (inventory_position.sql), relationship keys, and 237-line Open Data Contract Standard (inventory.odcs.yaml).",
-          "Delivered Mermaid & DBML entity-relationship diagrams alongside standardized retail terminology glossary.",
-        ],
-      },
-      {
-        title: "02 — Outcome Package · Balancing Margin & Volume",
-        items: [
-          "Authored a 4,236-line ODCS specification, 11 Gold-tier analytical tables, and 12 semantic metric views to unify retail pricing, margin, and stockout trade-off analytics.",
-          "Implemented 515+ lines of automated SQL quality assertions, executable sample datasets, and validation notebooks.",
-        ],
-      },
-    ],
-    pills: [
-      "Databricks",
-      "ODCS YAML",
-      "SQL DDL",
-      "Gold Lakehouse",
-      "Data Contracts",
-      "Dimensional Modeling",
-      "Metric Views",
-      "Open Source",
-    ],
-    githubUrl: "https://github.com/databricks-industry-solutions/open-retail-data-model",
   },
 ];
 

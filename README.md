@@ -133,9 +133,9 @@ portfoolio-website/
 │   │       └── contact/          # Email dispatch API (SMTP / Resend)
 │   ├── components/
 │   │   ├── chrome/               # Global persistent UI (Header, Cursor, Preloader,
-│   │   │                         #  PersistentMorphActor, MorphingThreeCharacter)
-│   │   ├── home/                 # Chapter sections (TwoSides hero, Street,
-│   │   │                         #  Factory, UnderHood, Missions, Finale, RoleKnowledgeGraph)
+│   │   │                         #  DeterministicDevBotCompanion)
+│   │   ├── home/                 # Chapter sections (TwoSides hero, Street, Factory,
+│   │   │                         #  UnderHood, Missions, Finale, ScrollDrivenCyclist, PuppetDeveloperAvatar)
 │   │   └── work/                 # Case study presentation components
 │   ├── context/
 │   │   └── RoleContext.tsx       # Global role, stage mode, and character mood state

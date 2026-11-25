@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
-import { triggerRouteNavigation } from "@/lib/navigation";
+import { scrollToSectionId } from "@/lib/navigation";
 
 interface TransitionLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">,
@@ -12,6 +11,10 @@ interface TransitionLinkProps
   className?: string;
 }
 
+/**
+ * Standard Next.js Link wrapper with smooth scroll for in-page anchors
+ * and instant native App Router prefetching for sub-routes.
+ */
 export function TransitionLink({
   href,
   children,
@@ -19,39 +22,37 @@ export function TransitionLink({
   className,
   ...rest
 }: TransitionLinkProps) {
-  const router = useRouter();
   const hrefString = typeof href === "string" ? href : href.pathname || "/";
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (onClick) onClick(e);
-    if (
-      e.defaultPrevented ||
-      e.metaKey ||
-      e.ctrlKey ||
-      e.shiftKey ||
-      e.altKey ||
-      e.button !== 0 ||
-      rest.target === "_blank"
-    ) {
+
+    // In-page hash scroll handling
+    if (hrefString.startsWith("#")) {
+      e.preventDefault();
+      scrollToSectionId(hrefString.slice(1));
       return;
     }
 
     if (
-      hrefString.startsWith("http://") ||
-      hrefString.startsWith("https://") ||
-      hrefString.startsWith("mailto:")
+      hrefString.startsWith("/#") &&
+      typeof window !== "undefined" &&
+      window.location.pathname === "/"
     ) {
+      e.preventDefault();
+      scrollToSectionId(hrefString.slice(2));
       return;
     }
-
-    e.preventDefault();
-    triggerRouteNavigation(hrefString, router);
   };
 
   return (
-    <Link href={href} onClick={handleClick} className={className} {...rest}>
+    <Link
+      href={href}
+      onClick={handleClick}
+      className={className}
+      {...rest}
+    >
       {children}
     </Link>
   );
 }
-

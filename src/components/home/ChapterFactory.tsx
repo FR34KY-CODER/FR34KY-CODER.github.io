@@ -7,9 +7,12 @@ import { ROLES } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
 import { useHorizontalScene } from "@/hooks/useHorizontalScene";
 
+import { ModuleLibrary } from "./ModuleLibrary";
+import { SceneIndex } from "./SceneIndex";
+
 export function ChapterFactory() {
   const { activeRole, setDevMood, setStageMode, setHoverInfo, setDockVisible } = useRole();
-  const { sectionRef, viewportRef, trackRef, advance } = useHorizontalScene({
+  const { sectionRef, viewportRef, trackRef, advance, position, last } = useHorizontalScene({
     onActiveChange: (active) => {
       if (active) {
         setStageMode("factory");
@@ -26,13 +29,14 @@ export function ChapterFactory() {
     const section = sectionRef.current;
     if (!viewport || !track || !section) return;
     const media = window.matchMedia("(min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)");
+    const items = Array.from(track.querySelectorAll<HTMLElement>(".factory-crate"));
+    let centers: number[] = [];
     let previous = 0;
     const update = () => {
-      const items = Array.from(track.querySelectorAll<HTMLElement>(".factory-crate"));
       let count = 0;
-      items.forEach(item => {
-        const done = !media.matches || item.offsetLeft + item.offsetWidth / 2 - viewport.scrollLeft <= viewport.clientWidth / 2;
-        item.dataset.processed = String(done);
+      items.forEach((item, index) => {
+        const done = !media.matches || centers[index] - viewport.scrollLeft <= viewport.clientWidth / 2;
+        if (item.dataset.processed !== String(done)) item.dataset.processed = String(done);
         if (done) count++;
       });
       if (count !== previous) {
@@ -43,26 +47,32 @@ export function ChapterFactory() {
         setProcessed(count);
       }
     };
-    update();
+    const measure = () => {
+      centers = items.map(item => item.offsetLeft + item.offsetWidth / 2);
+      update();
+    };
+    const resize = new ResizeObserver(measure);
+    resize.observe(track);
+    resize.observe(viewport);
+    measure();
     viewport.addEventListener("scroll", update, {passive: true});
-    window.addEventListener("resize", update);
     media.addEventListener("change", update);
     return () => {
       viewport.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      resize.disconnect();
       media.removeEventListener("change", update);
     };
   }, [sectionRef, viewportRef, trackRef]);
 
   return (
+    <>
     <section id="the-factory" ref={sectionRef} data-night="" className="motion-scene factory-scene" aria-labelledby="factory-title">
       <div className="factory-windows" aria-hidden="true">{Array.from({length: 6}, (_, i) => <div key={i}>{Array.from({length: 15}, (_, j) => <i key={j} className={(i + j) % 7 === 0 ? "lit" : ""} />)}</div>)}</div>
       <div className="scene-heading">
-        <p className="scene-eyebrow">03 / The factory</p>
-        <h2 id="factory-title">Under the hood.<br /><em>On the production line.</em></h2>
-        <p>AI, backend, data science and ML. Explore the modules behind the work.</p>
+        <p className="scene-eyebrow">Skills & tools</p>
+        <h2 id="factory-title">The skills <em>factory.</em></h2>
         <div className="scene-controls">
-          <button onClick={() => advance(-1)} aria-label="Previous modules"><ArrowLeft size={18} /></button><span>Scroll to run the belt</span><button onClick={() => advance(1)} aria-label="Next modules"><ArrowRight size={18} /></button>
+          <button disabled={position === 0} onClick={() => advance(-1)} aria-label="Previous modules"><ArrowLeft size={18} /></button><span>Module {position + 1} of {FACTORY_CRATES.length}</span><button disabled={position === last} onClick={() => advance(1)} aria-label="Next modules"><ArrowRight size={18} /></button>
         </div>
       </div>
       <div className="factory-gantry" aria-hidden="true"><div className="factory-press"><div className="factory-press-head"><i /><i /><i /><div className="factory-piston" /><div className="factory-press-plate" /></div></div></div>
@@ -79,7 +89,7 @@ export function ChapterFactory() {
               data-scene-item=""
               data-processed="false"
               data-matching={activeRole === crate.role}
-              data-cursor-label="REPO"
+              data-cursor-label="REPO" data-insight={crate.summary}
               style={{"--crate-accent": ROLES[crate.role].accentNight} as React.CSSProperties}
               onMouseEnter={() =>
                 setHoverInfo({
@@ -105,7 +115,10 @@ export function ChapterFactory() {
         </div>
       </div>
       <div className="factory-belt" aria-hidden="true">{Array.from({length: 30}, (_, i) => <i key={i} />)}</div>
-      <div className="factory-status"><span>{String(processed).padStart(2, "0")} / {FACTORY_CRATES.length} assembled</span><span>Explore a module ↗</span></div>
+      <div className="factory-status"><span>{String(processed).padStart(2, "0")} / {FACTORY_CRATES.length} assembled</span></div>
     </section>
+    <SceneIndex title="Browse skills by discipline"><ModuleLibrary /></SceneIndex>
+    </>
   );
 }
+

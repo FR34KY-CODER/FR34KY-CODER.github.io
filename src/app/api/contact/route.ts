@@ -14,7 +14,7 @@ const contactSchema = z.object({
     .string()
     .trim()
     .min(6, "Please provide a valid phone number")
-    .max(32),
+    .max(32).or(z.literal("")).optional().default(""),
   company: z.string().trim().max(140).optional().default(""),
   roleMission: z.string().trim().max(120).optional().default(""),
   message: z
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     "The Visitor is interested in contacting you!",
     `Name: ${data.name}`,
     `Email: ${data.email}`,
-    `Phone: ${data.phone}`,
+    ...(data.phone ? ["Phone: " + data.phone] : []),
     `Company: ${data.company || "Independent / Individual"}`,
     `Role / Mission: ${data.roleMission || "Multi-Role Inquiry"}`,
     "",
