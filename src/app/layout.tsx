@@ -6,6 +6,9 @@ import "./portfolio.css";
 import { RoleProvider } from "@/context/RoleContext";
 import { Header } from "@/components/chrome/Header";
 import { DeterministicDevBotCompanion } from "@/components/chrome/DeterministicDevBotCompanion";
+import "./culture.css";
+import { PortfolioPlayer } from "@/components/chrome/PortfolioPlayer";
+import { RouteIris } from "@/components/chrome/RouteIris";
 import { CustomCursor } from "@/components/chrome/CustomCursor";
 import { Footer } from "@/components/chrome/Footer";
 import { PROFILE } from "@/data/profile";
@@ -25,6 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+import {CatalogProvider} from "@/context/Catalog";
 export const metadata: Metadata = {
   title: `${PROFILE.name} (${PROFILE.handle}) — AI · Backend · Data Science · ML Engineer`,
   description:
@@ -58,16 +62,20 @@ export default function RootLayout({
       className={`${archivo.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-[#f4f1ea] text-[#0f1217] font-sans antialiased selection:bg-[#ea1d0f] selection:text-[#f4f1ea]">
-        <RoleProvider>
+        <CatalogProvider><RoleProvider>
           <Header />
           <CustomCursor />
+          <RouteIris />
+          <PortfolioPlayer />
           <main className="relative min-h-screen">{children}</main>
           <DeterministicDevBotCompanion />
           <Footer />
-        </RoleProvider>
+        </RoleProvider></CatalogProvider>
       </body>
     </html>
   );
 }
+
+
 
 

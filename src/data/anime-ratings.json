@@ -1,0 +1,284 @@
+{
+  "highest": [
+    {
+      "title": "Chainsaw Man",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/127230",
+      "art": "/images/culture/anime-127230.webp",
+      "genres": [
+        "Action",
+        "Drama",
+        "Horror"
+      ],
+      "episodes": 12,
+      "year": 2022
+    },
+    {
+      "title": "One-Punch Man",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/21087",
+      "art": "/images/culture/anime-21087.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Sci-Fi"
+      ],
+      "episodes": 12,
+      "year": 2015
+    },
+    {
+      "title": "Dragon Ball Z",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/813",
+      "art": "/images/culture/anime-813.webp",
+      "genres": [
+        "Action",
+        "Adventure",
+        "Comedy"
+      ],
+      "episodes": 291,
+      "year": 1989
+    },
+    {
+      "title": "Death Note",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/1535",
+      "art": "/images/culture/anime-1535.webp",
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Supernatural"
+      ],
+      "episodes": 37,
+      "year": 2006
+    },
+    {
+      "title": "Akudama Drive",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/116566",
+      "art": "/images/culture/anime-116566.webp",
+      "genres": [
+        "Action",
+        "Drama",
+        "Sci-Fi"
+      ],
+      "episodes": 12,
+      "year": 2020
+    },
+    {
+      "title": "JUJUTSU KAISEN Season 2",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/145064",
+      "art": "/images/culture/anime-145064.webp",
+      "genres": [
+        "Action",
+        "Drama",
+        "Supernatural"
+      ],
+      "episodes": 23,
+      "year": 2023
+    },
+    {
+      "title": "Mob Psycho 100 III",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/140439",
+      "art": "/images/culture/anime-140439.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama"
+      ],
+      "episodes": 12,
+      "year": 2022
+    },
+    {
+      "title": "Mob Psycho 100 II",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/101338",
+      "art": "/images/culture/anime-101338.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama"
+      ],
+      "episodes": 13,
+      "year": 2019
+    },
+    {
+      "title": "Assassination Classroom Second Season",
+      "score": 100,
+      "format": "TV",
+      "url": "https://anilist.co/anime/21170",
+      "art": "/images/culture/anime-21170.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama"
+      ],
+      "episodes": 25,
+      "year": 2016
+    },
+    {
+      "title": "Grave of the Fireflies",
+      "score": 100,
+      "format": "MOVIE",
+      "url": "https://anilist.co/anime/578",
+      "art": "/images/culture/anime-578.webp",
+      "genres": [
+        "Drama"
+      ],
+      "episodes": 1,
+      "year": 1988
+    },
+    {
+      "title": "Cyberpunk: Edgerunners",
+      "score": 100,
+      "format": "ONA",
+      "url": "https://anilist.co/anime/120377",
+      "art": "/images/culture/anime-120377.webp",
+      "genres": [
+        "Action",
+        "Drama",
+        "Psychological"
+      ],
+      "episodes": 10,
+      "year": 2022
+    },
+    {
+      "title": "Scissor Seven",
+      "score": 100,
+      "format": "ONA",
+      "url": "https://anilist.co/anime/107912",
+      "art": "/images/culture/anime-107912.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama"
+      ],
+      "episodes": 10,
+      "year": 2018
+    }
+  ],
+  "ovas": [
+    {
+      "title": "Mob Psycho 100 REIGEN The Miraculous Unknown Psychic",
+      "score": 100,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/100353",
+      "art": "/images/culture/anime-100353.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Supernatural"
+      ],
+      "episodes": 1,
+      "year": 2018
+    },
+    {
+      "title": "GOLDEN BOY",
+      "score": 100,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/268",
+      "art": "/images/culture/anime-268.webp",
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Ecchi"
+      ],
+      "episodes": 6,
+      "year": 1995
+    },
+    {
+      "title": "One-Punch Man OVA",
+      "score": 100,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/21416",
+      "art": "/images/culture/anime-21416.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Sci-Fi"
+      ],
+      "episodes": 6,
+      "year": 2015
+    },
+    {
+      "title": "One-Punch Man: Road to Hero",
+      "score": 90,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/21386",
+      "art": "/images/culture/anime-21386.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Sci-Fi"
+      ],
+      "episodes": 1,
+      "year": 2015
+    },
+    {
+      "title": "One-Punch Man Season 2 OVA",
+      "score": 80,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/108945",
+      "art": "/images/culture/anime-108945.webp",
+      "genres": [
+        "Action",
+        "Comedy",
+        "Sci-Fi"
+      ],
+      "episodes": 6,
+      "year": 2019
+    },
+    {
+      "title": "I Dream of Mimi",
+      "score": 80,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/458",
+      "art": "/images/culture/anime-458.webp",
+      "genres": [
+        "Comedy",
+        "Ecchi",
+        "Sci-Fi"
+      ],
+      "episodes": 3,
+      "year": 1997
+    },
+    {
+      "title": "Prison School: Mad Wax",
+      "score": 80,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/21565",
+      "art": "/images/culture/anime-21565.webp",
+      "genres": [
+        "Comedy",
+        "Ecchi",
+        "Romance"
+      ],
+      "episodes": 1,
+      "year": 2016
+    },
+    {
+      "title": "Supernatural: The Anime Series",
+      "score": 80,
+      "format": "OVA",
+      "url": "https://anilist.co/anime/8986",
+      "art": "/images/culture/anime-8986.webp",
+      "genres": [
+        "Action",
+        "Horror",
+        "Mystery"
+      ],
+      "episodes": 22,
+      "year": 2011
+    }
+  ]
+}

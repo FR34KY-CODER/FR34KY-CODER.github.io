@@ -113,7 +113,7 @@ export function Footer() {
             <span>·</span>
             <span>{PROFILE.education}</span>
             <span>·</span>
-            <span>{PROFILE.currentRole}</span>
+            <span>{PROFILE.currentRole}</span>{process.env.NEXT_PUBLIC_STATIC_CONTACT!=="true" && <TransitionLink href="/admin">Admin ↗</TransitionLink>}
           </div>
 
           <button

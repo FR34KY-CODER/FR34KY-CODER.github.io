@@ -6,12 +6,11 @@ import { ArrowDown } from "lucide-react";
 
 const CHAPTERS = [
   { id: "two-sides", num: "01", label: "Introduction" },
-  { id: "missions", num: "02", label: "Role profiles" },
-  { id: "the-street", num: "03", label: "Projects" },
-  { id: "the-factory", num: "04", label: "Tools" },
-  { id: "under-the-hood", num: "05", label: "Experience" },
+  { id: "the-street", num: "02", label: "Projects" },
+  { id: "the-factory", num: "03", label: "Tools" },
+  { id: "under-the-hood", num: "04", label: "Experience" },
 
-  { id: "both-sides", num: "06", label: "Contact" },
+  { id: "both-sides", num: "05", label: "Contact" },
 ];
 
 export function ChapterRail() {

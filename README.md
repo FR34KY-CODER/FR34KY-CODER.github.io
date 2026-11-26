@@ -239,3 +239,11 @@ npm run build
 ## 📄 License
 This project is open source and available under the [MIT License](LICENSE).
 
+
+## Local portfolio editor
+
+Run the portfolio with Node.js 24 and open `/admin` on the local Next.js server. The city, time zone, projects, screen catalog, music uploads and account records live in `.portfolio/portfolio.sqlite`. Back up this directory with the server stopped. Set `PORTFOLIO_DATA_DIR` to choose another private local directory.
+
+On a fresh installation, pass the initial password through standard input to `node scripts/init-admin.mjs`. It creates the owner account once. Subsequent password changes require an authenticated session and a code delivered to the owner's mailbox. Configure the SMTP settings in `.env.local` and restart the server after changing them.
+
+The GitHub Pages export serves the bundled public portfolio. Local edits and admin sign-in are available on the Node server.

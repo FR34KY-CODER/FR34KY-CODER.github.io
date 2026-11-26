@@ -3,20 +3,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { HexMark } from "./HexMark";
+import {useCatalog} from "@/context/Catalog";
 import { TransitionLink } from "./TransitionLink";
 import { PROFILE } from "@/data/profile";
 import { CORE_ROLES, RoleId } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
 import { Menu, X } from "lucide-react";
 
-function useJaipurClock() {
+function useCityClock(timezone:string) {
   const [timeStr, setTimeStr] = useState("--:--");
 
   useEffect(() => {
     const update = () => {
       try {
         const formatted = new Intl.DateTimeFormat("en-IN", {
-          timeZone: PROFILE.timezone,
+          timeZone: timezone,
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
@@ -29,7 +30,7 @@ function useJaipurClock() {
     update();
     const id = window.setInterval(update, 15000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [timezone]);
 
   return timeStr;
 }
@@ -37,13 +38,15 @@ function useJaipurClock() {
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
+  { href: "/co-curricular", label: "Co-curricular" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "/";
   const { activeRole, setActiveRole } = useRole();
-  const jaipurTime = useJaipurClock();
+  const {city,timezone}=useCatalog();
+  const jaipurTime = useCityClock(timezone);
 
   const brandRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -180,6 +183,7 @@ export function Header() {
                   <TransitionLink
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "page" : undefined}
                     className="relative rounded-full px-3.5 py-1.5 font-mono text-[12px] font-medium tracking-[0.14em] uppercase transition-all duration-200"
                     style={{
                       backgroundColor: isActive
@@ -201,8 +205,8 @@ export function Header() {
             </nav>
 
             {/* Live IST Status Pill */}
-            <div
-              title={PROFILE.statusLabel}
+            <TransitionLink href="/life"
+              title={"Life in "+city}
               className="hidden sm:flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[12px] tracking-[0.14em] uppercase backdrop-blur-md"
               style={{
                 borderColor: rightNight
@@ -218,9 +222,9 @@ export function Header() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               <span className="tabular-nums">
-                {PROFILE.city} {jaipurTime}
+                {city} {jaipurTime}
               </span>
-            </div>
+            </TransitionLink>
 
             {/* Mobile Menu Trigger */}
             <button
@@ -323,9 +327,7 @@ export function Header() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#f4f1ea]/12 pt-4 font-mono text-xs text-[#f4f1ea]/75">
-          <span>
-            {PROFILE.city} · {jaipurTime} IST
-          </span>
+          <TransitionLink href="/life" onClick={()=>setMobileOpen(false)}>{city} · {jaipurTime} ↗</TransitionLink>
           <a
             href={
               PROFILE.socials.find((s) => s.label === "GitHub")?.href ||
@@ -342,4 +344,6 @@ export function Header() {
     </>
   );
 }
+
+
 

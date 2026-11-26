@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { PROJECTS } from "@/data/projects";
+import {useCatalog} from "@/context/Catalog";
 import { ROLES } from "@/data/roles";
 import { useRole } from "@/context/RoleContext";
 import { TransitionLink } from "@/components/chrome/TransitionLink";
@@ -13,6 +13,7 @@ import { ProjectIndex } from "./ProjectIndex";
 import { SceneIndex } from "./SceneIndex";
 
 export function ChapterStreet() {
+  const {projects:PROJECTS}=useCatalog();
   const { activeRole, setDevMood, setStageMode, setHoverInfo, setDockVisible } = useRole();
   const rotationRef = React.useRef(0);
   const { sectionRef, viewportRef, trackRef, advance, position, last } = useHorizontalScene({

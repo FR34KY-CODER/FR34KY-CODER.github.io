@@ -4,7 +4,6 @@ import { ChapterTwoSides } from "@/components/home/ChapterTwoSides";
 import { ChapterStreet } from "@/components/home/ChapterStreet";
 import { ChapterFactory } from "@/components/home/ChapterFactory";
 import { ChapterUnderHood } from "@/components/home/ChapterUnderHood";
-import { ChapterMissions } from "@/components/home/ChapterMissions";
 import { ChapterFinale } from "@/components/home/ChapterFinale";
 
 export default function HomePage() {
@@ -12,7 +11,6 @@ export default function HomePage() {
     <div className="relative">
       <ChapterRail />
       <ChapterTwoSides />
-      <ChapterMissions />
       <ChapterStreet />
       <ChapterFactory />
       <ChapterUnderHood />

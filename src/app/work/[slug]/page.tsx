@@ -5,6 +5,11 @@ import { PROJECTS } from "@/data/projects";
 import { PROFILE } from "@/data/profile";
 import { CaseStudyView } from "@/components/work/CaseStudyView";
 
+import {database} from "@/server/database.mjs";
+function allProjects() {
+  if(process.env.GITHUB_ACTIONS)return PROJECTS;
+  return [...PROJECTS,...database().prepare("SELECT json FROM content WHERE kind='projects'").all().map(row=>JSON.parse(String(row.json)) as (typeof PROJECTS)[number])];
+}
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
 }
@@ -15,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = allProjects().find((p) => p.slug === slug);
   if (!project) {
     return { title: `Not Found — ${PROFILE.name}` };
   }
@@ -31,13 +36,14 @@ export default async function WorkCaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const idx = PROJECTS.findIndex((p) => p.slug === slug);
+  const projects=allProjects();
+  const idx = projects.findIndex((p) => p.slug === slug);
   if (idx === -1) {
     notFound();
   }
 
-  const project = PROJECTS[idx];
-  const nextProject = PROJECTS[(idx + 1) % PROJECTS.length];
+  const project = projects[idx];
+  const nextProject = projects[(idx + 1) % projects.length];
 
   return <CaseStudyView project={project} nextProject={nextProject} />;
 }
