@@ -6,6 +6,9 @@ import "./portfolio.css";
 import { RoleProvider } from "@/context/RoleContext";
 import { Header } from "@/components/chrome/Header";
 import { DeterministicDevBotCompanion } from "@/components/chrome/DeterministicDevBotCompanion";
+import "./culture.css";
+import { PortfolioPlayer } from "@/components/chrome/PortfolioPlayer";
+import { RouteIris } from "@/components/chrome/RouteIris";
 import { CustomCursor } from "@/components/chrome/CustomCursor";
 import { Footer } from "@/components/chrome/Footer";
 import { PROFILE } from "@/data/profile";
@@ -61,6 +64,8 @@ export default function RootLayout({
         <RoleProvider>
           <Header />
           <CustomCursor />
+          <RouteIris />
+          <PortfolioPlayer />
           <main className="relative min-h-screen">{children}</main>
           <DeterministicDevBotCompanion />
           <Footer />
@@ -69,5 +74,7 @@ export default function RootLayout({
     </html>
   );
 }
+
+
 
 

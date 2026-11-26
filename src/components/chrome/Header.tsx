@@ -37,6 +37,7 @@ function useJaipurClock() {
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
+  { href: "/co-curricular", label: "Co-curricular" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -342,4 +343,5 @@ export function Header() {
     </>
   );
 }
+
 
