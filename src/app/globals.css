@@ -58,9 +58,9 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    html.has-custom-cursor,
-    html.has-custom-cursor a,
-    html.has-custom-cursor button {
+    html.has-custom-cursor:not(:has(dialog:modal)),
+    html.has-custom-cursor:not(:has(dialog:modal)) a,
+    html.has-custom-cursor:not(:has(dialog:modal)) button {
       cursor: none !important;
     }
   }
@@ -581,3 +581,5 @@ p { text-wrap: pretty; }
 .observatory-controls button { display: grid; place-items: center; width: 34px; height: 40px; cursor: pointer; }
 .observatory-controls button:hover { color: #a33622; }
 .observatory-controls input { width: clamp(48px,9vw,120px); height: 30px; accent-color: #a33622; cursor: pointer; }
+.management,.life-album{min-height:100svh;padding:clamp(110px,12vw,185px) max(6vw,20px) 100px;background:#17161a;color:#f6eadf}.manage-inner{max-width:720px;margin:auto}.management header,.management nav,.life-album nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.management header{justify-content:space-between}.management h1,.life-album h1{font-size:clamp(44px,7vw,106px);line-height:1.05;letter-spacing:-.06em}.management nav,.life-album nav{margin:22px 0}.management button,.life-album nav a{border:1px solid #655f69;border-radius:24px;padding:8px 16px}.management button[aria-pressed=true],.management button[type=submit]{background:#e8c7ae;color:#231b1a}.management form{display:grid;gap:16px;background:#242128;border:1px solid #413c44;border-radius:18px;padding:clamp(16px,4vw,34px);margin:20px 0}.management label{display:grid;gap:5px;text-transform:capitalize}.management input,.management textarea{font:inherit;color:#fff;border:1px solid #645b69;border-radius:6px;padding:10px;background:#19171c;width:100%}.management button:disabled{opacity:.55}.life-album{background:#201c1b}.life-album section{scroll-margin-top:90px;margin-top:65px}.life-album h2{font-size:clamp(28px,4vw,56px);letter-spacing:-.045em;margin-bottom:16px}.life-album section>div{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}.life-album img,.life-album video{width:100%;height:clamp(240px,32vw,420px);object-fit:cover;border-radius:9px;background:#100f10}
+.management fieldset{display:grid;gap:14px;border:1px solid #514653;border-radius:10px;padding:16px}.management legend{padding:0 6px}.management .role-checks{display:flex;flex-wrap:wrap;gap:14px}.management .role-checks label,.management .check-field{display:flex;align-items:center;gap:6px}.management input[type=checkbox]{width:16px;height:16px}.management select{padding:10px;border-radius:6px;background:#19171c}

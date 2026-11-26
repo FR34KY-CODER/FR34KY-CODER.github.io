@@ -99,8 +99,8 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
       frame = 0;
       if (!ctx || !host || !visible || document.hidden || !width) return;
       const animate = !pausedRef.current && !motion.matches;
-      const drifting = animate && !hovered && !host.querySelector(".wire-popup:is(:hover,:focus-within)");
-      if (drifting && lastDraw && now-lastDraw < 30) { schedule(); return; }
+      const drifting = animate && !interaction.current.picked && !hovered && !host.querySelector(".wire-popup:is(:hover,:focus-within)");
+      if (drifting && lastDraw && now-lastDraw < 48) { schedule(); return; }
       if (drifting && lastDraw) orbit += Math.min(now-lastDraw,80) * tau / 160000;
       lastDraw = drifting ? now : 0;
       const turn = progress.current * tau / stringColors.length - .64 + orbit;
@@ -142,7 +142,7 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
         line(arms[i][3]); line(arms[i][9]);
         ctx.lineWidth = (i === active ? 1.2 : .85)*depth;
         ctx.globalAlpha = selected ? .12 : (i === active ? .8 : .49)*depth;
-        ctx.filter=selected ? "blur(1px)" : "none";
+
         for (const [fiber,path] of arms[i].entries()) {
           const points=path.map(project);
           paths.push({thread:{arm:i,fiber},points:points.filter((_,j)=>j%3===0 || j===80)});
@@ -150,13 +150,12 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
           points.forEach(([x,y],j)=>{if(j)ctx.lineTo(x,y);else ctx.moveTo(x,y);});
           ctx.stroke();
         }
-        ctx.filter="none";
+
         if(selected?.arm===i){
           const wire=arms[i][selected.fiber];
-          ctx.save();ctx.strokeStyle="#fff";ctx.shadowColor=stringColors[i];ctx.shadowBlur=8;
+          ctx.save();ctx.strokeStyle="#fff";
           ctx.globalAlpha=.9;ctx.lineWidth=1.8;line(wire);
-          const at=animate ? Math.floor(now/23)%74 : 36;
-          ctx.lineWidth=4;line(wire.slice(at,at+7));ctx.restore();
+          ctx.restore();
           if(popup){
             const [px,py]=project(wire[43]);
             popup.style.left=Math.max(8,Math.min(width-popup.offsetWidth-8,px+14))+"px";
@@ -177,7 +176,7 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
         }
       }
       ctx.globalAlpha=1;
-      if (drifting || (animate && interaction.current.picked)) schedule();
+      if (drifting) schedule();
     }
     function schedule() {
       if (!frame && visible && !document.hidden) frame=requestAnimationFrame(draw);
@@ -187,7 +186,7 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
     visibility.observe(host);
     const resize = new ResizeObserver(() => {
       width=host.clientWidth; height=host.clientHeight;
-      const ratio=Math.min(devicePixelRatio,2);
+      const ratio=Math.min(devicePixelRatio,1.5);
       surface.width=Math.round(width*ratio); surface.height=Math.round(height*ratio);
       ctx.setTransform(ratio,0,0,ratio,0,0); schedule();
     });
@@ -204,5 +203,3 @@ export function SignalVolume({ stage, progress, labels, paused, picked, nameFor,
   }, [stage,progress,labels]);
   return <><canvas ref={canvas} className="signal-volume" aria-hidden="true"/><output hidden ref={tooltip} className="thread-tip" aria-hidden="true"/></>;
 }
-
-

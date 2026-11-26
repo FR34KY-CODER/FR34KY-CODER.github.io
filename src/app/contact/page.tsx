@@ -33,7 +33,7 @@ function ContactConsoleContent() {
   const searchParams = useSearchParams();
   const { activeRole } = useRole();
 
-  const initialRole = searchParams.get("role");
+  const initialRole = searchParams?.get("role");
   const defaultMission =
     initialRole && initialRole in ROLES && initialRole !== "all"
       ? ROLES[initialRole as keyof typeof ROLES].title

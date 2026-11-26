@@ -21,7 +21,7 @@ export function CustomCursor() {
       frame = 0;
       if (x < 0 || !media.matches) return;
       const hit = document.elementFromPoint(x,y);
-      if (!hit || hit.closest('input,textarea,[contenteditable=true],select')) { hide(); return; }
+      if (!hit || document.querySelector('dialog:modal') || hit.closest('input,textarea,[contenteditable=true],select')) { hide(); return; }
       dot.hidden = false;
       document.documentElement.classList.add("has-custom-cursor");
       dot.style.transform = `translate(${x-5}px,${y-5}px)`;

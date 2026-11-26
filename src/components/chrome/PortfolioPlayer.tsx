@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect,useRef,useState} from "react";
+import {useEffect,useMemo,useRef,useState} from "react";
 import Image from "next/image";
-import {Pause,Play,SkipBack,SkipForward,Volume2,VolumeX,X,Music2,ListMusic} from "lucide-react";
-import tracks from "@/data/playback.json";
+import {Pause,Play,SkipBack,SkipForward,Volume2,VolumeX,X,Music2,ListMusic,Search} from "lucide-react";
+import {useCatalog} from "@/context/Catalog";
 
 export function playTrack(index:number,order:number[]){
   window.dispatchEvent(new CustomEvent("portfolio:play",{detail:{index,order}}));
@@ -12,6 +12,7 @@ export function clock(seconds:number){
   return Math.floor(seconds/60)+":"+String(Math.floor(seconds%60)).padStart(2,"0");
 }
 export function PortfolioPlayer(){
+  const {tracks}=useCatalog();
   const audio=useRef<HTMLAudioElement>(null),order=useRef<number[]>([]);
   const [index,select]=useState<number|null>(null),[playing,setPlaying]=useState(false);
   const [time,setTime]=useState(0),[duration,setDuration]=useState(0),[volume,setVolume]=useState(.8),[error,setError]=useState(false);
@@ -35,18 +36,25 @@ export function PortfolioPlayer(){
       if(index===data.index)toggle();else load(data.index);
     }
     window.addEventListener("portfolio:play",start);return ()=>window.removeEventListener("portfolio:play",start);
-  },[index]);
+  },[index,tracks]);
   useEffect(()=>{if(audio.current)audio.current.volume=volume;},[index,volume]);
   const picker=useRef<HTMLDialogElement>(null);
   const [query,setQuery]=useState("");
   const [browsing,setBrowsing]=useState(false);
-  function openLibrary(){setBrowsing(true);picker.current?.showModal();}
-  const matches=(browsing?tracks:[]).map((t,i)=>({t,i})).filter(({t})=>(t.title+" "+t.artist).toLowerCase().includes(query.toLowerCase()));
+  function openLibrary(){setBrowsing(true);picker.current?.showModal();picker.current?.querySelector("input")?.focus();}
+  const [limit,setLimit]=useState(20);
+  const matches=useMemo(()=>{
+    const normalize=(v:string)=>v.normalize("NFKD").replace(/\p{M}/gu,"").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
+    const q=normalize(query),words=q.split(" ");
+    return (browsing?tracks:[]).map((t,i)=>({t,i})).filter(({t})=>{const hay=normalize([t.title,t.artist,t.credit,t.album].join(" "));return words.every(w=>hay.includes(w));})
+      .sort((a,b)=>Number(normalize(b.t.title).startsWith(q))-Number(normalize(a.t.title).startsWith(q)));
+  },[browsing,query,tracks]);
   const library=<dialog className="global-library" ref={picker} onClose={()=>setBrowsing(false)} aria-label="Music library">
     <header><h2>Music library</h2><button aria-label="Close music library" onClick={()=>picker.current?.close()}><X/></button></header>
-    <input type="search" aria-label="Search music library" placeholder="Find a song or artist" value={query} onChange={e=>setQuery(e.target.value)}/>
-    <div>{matches.map(({t,i})=><button key={t.src} className="library-track" onClick={()=>{playTrack(i,matches.map(m=>m.i));picker.current?.close();}}>
+    <label className="music-search"><Search aria-hidden="true" size={18}/><input type="search" aria-label="Search music library" placeholder="Search songs, artists and albums" value={query} onChange={e=>{setQuery(e.target.value);setLimit(20);}}/></label>
+    <small className="library-count">{matches.length} tracks</small><div>{matches.slice(0,limit).map(({t,i})=><button key={t.src} className="library-track" onClick={()=>{playTrack(i,matches.map(m=>m.i));picker.current?.close();}}>
       <Image src={t.art} width={40} height={40} alt="" loading="lazy"/><span><b>{t.title}</b><small>{t.artist}</small></span><em>{t.kind==="Library"?clock(t.seconds):"Preview"}</em><Play size={15}/></button>)}
+    {matches.length>limit&&<button className="more-tracks" onClick={()=>setLimit(limit+20)}>Show more tracks</button>}
     {!matches.length && <p>No matching songs.</p>}</div></dialog>;
   if(index===null)return <>{library}<button className="global-music-launch" onClick={openLibrary}><Music2 size={16}/> Music</button></>;
   const t=tracks[index];
@@ -56,7 +64,7 @@ export function PortfolioPlayer(){
       onTimeUpdate={e=>setTime(e.currentTarget.currentTime)} onPlay={()=>{setPlaying(true);setError(false);}}
       onPause={()=>setPlaying(false)} onEnded={()=>advance(1)} onError={()=>{setPlaying(false);setError(true);}}/>
     <Image src={t.art} width={52} height={52} alt=""/>
-    <div className="dock-title"><b>{t.title}</b><small>{t.credit}</small>{error&&<a href={t.url}>Open on Apple Music ↗</a>}</div>
+    <div className="dock-title"><b>{t.title}</b><small>{t.credit}</small>{error&&!t.url&&<small>Playback unavailable</small>}{error&&t.url&&<a href={t.url}>Open on Apple Music ↗</a>}</div>
     <div className="transport"><button aria-label="Previous track" onClick={()=>advance(-1)}><SkipBack/></button>
     <button className="play-disc" aria-label={playing?"Pause track":"Play track"} onClick={toggle}>{playing?<Pause/>:<Play/>}</button>
     <button aria-label="Next track" onClick={()=>advance(1)}><SkipForward/></button></div>

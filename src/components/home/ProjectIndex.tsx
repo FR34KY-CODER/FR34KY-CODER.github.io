@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PROJECTS } from "@/data/projects";
+import {useCatalog} from "@/context/Catalog";
 
 export function ProjectIndex() {
+  const {projects:PROJECTS}=useCatalog();
   return <section data-paper="" className="evidence-index">
     <header><div><p className="atlas-label">Case studies</p><h2>Selected work.</h2></div><Link href="/work">All {PROJECTS.length} projects <ArrowUpRight size={16}/></Link></header>
     <ol>{PROJECTS.slice(0,5).map(project=><li key={project.slug}>

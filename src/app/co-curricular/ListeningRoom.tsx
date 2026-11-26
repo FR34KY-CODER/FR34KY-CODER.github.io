@@ -4,20 +4,22 @@ import {useState} from "react";
 import Image from "next/image";
 import {Play,Music2} from "lucide-react";
 import artists from "@/data/listening.json";
-import tracks from "@/data/playback.json";
+import {useCatalog} from "@/context/Catalog";
 import {clock,playTrack} from "@/components/chrome/PortfolioPlayer";
 
 const groups={
   Bollywood:["Sonu Nigam","Shreya Ghoshal","Mohit Chauhan","Vishal Mishra"],
   "Indian indie":["The Local Train","Dream Note"],
+  Uploads:[] as string[],
   English:["LINKIN PARK","NEFFEX","Eminem","Bruno Mars","Ed Sheeran"],
 };
 export function ListeningRoom(){
+  const {tracks}=useCatalog();
   const [genre,setGenre]=useState<keyof typeof groups>("Bollywood"),[artist,setArtist]=useState(""),[limit,setLimit]=useState(6);
-  const names=groups[genre], members=artists.filter(a=>names.includes(a.name));
+  const names=genre==="Uploads"?tracks.filter(t=>t.src.startsWith("/api/audio/")).map(t=>t.artist):groups[genre], members=artists.filter(a=>names.includes(a.name));
   const [format,setFormat]=useState<"All"|"Library"|"Preview">("All");
   const [query,setQuery]=useState("");
-  const collection=tracks.map((t,i)=>({...t,index:i})).filter(t=>artist?t.artist===artist:names.includes(t.artist));
+  const collection=tracks.map((t,i)=>({...t,index:i})).filter(t=>genre==="Uploads"?t.src.startsWith("/api/audio/"):artist?t.artist===artist:names.includes(t.artist));
   const songs=collection.filter(t=>(format==="All"||t.kind===format) && [t.title,t.credit,t.album].join(" ").toLowerCase().includes(query.trim().toLowerCase()));
   const order=songs.map(s=>s.index);
   function changeArtist(name:string){setArtist(name);setLimit(6);setFormat("All");setQuery("");}
@@ -26,7 +28,7 @@ export function ListeningRoom(){
       <div><p className="culture-kicker"><Music2 size={14}/> Apple Music · Lossless listener</p><h2>Listening room</h2>
       <p>{tracks.filter(t=>t.kind==="Library").length} library tracks · {tracks.filter(t=>t.kind==="Preview").length} catalog previews</p>
       <button className="room-play" disabled={!order.length} onClick={()=>playTrack(order[0],order)}><Play size={15} fill="currentColor"/> Play {artist||genre}</button></div></header>
-    <div className="shelf-controls" aria-label="Music genres">{(Object.keys(groups) as (keyof typeof groups)[]).map(g=><button key={g} aria-pressed={g===genre} onClick={()=>{setGenre(g);changeArtist("");}}>{g}</button>)}</div>
+    <div className="shelf-controls" aria-label="Music genres">{(Object.keys(groups) as (keyof typeof groups)[]).filter(g=>g!=="Uploads"||tracks.some(t=>t.src.startsWith("/api/audio/"))).map(g=><button key={g} aria-pressed={g===genre} onClick={()=>{setGenre(g);changeArtist("");}}>{g}</button>)}</div>
     <div className="music-library"><div className="artist-shelf"><h3>Artists</h3><div className="artist-grid">{members.map(a=><article key={a.name} className="artist">
       <button aria-pressed={artist===a.name} onClick={()=>changeArtist(artist===a.name?"":a.name)}><Image src={a.art} width={160} height={160} alt=""/><b>{a.name}</b></button>
       <div className="artist-tracks"><a href={a.source}>Top songs ↗</a><ol>{a.tracks.map(t=><li key={t.url}><a href={t.url}>{t.title}</a></li>)}</ol></div></article>)}</div></div>

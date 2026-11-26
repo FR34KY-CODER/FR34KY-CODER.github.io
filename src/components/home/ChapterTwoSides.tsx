@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {ArrowDownRight,ArrowUpRight,Workflow,Database,FlaskConical,Braces,Pause,Play} from "lucide-react";
 import {SignalVolume,stringColors,type Thread} from "./SignalVolume";
+import {useCatalog} from "@/context/Catalog";
 import {PROJECTS} from "@/data/projects";
 import {ROLES} from "@/data/roles";
 
@@ -14,10 +15,16 @@ const branches=[
  {label:"AI & ML",title:"Applied intelligence",meta:"Research · Machine learning",role:"ml",icon:FlaskConical,detail:"Legal retrieval and summarization at LNMIIT’s LICAI Lab, vision-based traffic control, and predictive modeling across tabular and language data.",projects:PROJECTS.filter(p=>["lexnext-ai","adaptive-traffic","ml-predictive-suite","gyastro"].includes(p.slug))},
  {label:"Software",title:"Software systems",meta:"Backend · Developer tools",role:"backend",icon:Braces,detail:"An asynchronous booking engine, a rules-driven application marketplace, and a local GPU workspace for generating websites.",projects:PROJECTS.filter(p=>["async-booking-api","uniapply","site-engineer"].includes(p.slug))},
 ] as const;
-function projectFor({arm,fiber}:Thread){const group=branches[arm].projects;return group[fiber%group.length];}
-function nameFor(thread:Thread){return projectFor(thread).title;}
+
 
 export function ChapterTwoSides(){
+ const {city,projects}=useCatalog();
+ function projectFor({arm,fiber}:Thread){
+   const extra=projects.slice(PROJECTS.length).filter(p=>arm===0?p.isClientEngagement:arm===1?Boolean(p.githubUrl):p.roles.includes(branches[arm].role));
+   const group=[...branches[arm].projects,...extra];
+   return group[fiber%group.length];
+ }
+ function nameFor(thread:Thread){return projectFor(thread).title;}
  const section=useRef<HTMLElement>(null),stage=useRef<HTMLDivElement>(null);
  const labels=useRef<(HTMLButtonElement|null)[]>([]),progress=useRef(0),active=useRef(0);
  const [selected,setSelected]=useState(0),[paused,setPaused]=useState(false),[picked,setPicked]=useState<Thread|null>(null);
@@ -45,7 +52,7 @@ export function ChapterTwoSides(){
  return <section id="two-sides" data-night="" className="signal-journey" ref={section} aria-labelledby="hero-title">
  <div className="signal-stage" ref={stage} style={{"--signal":stringColors[selected]} as React.CSSProperties}>
  <SignalVolume stage={stage} progress={progress} labels={labels} paused={paused} picked={picked} nameFor={nameFor} onPick={pick}/>
- <header className="signal-identity"><p className="atlas-label">AI &amp; Data Science Engineer · Jaipur</p><h1 id="hero-title">Ojasvi Goyal<span>.</span></h1>
+ <header className="signal-identity"><p className="atlas-label">AI &amp; Data Science Engineer · {city}</p><h1 id="hero-title">Ojasvi Goyal<span>.</span></h1>
  <a href="#under-the-hood">Experience <ArrowDownRight size={14}/></a><button className="orbit-toggle" onClick={()=>setPaused(!paused)} aria-label={paused?"Resume graph rotation":"Pause graph rotation"}>{paused?<Play size={14}/>:<Pause size={14}/>}</button></header>
  <nav className="signal-branches" aria-label="Portfolio branches">{branches.map(({label,icon:Icon},i)=><button key={label} ref={el=>{labels.current[i]=el;}} style={{"--node":stringColors[i]} as React.CSSProperties} aria-pressed={selected===i} aria-controls="atlas-evidence" onClick={()=>choose(i)}><Icon size={14}/>{label}</button>)}</nav>
  {project && <aside className="wire-popup" aria-label="Selected project"><button aria-label="Close project insight" onClick={()=>setPicked(null)}>×</button><strong>{project.title}</strong><span>{project.headlineMetric.value}</span><Link href={'/work/'+project.slug}>Case study ↗</Link></aside>}

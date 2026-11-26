@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { Flip } from "gsap/Flip";
 import { ArrowUpRight, Filter, FolderGit2, ShieldCheck } from "lucide-react";
-import { PROJECTS } from "@/data/projects";
+import {useCatalog} from "@/context/Catalog";
 import { CORE_ROLES, RoleId, ROLES } from "@/data/roles";
 import { TransitionLink } from "@/components/chrome/TransitionLink";
 import { useRole } from "@/context/RoleContext";
@@ -25,9 +25,10 @@ const FILTER_OPTIONS: { id: WorkFilter; label: string; color?: string }[] = [
 ];
 
 function WorkArchiveContent() {
+  const {projects:PROJECTS}=useCatalog();
   const searchParams = useSearchParams();
   const { setActiveRole } = useRole();
-  const filter = FILTER_OPTIONS.find(option => option.id === searchParams.get("role"))?.id ?? "all";
+  const filter = FILTER_OPTIONS.find(option => option.id === searchParams?.get("role"))?.id ?? "all";
 
   useEffect(() => {
     if (filter !== "client" && filter !== "opensource") setActiveRole(filter);

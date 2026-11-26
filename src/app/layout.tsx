@@ -28,6 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+import {CatalogProvider} from "@/context/Catalog";
 export const metadata: Metadata = {
   title: `${PROFILE.name} (${PROFILE.handle}) — AI · Backend · Data Science · ML Engineer`,
   description:
@@ -61,7 +62,7 @@ export default function RootLayout({
       className={`${archivo.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-[#f4f1ea] text-[#0f1217] font-sans antialiased selection:bg-[#ea1d0f] selection:text-[#f4f1ea]">
-        <RoleProvider>
+        <CatalogProvider><RoleProvider>
           <Header />
           <CustomCursor />
           <RouteIris />
@@ -69,7 +70,7 @@ export default function RootLayout({
           <main className="relative min-h-screen">{children}</main>
           <DeterministicDevBotCompanion />
           <Footer />
-        </RoleProvider>
+        </RoleProvider></CatalogProvider>
       </body>
     </html>
   );
